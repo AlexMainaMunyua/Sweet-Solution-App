@@ -1,13 +1,24 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'pages/Authentication/authenication.dart';
 import 'pages/myhomepage/myhomePage.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  EcommerceApp.auth = FirebaseAuth.instance;
+
+  EcommerceApp.sharedPreferences = await SharedPreferences.getInstance();
+
+  EcommerceApp.firestore = FirebaseFirestore.instance;
+
   runApp(MyApp());
 }
 
@@ -59,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: [Colors.black, Colors.white],
+                colors: [Colors.black26, Colors.white],
                 begin: const FractionalOffset(0.0, 0.0),
                 end: const FractionalOffset(1.0, 0.0),
                 stops: [0.0, 1.0],
