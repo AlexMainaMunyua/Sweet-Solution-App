@@ -46,7 +46,10 @@ class _RegisterState extends State<Register> {
               height: 8.0,
             ),
             InkWell(
-              onTap: () => _selectAndPickImage,
+              onTap: () {
+                
+                _selectAndPickImage();
+              },
               child: CircleAvatar(
                 radius: _screenHeight * 0.06,
                 backgroundColor: Colors.white,
@@ -116,10 +119,9 @@ class _RegisterState extends State<Register> {
   }
 
   Future<void> _selectAndPickImage() async {
-
     final picker = ImagePicker();
 
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
@@ -132,10 +134,8 @@ class _RegisterState extends State<Register> {
     // _imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
   }
 
- 
-
-   Future<void> uploadAndSaveImage() async {
-    if (_imageFile != null) {
+  Future<void> uploadAndSaveImage() async {
+    if (_imageFile == null) {
       showDialog(
           context: context,
           builder: (c) {
@@ -152,7 +152,7 @@ class _RegisterState extends State<Register> {
               : displayDialog("Please fill up the registration from.")
           : displayDialog("Password do not match.");
     }
-  } 
+  }
 
   displayDialog(String msg) {
     showDialog(
@@ -189,7 +189,7 @@ class _RegisterState extends State<Register> {
           context: context,
           builder: (c) {
             return ErrorAlertDialog(
-              message: error.messagge.toString(),
+              message: error.message.toString(),
             );
           });
     });
@@ -214,7 +214,7 @@ class _RegisterState extends State<Register> {
           context: context,
           builder: (c) {
             return ErrorAlertDialog(
-              message: error.messagge.toString(),
+              message: error.message.toString(),
             );
           });
     });

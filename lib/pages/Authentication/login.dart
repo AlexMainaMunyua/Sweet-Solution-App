@@ -132,14 +132,14 @@ class _LoginState extends State<Login> {
           context: context,
           builder: (c) {
             return ErrorAlertDialog(
-              message: error.messagge.toString(),
+              message: error.message.toString(),
             );
           });
     });
     if (User != null) {
       readData(firebaseUser).then((s) {
         Navigator.pop(context);
-         Route route = MaterialPageRoute(builder: (c) => MyHomePage());
+        Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
         Navigator.pushReplacement(context, route);
       });
