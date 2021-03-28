@@ -23,11 +23,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cloud_firestore:
-  firebase_auth:
-  shared_preferences:
-  image_picker:
-  firebase_storage:
+  cloud_firestore: ^1.0.3
+  firebase_auth: ^1.0.1
+  shared_preferences: ^2.0.5
+  image_picker: ^0.7.3
+  firebase_storage: ^8.0.1
+  firebase_core: ^1.0.2
 
 
 

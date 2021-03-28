@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
               padding: EdgeInsets.only(right: 20),
               icon: Icon(
-                Icons.favorite_border_outlined,
+                Icons.favorite_border,
                 color: Colors.grey[800],
               ),
               onPressed: () {},

@@ -92,7 +92,7 @@ class _RegisterState extends State<Register> {
                 ],
               ),
             ),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () {
                 uploadAndSaveImage();
               },
@@ -116,10 +116,25 @@ class _RegisterState extends State<Register> {
   }
 
   Future<void> _selectAndPickImage() async {
-    _imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    final picker = ImagePicker();
+
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _imageFile = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+
+    // _imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
   }
 
-  Future<void> uploadAndSaveImage() async {
+ 
+
+   Future<void> uploadAndSaveImage() async {
     if (_imageFile != null) {
       showDialog(
           context: context,
@@ -137,7 +152,7 @@ class _RegisterState extends State<Register> {
               : displayDialog("Please fill up the registration from.")
           : displayDialog("Password do not match.");
     }
-  }
+  } 
 
   displayDialog(String msg) {
     showDialog(
