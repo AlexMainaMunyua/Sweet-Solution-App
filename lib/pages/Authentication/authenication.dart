@@ -27,7 +27,7 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
             title: Text(
               "P-shop",
               style: TextStyle(
-                  fontSize: 50.0, color: Colors.white, fontFamily: "Signatra"),
+                  fontSize: 20.0, color: Colors.white, fontFamily: "Signatra"),
             ),
             centerTitle: true,
             bottom: TabBar(

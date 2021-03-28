@@ -167,7 +167,7 @@ class _RegisterState extends State<Register> {
         context: context,
         builder: (c) {
           return LoadingAlertDialog(
-            message: "'Authenticating, Please wait....",
+            message: "Registering, Please wait....",
           );
         });
 
@@ -234,6 +234,7 @@ class _RegisterState extends State<Register> {
       "email": fUser.email,
       "name": _nameTextEditingController.text.trim(),
       "url": userImageUrl,
+      EcommerceApp.userCartList: ["garbageValue"],
     });
 
     await EcommerceApp.sharedPreferences
