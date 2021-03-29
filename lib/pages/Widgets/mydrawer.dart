@@ -35,6 +35,7 @@ class MyDrawer extends StatelessWidget {
                     height: 160.0,
                     width: 160.0,
                     child: CircleAvatar(
+                      radius: 20.0,
                       backgroundImage: NetworkImage(EcommerceApp
                           .sharedPreferences
                           .getString(EcommerceApp.userAvatarUrl)),
@@ -92,7 +93,7 @@ class MyDrawer extends StatelessWidget {
                 ///////////////////////////////////////////////////////////////////////
                 ListTile(
                   leading: Icon(
-                    Icons.home,
+                    Icons.request_quote,
                     color: Colors.white,
                   ),
                   title: Text(
@@ -112,7 +113,7 @@ class MyDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.home,
+                    Icons.shopping_cart,
                     color: Colors.white,
                   ),
                   title: Text(
@@ -132,7 +133,7 @@ class MyDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.home,
+                    Icons.search,
                     color: Colors.white,
                   ),
                   title: Text(
@@ -153,7 +154,7 @@ class MyDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.home,
+                    Icons.location_city,
                     color: Colors.white,
                   ),
                   title: Text(
@@ -174,7 +175,7 @@ class MyDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.home,
+                    Icons.logout,
                     color: Colors.white,
                   ),
                   title: Text(

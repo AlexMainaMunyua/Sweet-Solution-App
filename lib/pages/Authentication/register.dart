@@ -47,7 +47,6 @@ class _RegisterState extends State<Register> {
             ),
             InkWell(
               onTap: () {
-                
                 _selectAndPickImage();
               },
               child: CircleAvatar(
