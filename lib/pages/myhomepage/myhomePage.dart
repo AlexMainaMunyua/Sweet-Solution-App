@@ -1,7 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
+import 'package:ecommerce_application/pages/Model/item.dart';
 import 'package:ecommerce_application/pages/Store/cart.dart';
+import 'package:ecommerce_application/pages/Store/productPage.dart';
+import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
 import 'package:ecommerce_application/pages/Widgets/mydrawer.dart';
+import 'package:ecommerce_application/pages/Widgets/searchBox.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -35,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
                 icon: Icon(
                   Icons.shopping_cart,
+                  // size: 30.0,
                   color: Colors.black26,
                 ),
                 onPressed: () {
@@ -48,11 +58,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Icon(
                   Icons.brightness_1,
                   size: 20.0,
-                  color: Colors.green,
+                  color: Colors.black45,
                 ),
                 Positioned(
                   top: 3.0,
                   bottom: 4.0,
+                  left: 6.0,
                   child: Consumer<CartItemCounter>(
                     builder: (context, counter, _) {
                       return Text(counter.count.toString(),
@@ -69,144 +80,243 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       drawer: MyDrawer(),
+      body: CustomScrollView(
+        slivers: [
+          SliverPersistentHeader(pinned: true, delegate: SearchBoxDelegate()),
+          StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("items")
+                .limit(15)
+                .orderBy("publishedDate", descending: true)
+                .snapshots(),
+            builder: (context, dataSnapshot) {
+              return !dataSnapshot.hasData
+                  ? SliverToBoxAdapter(
+                      child: Center(
+                        child: circularProgress(),
+                      ),
+                    )
+                  : SliverStaggeredGrid.countBuilder(
+                      crossAxisCount: 1,
+                      staggeredTileBuilder: (c) => StaggeredTile.fit(1),
+                      itemBuilder: (context, index) {
+                        ItemModel model = ItemModel.fromJson(
+                            dataSnapshot.data.docs[index].data());
+                        return sourceInfo(model, context);
+                      },
+                      itemCount: dataSnapshot.data.docs.length,
+                    );
+            },
+          )
+        ],
+      ),
     ));
   }
 }
 
-// Widget sourceInfo(ItemModel model, BuildContext context,
-//     {Color background, removeCartFunction}) {
-//   return InkWell();
-// }
+Widget sourceInfo(ItemModel model, BuildContext context,
+    {Color background, removeCartFunction}) {
+  return InkWell(
+    onTap: () {
+      Route route =
+          MaterialPageRoute(builder: (c) => ProductPage(itemModel: model));
+
+      Navigator.pushReplacement(context, route);
+    },
+    splashColor: Colors.black26,
+    child: Padding(
+      padding: EdgeInsets.all(9.0),
+      child: Container(
+        height: 190.0,
+        // width: width,
+
+        child: Row(
+          children: [
+            Image.network(
+              model.thumbnailUrl,
+              height: 140.0,
+              width: 140.0,
+            ),
+            SizedBox(
+              width: 4.0,
+            ),
+            Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 15),
+                Container(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                          child: Text(
+                        model.title,
+                        style: TextStyle(color: Colors.black45, fontSize: 14.0),
+                      ))
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
+                Container(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                          child: Text(
+                        model.shortInfo,
+                        style: TextStyle(color: Colors.black38, fontSize: 12.0),
+                      ))
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      alignment: Alignment.topLeft,
+                      width: 40.0,
+                      height: 43.0,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "50%",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Text(
+                              "OFF%",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.normal),
+                            )
+                          ],
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        color: Colors.black26,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 0.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Original price: Ksh.",
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  decoration: TextDecoration.lineThrough,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              Text(
+                                (model.price + model.price).toString(),
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    color: Colors.grey,
+                                    decoration: TextDecoration.lineThrough),
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 5.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                "New price: Ksh.",
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              Text(
+                                (model.price).toString(),
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.grey,
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+                Flexible(
+                  child: Container(),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: removeCartFunction == null
+                      ? IconButton(
+                          onPressed: () {
+                            checkItemInCart(model.shortInfo, context);
+                          },
+                          icon: Icon(
+                            Icons.add_shopping_cart,
+                            color: Colors.black26,
+                          ))
+                      : IconButton(
+                          icon: Icon(Icons.remove_shopping_cart),
+                          onPressed: () {}),
+                ),
+                Divider(height: 5.0, color: Colors.black26,)
+              ],
+            ))
+          ],
+        ),
+      ),
+    ),
+  );
+}
 
 Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
   return Container();
 }
 
-void checkItemInCart(String productID, BuildContext context) {}
+void checkItemInCart(String shortInfoID, BuildContext context) {
+  EcommerceApp.sharedPreferences
+          .getStringList(EcommerceApp.userCartList)
+          .contains(shortInfoID)
+      ? Fluttertoast.showToast(msg: "Item already in Cart")
+      : addItemToCart(shortInfoID, context);
+}
 
-// class _MyHomePageState extends State<MyHomePage> {
-//   int _selectedIndex = 0;
-//   static const TextStyle optionStyle =
-//       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-//   static const List<Widget> _widgetOptions = <Widget>[
-//     Text(
-//       'Index 0: Home',
-//       style: optionStyle,
-//     ),
-//     Text(
-//       'Index 1: Chat',
-//       style: optionStyle,
-//     ),
-//     Text(
-//       'Index 2: My Cart',
-//       style: optionStyle,
-//     ),
-//     Text(
-//       'Index 3: My Account',
-//       style: optionStyle,
-//     ),
-//   ];
+addItemToCart(String shortInfoID, BuildContext context) {
+  List tempCartList =
+      EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
 
-//   void _onItemTapped(int index) {
-//     setState(() {
-//       _selectedIndex = index;
-//     });
-//   }
+  tempCartList.add(shortInfoID);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return DefaultTabController(
-//       length: 6,
-//       child: Scaffold(
-//         appBar: AppBar(
-//           elevation: 0,
-//           backgroundColor: Colors.white,
-//           title: Container(
-//             height: 40,
-//             child: TextField(
-//               decoration: InputDecoration(
-//                   prefixIcon: Icon(
-//                     Icons.search,
-//                     color: Colors.grey[900],
-//                   ),
-//                   border: OutlineInputBorder(borderSide: new BorderSide())
-//                   // prefixText: "Search",
-//                   ),
-//             ),
-//           ),
-//           actions: [
-//             IconButton(
-//               padding: EdgeInsets.only(right: 20),
-//               icon: Icon(
-//                 Icons.favorite_border,
-//                 color: Colors.grey[800],
-//               ),
-//               onPressed: () {},
-//               iconSize: 30,
-//             )
-//           ],
-//           bottom: TabBar(
-//             labelColor: Colors.grey[900],
-//             labelStyle: TextStyle(fontWeight: FontWeight.w600),
-//             indicatorColor: Colors.grey[900],
-//             unselectedLabelColor: Colors.grey[500],
-//             isScrollable: true,
-//             tabs: [
-//               Tab(
-//                 text: "All",
-//               ),
-//               Tab(text: "Sweets"),
-//               Tab(text: "Beauty"),
-//               Tab(
-//                 text: "Consumerbles",
-//               ),
-//               Tab(
-//                 text: "Stationaries",
-//               ),
-//               Tab(
-//                 text: "Detagents and Sanitary",
-//               ),
-//             ],
-//           ),
-//         ),
-//         body: Center(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: <Widget>[],
-//           ),
-//         ),
+  EcommerceApp.firestore
+      .collection(EcommerceApp.collectionUser)
+      .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
+      .update({
+    EcommerceApp.userCartList: tempCartList,
+  }).then((value) {
+    Fluttertoast.showToast(msg: "Item Added to Cart Successfully");
 
-//         bottomNavigationBar: BottomNavigationBar(
-//           type: BottomNavigationBarType.fixed,
-//           unselectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-//           items: const <BottomNavigationBarItem>[
-//             BottomNavigationBarItem(
-//               icon: Icon(Icons.home),
-//               label: 'Home',
-//             ),
-//             BottomNavigationBarItem(
-//               icon: Icon(Icons.chat),
-//               label: 'Message',
-//             ),
-//             BottomNavigationBarItem(
-//               icon: Icon(Icons.shopping_cart),
-//               label: 'My Cart',
-//             ),
-//             BottomNavigationBarItem(
-//               icon: Icon(Icons.person),
-//               label: 'My Account',
-//             ),
-//           ],
-//           currentIndex: _selectedIndex,
-//           selectedItemColor: Colors.grey[900],
-//           unselectedItemColor: Colors.grey[500],
-//           showUnselectedLabels: true,
-//           selectedLabelStyle:
-//               TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-//           onTap: _onItemTapped,
-//         ),
-//         // This trailing comma makes auto-formatting nicer for build methods.
-//       ),
-//     );
-//   }
-// }
+    EcommerceApp.sharedPreferences
+        .setStringList(EcommerceApp.userCartList, tempCartList);
+
+    Provider.of<CartItemCounter>(context, listen: false).displayResult();
+  });
+}

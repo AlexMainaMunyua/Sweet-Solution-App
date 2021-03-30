@@ -32,10 +32,10 @@ class MyDrawer extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(80.0)),
                   elevation: 8.0,
                   child: Container(
-                    height: 160.0,
-                    width: 160.0,
+                    height: 80.0,
+                    width: 80.0,
                     child: CircleAvatar(
-                      radius: 20.0,
+                     
                       backgroundImage: NetworkImage(EcommerceApp
                           .sharedPreferences
                           .getString(EcommerceApp.userAvatarUrl)),
@@ -93,7 +93,7 @@ class MyDrawer extends StatelessWidget {
                 ///////////////////////////////////////////////////////////////////////
                 ListTile(
                   leading: Icon(
-                    Icons.request_quote,
+                    Icons.reorder,
                     color: Colors.white,
                   ),
                   title: Text(
@@ -154,7 +154,7 @@ class MyDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.location_city,
+                    Icons.add_location,
                     color: Colors.white,
                   ),
                   title: Text(

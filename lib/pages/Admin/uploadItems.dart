@@ -413,7 +413,7 @@ class _UploadPageState extends State<UploadPage>
       "longDescription": _descriptionTextEditingController.text.trim(),
       "title": _titleTextEditingController.text.trim(),
       "publishedDate": DateTime.now(),
-      "price": _priceTextEditingController.text.trim(),
+      "price": int.parse(_priceTextEditingController.text),
       "thumbnailUrl": downloadUrl,
       "status": "available",
     });
