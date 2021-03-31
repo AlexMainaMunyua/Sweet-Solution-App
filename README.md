@@ -27,10 +27,14 @@ The application is a mobile application only with two components:
 1. Administartor functionalities.
     a) Authenication of the admin to login and logout of the application.
     b) Manage Order
+        i) Admin Check Orders Placed by Users
+        ii) Admin check order details
+        iii) Admin confirms shipments.
     c) Manage products
 
 2. User functionalities.
     a) Authenitication of the user to register an account, login to the application, logout and change their password incase forgotten.
     b) Make a purchase.
     c) Add an address of their location.
+    d) Search for available items or products
 
