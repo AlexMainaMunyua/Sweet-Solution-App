@@ -1,0 +1,215 @@
+{
+  "project_info": {
+    "project_number": "486925158947",
+    "firebase_url": "https://loan-app-6d0b2.firebaseio.com",
+    "project_id": "loan-app-6d0b2",
+    "storage_bucket": "loan-app-6d0b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486925158947:android:f4039aee24e1d9af9bff96",
+        "android_client_info": {
+          "package_name": "com.example.ecommerce_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "486925158947-vgf0017dlrv01tgj85j97mblcu1clfp6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdQdswWq8zsdyOBamAXwTnlhrXkeRvl4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "486925158947-vgf0017dlrv01tgj85j97mblcu1clfp6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "486925158947-ddms8u0clq17u6dhakgvvbd2sagkf3sg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.loanapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486925158947:android:f329b70748346aab9bff96",
+        "android_client_info": {
+          "package_name": "com.example.flying_school"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "486925158947-68lm3g77gri3t1g924rmp7eqs80jvksl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flying_school",
+            "certificate_hash": "4e48cb8155f0f156b54e97dee85f32975c578028"
+          }
+        },
+        {
+          "client_id": "486925158947-vgf0017dlrv01tgj85j97mblcu1clfp6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdQdswWq8zsdyOBamAXwTnlhrXkeRvl4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "486925158947-vgf0017dlrv01tgj85j97mblcu1clfp6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "486925158947-ddms8u0clq17u6dhakgvvbd2sagkf3sg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.loanapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486925158947:android:4d6c96c83e05694d9bff96",
+        "android_client_info": {
+          "package_name": "com.example.flying_school_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "486925158947-cj8vvm6mk3h4digtthon7ntd5itmi04g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flying_school_admin",
+            "certificate_hash": "4e48cb8155f0f156b54e97dee85f32975c578028"
+          }
+        },
+        {
+          "client_id": "486925158947-vgf0017dlrv01tgj85j97mblcu1clfp6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdQdswWq8zsdyOBamAXwTnlhrXkeRvl4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "486925158947-vgf0017dlrv01tgj85j97mblcu1clfp6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "486925158947-ddms8u0clq17u6dhakgvvbd2sagkf3sg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.loanapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486925158947:android:826685f2efb3a2e2",
+        "android_client_info": {
+          "package_name": "com.example.loanapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "486925158947-vgf0017dlrv01tgj85j97mblcu1clfp6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdQdswWq8zsdyOBamAXwTnlhrXkeRvl4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "486925158947-vgf0017dlrv01tgj85j97mblcu1clfp6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "486925158947-ddms8u0clq17u6dhakgvvbd2sagkf3sg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.loanapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486925158947:android:099a06c2b0abe03b9bff96",
+        "android_client_info": {
+          "package_name": "com.example.veternary_application_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "486925158947-n3ol3tgjmeirc0u47r4qov20u4rirqjm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.veternary_application_admin",
+            "certificate_hash": "a0a015508ec90c9d41e1c5ebe0c2ef91587d2a70"
+          }
+        },
+        {
+          "client_id": "486925158947-vgf0017dlrv01tgj85j97mblcu1clfp6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdQdswWq8zsdyOBamAXwTnlhrXkeRvl4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "486925158947-vgf0017dlrv01tgj85j97mblcu1clfp6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "486925158947-ddms8u0clq17u6dhakgvvbd2sagkf3sg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.loanapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
