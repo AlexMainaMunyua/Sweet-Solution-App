@@ -1,6 +1,7 @@
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Model/address.dart';
 import 'package:ecommerce_application/pages/Widgets/customAppBar.dart';
+import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
 
 class AddAddress extends StatelessWidget {
@@ -48,6 +49,10 @@ class AddAddress extends StatelessWidget {
 
                   formKey.currentState.reset();
                 });
+
+                Route route = MaterialPageRoute(builder: (c) => MyHomePage());
+
+                Navigator.pushReplacement(context, route);
               }
             },
             label: Text("Done"),
