@@ -32,8 +32,8 @@ class MyDrawer extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(80.0)),
                   elevation: 8.0,
                   child: Container(
-                    height: 80.0,
-                    width: 80.0,
+                    height: 120.0,
+                    width: 120.0,
                     child: CircleAvatar(
                      
                       backgroundImage: NetworkImage(EcommerceApp
@@ -58,24 +58,24 @@ class MyDrawer extends StatelessWidget {
             height: 12.0,
           ),
           Container(
-            padding: EdgeInsets.only(top: 1.0),
+         /*    padding: EdgeInsets.only(top: 1.0),
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     colors: [Colors.black26, Colors.white],
                     begin: const FractionalOffset(0.0, 0.0),
                     end: const FractionalOffset(1.0, 0.0),
                     stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp)),
+                    tileMode: TileMode.clamp)), */
             child: Column(
               children: [
                 ListTile(
                   leading: Icon(
                     Icons.home,
-                    color: Colors.white,
+                    color: Colors.black45,
                   ),
                   title: Text(
                     "Home",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black45),
                   ),
                   onTap: () {
                     Route route =
@@ -85,20 +85,20 @@ class MyDrawer extends StatelessWidget {
                   },
                 ),
                 Divider(
-                  height: 10.0,
-                  color: Colors.white,
-                  thickness: 6.0,
+                  height: 1.0,
+                  color: Colors.black45,
+                  // thickness: 6.0,
                 ),
 
                 ///////////////////////////////////////////////////////////////////////
                 ListTile(
                   leading: Icon(
                     Icons.reorder,
-                    color: Colors.white,
+                    color: Colors.black45,
                   ),
                   title: Text(
                     "My Orders",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black45),
                   ),
                   onTap: () {
                     Route route = MaterialPageRoute(builder: (c) => MyOrders());
@@ -107,18 +107,18 @@ class MyDrawer extends StatelessWidget {
                   },
                 ),
                 Divider(
-                  height: 10.0,
-                  color: Colors.white,
-                  thickness: 6.0,
+                  height: 1.0,
+                  color: Colors.black45,
+                  // thickness: 6.0,
                 ),
                 ListTile(
                   leading: Icon(
                     Icons.shopping_cart,
-                    color: Colors.white,
+                    color: Colors.black45,
                   ),
                   title: Text(
                     "My Cart",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black45),
                   ),
                   onTap: () {
                     Route route = MaterialPageRoute(builder: (c) => CartPage());
@@ -127,18 +127,18 @@ class MyDrawer extends StatelessWidget {
                   },
                 ),
                 Divider(
-                  height: 10.0,
-                  color: Colors.white,
-                  thickness: 6.0,
+                  height: 1.0,
+                  color: Colors.black45,
+                  // thickness: 6.0,
                 ),
                 ListTile(
                   leading: Icon(
                     Icons.search,
-                    color: Colors.white,
+                    color: Colors.black45,
                   ),
                   title: Text(
                     "Search",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black45),
                   ),
                   onTap: () {
                     Route route =
@@ -148,18 +148,18 @@ class MyDrawer extends StatelessWidget {
                   },
                 ),
                 Divider(
-                  height: 10.0,
-                  color: Colors.white,
-                  thickness: 6.0,
+                  height: 1.0,
+                  color: Colors.black45,
+                  // thickness: 6.0,
                 ),
                 ListTile(
                   leading: Icon(
                     Icons.add_location,
-                    color: Colors.white,
+                    color: Colors.black45,
                   ),
                   title: Text(
                     "Add New Address",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black45),
                   ),
                   onTap: () {
                     Route route =
@@ -168,19 +168,36 @@ class MyDrawer extends StatelessWidget {
                     Navigator.pushReplacement(context, route);
                   },
                 ),
-                Divider(
-                  height: 10.0,
-                  color: Colors.white,
-                  thickness: 6.0,
+                 Divider(
+                  height: 1.0,
+                  color: Colors.black45,
+                  // thickness: 6.0,
                 ),
+            /*     ListTile(
+                  leading: Icon(
+                    Icons.settings,
+                    color: Colors.black45,
+                  ),
+                  title: Text(
+                    "Account Settings",
+                    style: TextStyle(color: Colors.black45),
+                  ),
+                  onTap: () {
+                  },
+                ),
+                Divider(
+                  height: 1.0,
+                  color: Colors.black45,
+               
+                ), */
                 ListTile(
                   leading: Icon(
                     Icons.logout,
-                    color: Colors.white,
+                    color: Colors.black45,
                   ),
                   title: Text(
                     "Logout",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black45),
                   ),
                   onTap: () {
                     EcommerceApp.auth.signOut().then((value) {
@@ -191,11 +208,11 @@ class MyDrawer extends StatelessWidget {
                     });
                   },
                 ),
-                Divider(
+           /*      Divider(
                   height: 10.0,
-                  color: Colors.white,
+                  color: Colors.black45,
                   thickness: 6.0,
-                ),
+                ), */
               ],
             ),
           )

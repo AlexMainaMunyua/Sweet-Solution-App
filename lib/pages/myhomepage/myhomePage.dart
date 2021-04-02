@@ -19,103 +19,131 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Future<bool> _onBackPressed() {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text("Are you sure?"),
+              content: Text("Do you want to exit the application."),
+              actions: <Widget>[
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pop(false),
+                  child: Text("No", style: TextStyle(fontSize: 16.0),),
+                ),
+                SizedBox(width: 30.0, height: 30),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pop(true),
+                  child: Text("Yes", style: TextStyle(fontSize: 16.0),),
+                ),
+                 SizedBox(width: 10.0),
+              ],
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Colors.black26, Colors.white],
-                  begin: const FractionalOffset(0.0, 0.0),
-                  end: const FractionalOffset(1.0, 0.0),
-                  stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp)),
-        ),
-        title: Text(
-          "p-shop",
-          style: TextStyle(
-              fontSize: 55.0, color: Colors.white, fontFamily: "Signatra"),
-        ),
-        centerTitle: true,
-        actions: [
-          Stack(children: [
-            IconButton(
-                icon: Icon(
-                  Icons.shopping_cart,
-                  // size: 30.0,
-                  color: Colors.black26,
-                ),
-                onPressed: () {
-                  Route route = MaterialPageRoute(builder: (c) => CartPage());
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: SafeArea(
+          child: Scaffold(
+        appBar: AppBar(
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Colors.black26, Colors.white],
+                    begin: const FractionalOffset(0.0, 0.0),
+                    end: const FractionalOffset(1.0, 0.0),
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.clamp)),
+          ),
+          title: Text(
+            "Cady World",
+            style: TextStyle(
+                fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
+          ),
+          centerTitle: true,
+          actions: [
+            Container(
+              padding: EdgeInsets.only(right:10.0, top: 5.0),
+              child: Stack(children: [
+                IconButton(
+                    icon: Icon(
+                      Icons.shopping_cart,
+                      // size: 30.0,
+                      color: Colors.black26,
+                    ),
+                    onPressed: () {
+                      Route route = MaterialPageRoute(builder: (c) => CartPage());
 
-                  Navigator.pushReplacement(context, route);
-                }),
-            Positioned(
-                child: Stack(
-              children: [
-                Icon(
-                  Icons.brightness_1,
-                  size: 20.0,
-                  color: Colors.black45,
-                ),
+                      Navigator.pushReplacement(context, route);
+                    }),
                 Positioned(
-                  top: 3.0,
-                  bottom: 4.0,
-                  left: 6.0,
-                  child: Consumer<CartItemCounter>(
-                    builder: (context, counter, _) {
-                      return Text(
-                          (EcommerceApp.sharedPreferences
-                                      .getStringList(EcommerceApp.userCartList)
-                                      .length -
-                                  1)
-                              .toString(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w500));
-                    },
-                  ),
-                )
-              ],
-            )),
-          ])
-        ],
-      ),
-      drawer: MyDrawer(),
-      body: CustomScrollView(
-        slivers: [
-          SliverPersistentHeader(pinned: true, delegate: SearchBoxDelegate()),
-          StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("items")
-                .limit(15)
-                .orderBy("publishedDate", descending: true)
-                .snapshots(),
-            builder: (context, dataSnapshot) {
-              return !dataSnapshot.hasData
-                  ? SliverToBoxAdapter(
-                      child: Center(
-                        child: circularProgress(),
+                    child: Stack(
+                  children: [
+                    Icon(
+                      Icons.brightness_1,
+                      size: 20.0,
+                      color: Colors.black45,
+                    ),
+                    Positioned(
+                      top: 3.0,
+                      bottom: 4.0,
+                      left: 6.0,
+                      child: Consumer<CartItemCounter>(
+                        builder: (context, counter, _) {
+                          return Text(
+                              (EcommerceApp.sharedPreferences
+                                          .getStringList(
+                                              EcommerceApp.userCartList)
+                                          .length -
+                                      1)
+                                  .toString(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w500));
+                        },
                       ),
                     )
-                  : SliverStaggeredGrid.countBuilder(
-                      crossAxisCount: 1,
-                      staggeredTileBuilder: (c) => StaggeredTile.fit(1),
-                      itemBuilder: (context, index) {
-                        ItemModel model = ItemModel.fromJson(
-                            dataSnapshot.data.docs[index].data());
-                        return sourceInfo(model, context);
-                      },
-                      itemCount: dataSnapshot.data.docs.length,
-                    );
-            },
-          )
-        ],
-      ),
-    ));
+                  ],
+                )),
+              ]),
+            )
+          ],
+        ),
+        drawer: MyDrawer(),
+        body: CustomScrollView(
+          slivers: [
+            SliverPersistentHeader(pinned: true, delegate: SearchBoxDelegate()),
+            StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection("items")
+                  .limit(15)
+                  .orderBy("publishedDate", descending: true)
+                  .snapshots(),
+              builder: (context, dataSnapshot) {
+                return !dataSnapshot.hasData
+                    ? SliverToBoxAdapter(
+                        child: Center(
+                          child: circularProgress(),
+                        ),
+                      )
+                    : SliverStaggeredGrid.countBuilder(
+                        crossAxisCount: 1,
+                        staggeredTileBuilder: (c) => StaggeredTile.fit(1),
+                        itemBuilder: (context, index) {
+                          ItemModel model = ItemModel.fromJson(
+                              dataSnapshot.data.docs[index].data());
+                          return sourceInfo(model, context);
+                        },
+                        itemCount: dataSnapshot.data.docs.length,
+                      );
+              },
+            )
+          ],
+        ),
+      )),
+    );
   }
 }
 
@@ -306,25 +334,22 @@ Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
   return Container(
     height: 150.0,
     // width:  width * .34,
-    margin:  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
     decoration: BoxDecoration(
-      color: primaryColor,
-      borderRadius: BorderRadius.all(Radius.circular(20.0)),
-      boxShadow: <BoxShadow>[
-        BoxShadow(offset: Offset(0, 5), blurRadius: 10.0, color: Colors.grey[200])
-      ]
-    ),
+        color: primaryColor,
+        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+              offset: Offset(0, 5), blurRadius: 10.0, color: Colors.grey[200])
+        ]),
     child: ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(20.0)),
       child: Image.network(
         imgPath,
         height: 150.0,
         fit: BoxFit.fill,
-
       ),
-
     ),
-
   );
 }
 

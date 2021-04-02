@@ -25,54 +25,57 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
       ),
       centerTitle: true,
       title: Text(
-        "p-shop",
+        "cady world",
         style: TextStyle(
-            fontSize: 55.0, color: Colors.white, fontFamily: "Signatra"),
+            fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
       ),
       bottom: bottom,
       actions: [
-        Stack(children: [
-          IconButton(
-              icon: Icon(
-                Icons.shopping_cart,
-                // size: 30.0,
-                color: Colors.black26,
-              ),
-              onPressed: () {
-                Route route = MaterialPageRoute(builder: (c) => CartPage());
-
-                Navigator.pushReplacement(context, route);
-              }),
-          Positioned(
-              child: Stack(
-            children: [
-              Icon(
-                Icons.brightness_1,
-                size: 20.0,
-                color: Colors.black45,
-              ),
-              Positioned(
-                top: 3.0,
-                bottom: 4.0,
-                left: 6.0,
-                child: Consumer<CartItemCounter>(
-                  builder: (context, counter, _) {
-                    return Text(
-                        (EcommerceApp.sharedPreferences
-                                    .getStringList(EcommerceApp.userCartList)
-                                    .length -
-                                1)
-                            .toString(),
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w500));
-                  },
+        Container(
+          padding: EdgeInsets.only(right:10.0, top: 5.0),
+          child: Stack(children: [
+            IconButton(
+                icon: Icon(
+                  Icons.shopping_cart,
+                  // size: 30.0,
+                  color: Colors.black26,
                 ),
-              )
-            ],
-          )),
-        ])
+                onPressed: () {
+                  Route route = MaterialPageRoute(builder: (c) => CartPage());
+
+                  Navigator.pushReplacement(context, route);
+                }),
+            Positioned(
+                child: Stack(
+              children: [
+                Icon(
+                  Icons.brightness_1,
+                  size: 20.0,
+                  color: Colors.black45,
+                ),
+                Positioned(
+                  top: 3.0,
+                  bottom: 4.0,
+                  left: 6.0,
+                  child: Consumer<CartItemCounter>(
+                    builder: (context, counter, _) {
+                      return Text(
+                          (EcommerceApp.sharedPreferences
+                                      .getStringList(EcommerceApp.userCartList)
+                                      .length -
+                                  1)
+                              .toString(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w500));
+                    },
+                  ),
+                )
+              ],
+            )),
+          ]),
+        )
       ],
     );
   }

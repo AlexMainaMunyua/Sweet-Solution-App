@@ -3,6 +3,7 @@ import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/addressChanger.dart';
 import 'package:ecommerce_application/pages/Model/address.dart';
 import 'package:ecommerce_application/pages/Order/placeOrder.dart';
+import 'package:ecommerce_application/pages/Store/cart.dart';
 import 'package:ecommerce_application/pages/Widgets/customAppBar.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
 import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
@@ -21,73 +22,84 @@ class Address extends StatefulWidget {
 }
 
 class _AddressState extends State<Address> {
+
+    _onWillPop(BuildContext context) {
+    Route route = MaterialPageRoute(builder: (c) => CartPage());
+
+    Navigator.pushReplacement(context, route);
+  }
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: MyAppBar(),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  "Select Address",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0),
+    return WillPopScope(
+      onWillPop: () {
+        _onWillPop(context);
+      },
+      child: SafeArea(
+        child: Scaffold(
+          appBar: MyAppBar(),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "Select Address",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0),
+                  ),
                 ),
               ),
-            ),
-            Consumer<AddressChanger>(builder: (context, address, c) {
-              return Flexible(
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: EcommerceApp.firestore
-                      .collection(EcommerceApp.collectionUser)
-                      .doc(EcommerceApp.sharedPreferences
-                          .getString(EcommerceApp.userUID))
-                      .collection(EcommerceApp.subCollectionAddress)
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    return !snapshot.hasData
-                        ? Center(
-                            child: circularProgress(),
-                          )
-                        : snapshot.data.docs.length == 0
-                            ? noAddressCard()
-                            : ListView.builder(
-                                itemCount: snapshot.data.docs.length,
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return AddressCard(
-                                    currentIndex: address.count,
-                                    value: index,
-                                    addressId: snapshot.data.docs[index].id,
-                                    totalAmount: widget.totalAmount,
-                                    model: AddressModel.fromJson(
-                                        snapshot.data.docs[index].data()),
-                                  );
-                                },
-                              );
-                  },
-                ),
-              );
-            })
-          ],
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Route route = MaterialPageRoute(builder: (c) => AddAddress());
+              Consumer<AddressChanger>(builder: (context, address, c) {
+                return Flexible(
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: EcommerceApp.firestore
+                        .collection(EcommerceApp.collectionUser)
+                        .doc(EcommerceApp.sharedPreferences
+                            .getString(EcommerceApp.userUID))
+                        .collection(EcommerceApp.subCollectionAddress)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      return !snapshot.hasData
+                          ? Center(
+                              child: circularProgress(),
+                            )
+                          : snapshot.data.docs.length == 0
+                              ? noAddressCard()
+                              : ListView.builder(
+                                  itemCount: snapshot.data.docs.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return AddressCard(
+                                      currentIndex: address.count,
+                                      value: index,
+                                      addressId: snapshot.data.docs[index].id,
+                                      totalAmount: widget.totalAmount,
+                                      model: AddressModel.fromJson(
+                                          snapshot.data.docs[index].data()),
+                                    );
+                                  },
+                                );
+                    },
+                  ),
+                );
+              })
+            ],
+          ),
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () {
+              Route route = MaterialPageRoute(builder: (c) => AddAddress());
 
-            Navigator.pushReplacement(context, route);
-          },
-          label: Text("Add new address"),
-          backgroundColor: Colors.black26,
-          icon: Icon(Icons.add_location),
+              Navigator.pushReplacement(context, route);
+            },
+            label: Text("Add new address"),
+            backgroundColor: Colors.black26,
+            icon: Icon(Icons.add_location),
+          ),
         ),
       ),
     );

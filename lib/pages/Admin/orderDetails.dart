@@ -23,7 +23,7 @@ class AdminOrderDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getOrderId = orderBy;
+    getOrderId = orderID;
     return SafeArea(
          child: Scaffold(
         body: SingleChildScrollView(

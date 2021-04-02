@@ -32,99 +32,110 @@ class _CartPageState extends State<CartPage> {
     Provider.of<TotalAmount>(context, listen: false).displayAmount(0);
   }
 
+  _onWillPop(BuildContext context) {
+    Route route = MaterialPageRoute(builder: (c) => MyHomePage());
+
+    Navigator.pushReplacement(context, route);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MyAppBar(),
-      floatingActionButton: FloatingActionButton.extended(
-        label: Text("Check out"),
-        backgroundColor: Colors.black26,
-        icon: Icon(Icons.navigate_next),
-        onPressed: () {
-          if (EcommerceApp.sharedPreferences
-                  .getStringList(EcommerceApp.userCartList)
-                  .length ==
-              1) {
-            Fluttertoast.showToast(msg: "Your cart is empty");
-          } else {
-            Route route = MaterialPageRoute(
-                builder: (c) => Address(totalAmount: totalAmount));
+    return WillPopScope(
+      onWillPop: () {
+        _onWillPop(context);
+      },
+      child: Scaffold(
+        appBar: MyAppBar(),
+        floatingActionButton: FloatingActionButton.extended(
+          label: Text("Check out"),
+          backgroundColor: Colors.black12,
+          icon: Icon(Icons.navigate_next),
+          onPressed: () {
+            if (EcommerceApp.sharedPreferences
+                    .getStringList(EcommerceApp.userCartList)
+                    .length ==
+                1) {
+              Fluttertoast.showToast(msg: "Your cart is empty");
+            } else {
+              Route route = MaterialPageRoute(
+                  builder: (c) => Address(totalAmount: totalAmount));
 
-            Navigator.pushReplacement(context, route);
-          }
-        },
-      ),
-      drawer: MyDrawer(),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Consumer2<TotalAmount, CartItemCounter>(
-              builder: (context, amountProvider, cartProvider, c) {
-                return Padding(
-                    child: Center(
-                      child: cartProvider.count == 0
-                          ? Container()
-                          : Text(
-                              "Total Price: Ksh ${amountProvider.totalAmount.toString()}",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                    ),
-                    padding: EdgeInsets.all(8.0));
-              },
+              Navigator.pushReplacement(context, route);
+            }
+          },
+        ),
+        drawer: MyDrawer(),
+        body: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Consumer2<TotalAmount, CartItemCounter>(
+                builder: (context, amountProvider, cartProvider, c) {
+                  return Padding(
+                      child: Center(
+                        child: cartProvider.count == 0
+                            ? Container()
+                            : Text(
+                                "Total Price: Ksh ${amountProvider.totalAmount.toString()}",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                      ),
+                      padding: EdgeInsets.all(8.0));
+                },
+              ),
             ),
-          ),
-          StreamBuilder<QuerySnapshot>(
-              stream: EcommerceApp.firestore
-                  .collection("items")
-                  .where("shortInfo",
-                      whereIn: EcommerceApp.sharedPreferences
-                          .getStringList(EcommerceApp.userCartList))
-                  .snapshots(),
-              builder: (context, snapshot) {
-                return !snapshot.hasData
-                    ? SliverToBoxAdapter(
-                        child: Center(
-                          child: circularProgress(),
-                        ),
-                      )
-                    : snapshot.data.docs.length == 0
-                        ? beginBuildingCart()
-                        : SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (context, index) {
-                                ItemModel model = ItemModel.fromJson(
-                                    snapshot.data.docs[index].data());
+            StreamBuilder<QuerySnapshot>(
+                stream: EcommerceApp.firestore
+                    .collection("items")
+                    .where("shortInfo",
+                        whereIn: EcommerceApp.sharedPreferences
+                            .getStringList(EcommerceApp.userCartList))
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  return !snapshot.hasData
+                      ? SliverToBoxAdapter(
+                          child: Center(
+                            child: circularProgress(),
+                          ),
+                        )
+                      : snapshot.data.docs.length == 0
+                          ? beginBuildingCart()
+                          : SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                (context, index) {
+                                  ItemModel model = ItemModel.fromJson(
+                                      snapshot.data.docs[index].data());
 
-                                if (index == 0) {
-                                  totalAmount = 0;
-                                  totalAmount = model.price + totalAmount;
-                                } else {
-                                  totalAmount = model.price + totalAmount;
-                                }
-                                if (snapshot.data.docs.length - 1 == index) {
-                                  WidgetsBinding.instance
-                                      .addPostFrameCallback((t) {
-                                    Provider.of<TotalAmount>(context,
-                                            listen: false)
-                                        .displayAmount(totalAmount);
-                                  });
-                                }
+                                  if (index == 0) {
+                                    totalAmount = 0;
+                                    totalAmount = model.price + totalAmount;
+                                  } else {
+                                    totalAmount = model.price + totalAmount;
+                                  }
+                                  if (snapshot.data.docs.length - 1 == index) {
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback((t) {
+                                      Provider.of<TotalAmount>(context,
+                                              listen: false)
+                                          .displayAmount(totalAmount);
+                                    });
+                                  }
 
-                                return sourceInfo(model, context,
-                                     removeCartFunction: () =>
-                                        removeItemFromUserCart(
-                                            model.shortInfo));
-                              },
-                              childCount: snapshot.hasData
-                                  ? snapshot.data.docs.length
-                                  : 0,
-                            ),
-                          );
-              })
-        ],
+                                  return sourceInfo(model, context,
+                                      removeCartFunction: () =>
+                                          removeItemFromUserCart(
+                                              model.shortInfo));
+                                },
+                                childCount: snapshot.hasData
+                                    ? snapshot.data.docs.length
+                                    : 0,
+                              ),
+                            );
+                })
+          ],
+        ),
       ),
     );
   }

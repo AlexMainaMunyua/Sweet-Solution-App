@@ -12,31 +12,42 @@ class SearchProduct extends StatefulWidget {
 class _SearchProductState extends State<SearchProduct> {
   Future<QuerySnapshot> docList;
 
+  _onWillPop(BuildContext context) {
+    Route route = MaterialPageRoute(builder: (c) => MyHomePage());
+
+    Navigator.pushReplacement(context, route);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: MyAppBar(
-          bottom: PreferredSize(
-            child: searchWidget(),
-            preferredSize: Size(56.0, 56.0),
+    return WillPopScope(
+      onWillPop: () {
+        _onWillPop(context);
+      },
+      child: SafeArea(
+        child: Scaffold(
+          appBar: MyAppBar(
+            bottom: PreferredSize(
+              child: searchWidget(),
+              preferredSize: Size(56.0, 56.0),
+            ),
           ),
-        ),
-        body: FutureBuilder<QuerySnapshot>(
-          future: docList,
-          builder: (context, snap) {
-            return snap.hasData
-                ? ListView.builder(
-                    itemBuilder: (context, index) {
-                      ItemModel model =
-                          ItemModel.fromJson(snap.data.docs[index].data());
+          body: FutureBuilder<QuerySnapshot>(
+            future: docList,
+            builder: (context, snap) {
+              return snap.hasData
+                  ? ListView.builder(
+                      itemBuilder: (context, index) {
+                        ItemModel model =
+                            ItemModel.fromJson(snap.data.docs[index].data());
 
-                      return sourceInfo(model, context);
-                    },
-                    itemCount: snap.data.docs.length,
-                  )
-                : Text("No data available");
-          },
+                        return sourceInfo(model, context);
+                      },
+                      itemCount: snap.data.docs.length,
+                    )
+                  : Center(child: Text("Search items"));
+            },
+          ),
         ),
       ),
     );
@@ -46,9 +57,10 @@ class _SearchProductState extends State<SearchProduct> {
     return Container(
       alignment: Alignment.center,
       width: MediaQuery.of(context).size.width,
+      height: 80.0,
       decoration: BoxDecoration(
           gradient: LinearGradient(
-              colors: [Colors.black26, Colors.white],
+              colors: [Colors.black12, Colors.black12],
               begin: const FractionalOffset(0.0, 0.0),
               end: const FractionalOffset(1.0, 0.0),
               stops: [0.0, 1.0],

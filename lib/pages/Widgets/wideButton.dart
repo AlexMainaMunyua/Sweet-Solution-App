@@ -20,8 +20,10 @@ class WideButton extends StatelessWidget {
             ),
             width: MediaQuery.of(context).size.width*0.85,
             height: 50.0,
-            child: Text(
-              msg,style: TextStyle(color: Colors.white),
+            child: Center(
+              child: Text(
+                msg,style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ),
