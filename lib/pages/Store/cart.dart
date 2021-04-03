@@ -4,13 +4,10 @@ import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
 import 'package:ecommerce_application/pages/Counter/totalMoney.dart';
 import 'package:ecommerce_application/pages/Model/item.dart';
-import 'package:ecommerce_application/pages/Store/cartBody.dart';
-import 'package:ecommerce_application/pages/Store/checkOutCard.dart';
 import 'package:ecommerce_application/pages/Widgets/customAppBar.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
 import 'package:ecommerce_application/pages/Widgets/mydrawer.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
-// import 'package:ecommerce_application/pages/Widgets/orderCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -75,10 +72,10 @@ class _CartPageState extends State<CartPage> {
                         child: cartProvider.count == 0
                             ? Container()
                             : Text(
-                                "Total Price: Ksh ${amountProvider.totalAmount.toString()}",
+                                "Total Price: Ksh. ${amountProvider.totalAmount.toString()}",
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 20.0,
+                                    fontSize: 18.0,
                                     fontWeight: FontWeight.w500),
                               ),
                       ),
@@ -148,16 +145,19 @@ class _CartPageState extends State<CartPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.insert_emoticon,
-                  color: Colors.white,
-                ),
-                Text("Cart is Empty"),
-                Text("Start adding items to your Cart.")
+                Text("Cart is Empty",
+                    style: TextStyle(
+                      color: Colors.white,
+                    )),
+                    SizedBox(height: 10,),
+                Text("Start adding items to your Cart.",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ))
               ],
             ),
           ),
-          color: Theme.of(context).primaryColor.withOpacity(0.5)),
+          color: Colors.grey.shade400),
     );
   }
 

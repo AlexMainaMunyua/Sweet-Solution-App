@@ -1,7 +1,6 @@
 import 'package:ecommerce_application/pages/Address/address.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Model/address.dart';
-import 'package:ecommerce_application/pages/Store/cart.dart';
 import 'package:ecommerce_application/pages/Widgets/customAppBar.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
