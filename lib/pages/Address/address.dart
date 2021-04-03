@@ -157,7 +157,7 @@ class _AddressCardState extends State<AddressCard> {
             .displayResults(widget.value);
       },
       child: Card(
-        color: Colors.black26.withOpacity(0.4),
+        color: Colors.black12,
         child: Column(
           children: [
             Row(
@@ -165,7 +165,7 @@ class _AddressCardState extends State<AddressCard> {
                 Radio(
                   groupValue: widget.currentIndex,
                   value: widget.value,
-                  activeColor: Colors.white24,
+                  activeColor: Colors.white,
                   onChanged: (val) {
                     Provider.of<AddressChanger>(context, listen: false)
                         .displayResults(val);

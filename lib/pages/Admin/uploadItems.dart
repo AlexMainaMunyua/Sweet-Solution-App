@@ -35,47 +35,71 @@ class _UploadPageState extends State<UploadPage>
         : displayAdminUploadFormScreen();
   }
 
+   Future<bool> _onBackPressed() {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text("Are you sure?"),
+              content: Text("Do you want to exit the application."),
+              actions: <Widget>[
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pop(false),
+                  child: Text("No", style: TextStyle(fontSize: 16.0),),
+                ),
+                SizedBox(width: 30.0, height: 30),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pop(true),
+                  child: Text("Yes", style: TextStyle(fontSize: 16.0),),
+                ),
+                 SizedBox(width: 10.0),
+              ],
+            ));
+  }
+
   displayAdminHomeScreen() {
-    return Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Colors.black26, Colors.white],
-                  begin: const FractionalOffset(0.0, 0.0),
-                  end: const FractionalOffset(1.0, 0.0),
-                  stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp)),
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.border_color,
-            color: Colors.black26,
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Scaffold(
+        appBar: AppBar(
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Colors.black26, Colors.white],
+                    begin: const FractionalOffset(0.0, 0.0),
+                    end: const FractionalOffset(1.0, 0.0),
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.clamp)),
           ),
-          onPressed: () {
-            Route route = MaterialPageRoute(builder: (c) => AdminShiftOrders());
+          leading: IconButton(
+            icon: Icon(
+              Icons.border_color,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Route route = MaterialPageRoute(builder: (c) => AdminShiftOrders());
 
-            Navigator.pushReplacement(context, route);
-          },
+              Navigator.pushReplacement(context, route);
+            },
+          ),
+          actions: [
+            TextButton(
+                onPressed: () {
+               
+                  Route route = MaterialPageRoute(builder: (c) => SplashScreen());
+
+                  Navigator.pushReplacement(context, route);
+                },
+                child: Text(
+                  "Logout",
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black26),
+                ))
+          ],
         ),
-        actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                Route route = MaterialPageRoute(builder: (c) => SplashScreen());
-
-                Navigator.pushReplacement(context, route);
-              },
-              child: Text(
-                "Logout",
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black26),
-              ))
-        ],
+        body: getAdminHomeScreenBody(),
       ),
-      body: getAdminHomeScreenBody(),
     );
   }
 

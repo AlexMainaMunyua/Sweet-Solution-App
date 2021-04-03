@@ -95,12 +95,24 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Center(
+                  child: Text(
+                "Cady World",
+                style: TextStyle(
+                    fontSize: 55.0,
+                    color: Colors.white,
+                    fontFamily: "Signatra",
+                    fontWeight: FontWeight.bold),
+              )),
+               SizedBox(
+                height: 40.0,
+              ),
               Image.asset("images/welcome.png"),
               SizedBox(
-                height: 20.0,
+                height: 40.0,
               ),
               Text("Kenya's largest fast moving good online store",
-                  style: TextStyle(color: Colors.white))
+                  style: TextStyle(fontFamily: "Signatra",color: Colors.white))
             ],
           ),
         ),
