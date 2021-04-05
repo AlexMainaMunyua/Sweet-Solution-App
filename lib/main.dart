@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Pros Enterise',
+        title: 'Cady',
         theme: ThemeData(
           primarySwatch: Colors.grey,
         ),
