@@ -160,6 +160,9 @@ class _MyHomePageState extends State<MyHomePage> {
             SliverToBoxAdapter(
               child: _createBanner(),
             ),
+            // SliverToBoxAdapter(
+            //   child: _createOfficialBrands(),
+            // ),
             SliverToBoxAdapter(
               child: _createStreamBuilderHeader(),
             ),
@@ -207,6 +210,35 @@ Widget _createBanner() {
   );
 }
 
+// Widget _createOfficialBrands() {
+//   return Container(
+//     padding: EdgeInsets.only(right:15.0, left: 15.0, bottom: 15.0),
+//     child: Column(
+//       children: [
+//         Container(
+//           height: 40.0,
+//           padding: EdgeInsets.all(8.0),
+//           decoration: BoxDecoration(
+//               gradient: LinearGradient(
+//                   colors: [Colors.black26, Colors.white],
+//                   begin: const FractionalOffset(0.0, 0.0),
+//                   end: const FractionalOffset(1.0, 0.0),
+//                   stops: [0.0, 1.0],
+//                   tileMode: TileMode.clamp)),
+//           child: Center(
+//             child: Align(alignment: Alignment.centerLeft,
+//                           child: Text(
+//                 "OFFICIAL BRANDS",
+//                 style: TextStyle(color: Colors.black54),
+//               ),
+//             ),
+//           ),
+//         )
+//       ],
+//     ),
+//   );
+// }
+
 Widget _createFlashSalesHeader() {
   return Container(
     padding: EdgeInsets.only(left: 5.0, right: 5.0),
@@ -229,7 +261,10 @@ Widget _createFlashSalesHeader() {
               "See All",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             ),
-            Icon(Icons.arrow_forward_ios, size: 12,)
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 12,
+            )
           ],
         )
       ],
@@ -254,13 +289,16 @@ Widget _createStreamBuilderHeader() {
       children: [
         Text("Recently Added Items",
             style: TextStyle(fontWeight: FontWeight.w700)),
-       Row(
+        Row(
           children: [
             Text(
               "See All",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             ),
-            Icon(Icons.arrow_forward_ios, size: 12,)
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 12,
+            )
           ],
         )
       ],
@@ -280,12 +318,12 @@ Widget _createCategories() {
           child: Column(
             children: [
               CircleAvatar(
-                radius: 25.0,
+                radius: 20.0,
                 backgroundImage: NetworkImage(
                     "https://images.unsplash.com/photo-1576644461179-ddd318c669e4?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80"),
               ),
               SizedBox(
-                height: 5.0,
+                height: 10.0,
               ),
               Text(
                 "Gums",
@@ -298,12 +336,29 @@ Widget _createCategories() {
           child: Column(
             children: [
               CircleAvatar(
-                radius: 25.0,
+                  radius: 20.0,
+                  backgroundImage: NetworkImage(
+                      "https://images.unsplash.com/photo-1610112908715-bfb038058815?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80")),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "Toffees",
+                style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        ),
+        Container(
+          child: Column(
+            children: [
+              CircleAvatar(
+                radius: 20.0,
                 backgroundImage: NetworkImage(
                     "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80"),
               ),
               SizedBox(
-                height: 5.0,
+                height: 10.0,
               ),
               Text(
                 "Chocolates",
@@ -316,12 +371,12 @@ Widget _createCategories() {
           child: Column(
             children: [
               CircleAvatar(
-                radius: 25.0,
+                radius: 20.0,
                 backgroundImage: NetworkImage(
                     "https://images.unsplash.com/photo-1575729853435-c3aac6ca37df?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
               ),
               SizedBox(
-                height: 5.0,
+                height: 10.0,
               ),
               Text(
                 "Lollipops",
@@ -334,12 +389,12 @@ Widget _createCategories() {
           child: Column(
             children: [
               CircleAvatar(
-                radius: 25.0,
+                radius: 20.0,
                 backgroundImage: NetworkImage(
                     "https://images.unsplash.com/photo-1584609973729-4a8bc988e2e2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
               ),
               SizedBox(
-                height: 5.0,
+                height: 10.0,
               ),
               Text(
                 "Toys",
@@ -516,7 +571,11 @@ Widget sourceInfo(ItemModel model, BuildContext context,
               ),
             ],
           ),
-        ),
+        ),      ),
+    ),
+  );
+}
+
 
         // child: Row(
         //   children: [
@@ -680,10 +739,6 @@ Widget sourceInfo(ItemModel model, BuildContext context,
         //     // ))
         //   ],
         // ),
-      ),
-    ),
-  );
-}
 
 Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
   return Container(

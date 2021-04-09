@@ -86,7 +86,7 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: [Colors.black26, Colors.white],
+                colors: [Colors.white, Colors.white],
                 begin: const FractionalOffset(0.0, 0.0),
                 end: const FractionalOffset(1.0, 0.0),
                 stops: [0.0, 1.0],
@@ -97,10 +97,10 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               Center(
                   child: Text(
-                "Cady World",
+                "Cady",
                 style: TextStyle(
                     fontSize: 55.0,
-                    color: Colors.white,
+                    color: Colors.black45,
                     fontFamily: "Signatra",
                     fontWeight: FontWeight.bold),
               )),
@@ -112,7 +112,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 40.0,
               ),
               Text("Kenya's largest fast moving good online store",
-                  style: TextStyle(fontFamily: "Signatra",color: Colors.white))
+                  style: TextStyle(fontFamily: "Signatra",color: Colors.black45))
             ],
           ),
         ),
