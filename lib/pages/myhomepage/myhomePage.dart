@@ -571,174 +571,174 @@ Widget sourceInfo(ItemModel model, BuildContext context,
               ),
             ],
           ),
-        ),      ),
+        ),
+      ),
     ),
   );
 }
 
+// child: Row(
+//   children: [
+//     Image.network(
+//       model.thumbnailUrl,
+//       height: 140.0,
+//       width: 140.0,
+//     ),
+//     SizedBox(
+//       width: 4.0,
+//     ),
+//     // Expanded(
+//     //     child: Column(
+//     //   crossAxisAlignment: CrossAxisAlignment.start,
+//     //   children: [
+//     //     SizedBox(height: 15),
+//     //     Container(
+//     //       child: Row(
+//     //         mainAxisSize: MainAxisSize.max,
+//     //         children: [
+//     //           Expanded(
+//     //               child: Text(
+//     //             model.title,
+//     //             style: TextStyle(color: Colors.black45, fontSize: 14.0),
+//     //           ))
+//     //         ],
+//     //       ),
+//     //     ),
+//     //     SizedBox(
+//     //       height: 5.0,
+//     //     ),
+//     //     Container(
+//     //       child: Row(
+//     //         mainAxisSize: MainAxisSize.max,
+//     //         children: [
+//     //           Expanded(
+//     //               child: Text(
+//     //             model.shortInfo,
+//     //             style: TextStyle(color: Colors.black38, fontSize: 12.0),
+//     //           ))
+//     //         ],
+//     //       ),
+//     //     ),
+//     //     SizedBox(
+//     //       height: 20.0,
+//     //     ),
+//     //     Row(
+//     //       children: [
+//     //         Container(
+//     //           alignment: Alignment.topLeft,
+//     //           width: 40.0,
+//     //           height: 43.0,
+//     //           child: Center(
+//     //             child: Column(
+//     //               mainAxisAlignment: MainAxisAlignment.center,
+//     //               children: [
+//     //                 Text(
+//     //                   "50%",
+//     //                   style: TextStyle(
+//     //                       color: Colors.white,
+//     //                       fontSize: 15.0,
+//     //                       fontWeight: FontWeight.normal),
+//     //                 ),
+//     //                 Text(
+//     //                   "OFF%",
+//     //                   style: TextStyle(
+//     //                       color: Colors.white,
+//     //                       fontSize: 12.0,
+//     //                       fontWeight: FontWeight.normal),
+//     //                 )
+//     //               ],
+//     //             ),
+//     //           ),
+//     //           decoration: BoxDecoration(
+//     //             shape: BoxShape.rectangle,
+//     //             color: Colors.black26,
+//     //           ),
+//     //         ),
+//     //         SizedBox(
+//     //           width: 10.0,
+//     //         ),
+//     //         Column(
+//     //           crossAxisAlignment: CrossAxisAlignment.start,
+//     //           children: [
+//     //             Padding(
+//     //               padding: EdgeInsets.only(top: 0.0),
+//     //               child: Row(
+//     //                 children: [
+//     //                   Text(
+//     //                     "Original price: Ksh.",
+//     //                     style: TextStyle(
+//     //                       fontSize: 12.0,
+//     //                       decoration: TextDecoration.lineThrough,
+//     //                       color: Colors.grey,
+//     //                     ),
+//     //                   ),
+//     //                   Text(
+//     //                     (model.price + model.price).toString(),
+//     //                     style: TextStyle(
+//     //                         fontSize: 12.0,
+//     //                         color: Colors.grey,
+//     //                         decoration: TextDecoration.lineThrough),
+//     //                   )
+//     //                 ],
+//     //               ),
+//     //             ),
+//     //             Padding(
+//     //               padding: EdgeInsets.only(top: 5.0),
+//     //               child: Row(
+//     //                 children: [
+//     //                   Text(
+//     //                     "New price: Ksh.",
+//     //                     style: TextStyle(
+//     //                       fontSize: 12.0,
+//     //                       color: Colors.grey,
+//     //                     ),
+//     //                   ),
+//     //                   Text(
+//     //                     (model.price).toString(),
+//     //                     style: TextStyle(
+//     //                       fontSize: 12.0,
+//     //                       color: Colors.grey,
+//     //                     ),
+//     //                   )
+//     //                 ],
+//     //               ),>
+//     //             )
+//     //           ],
+//     //         )
+//     //       ],
+//     //     ),
+//     //     Flexible(
+//     //       child: Container(),
+//     //     ),
+//     //     Align(
+//     //       alignment: Alignment.centerRight,
+//     //       child: removeCartFunction == null
+//     //           ? IconButton(
+//     //               onPressed: () {
+//     //                 checkItemInCart(model.shortInfo, context);
+//     //               },
+//     //               icon: Icon(
+//     //                 Icons.add_shopping_cart,
+//     //                 color: Colors.black26,
+//     //               ))
+//     //           : IconButton(
+//     //               icon: Icon(Icons.remove_shopping_cart),
+//     //               onPressed: () {
+//     //                 removeCartFunction();
+//     //                 Route route =
+//     //                     MaterialPageRoute(builder: (c) => MyHomePage());
 
-        // child: Row(
-        //   children: [
-        //     Image.network(
-        //       model.thumbnailUrl,
-        //       height: 140.0,
-        //       width: 140.0,
-        //     ),
-        //     SizedBox(
-        //       width: 4.0,
-        //     ),
-        //     // Expanded(
-        //     //     child: Column(
-        //     //   crossAxisAlignment: CrossAxisAlignment.start,
-        //     //   children: [
-        //     //     SizedBox(height: 15),
-        //     //     Container(
-        //     //       child: Row(
-        //     //         mainAxisSize: MainAxisSize.max,
-        //     //         children: [
-        //     //           Expanded(
-        //     //               child: Text(
-        //     //             model.title,
-        //     //             style: TextStyle(color: Colors.black45, fontSize: 14.0),
-        //     //           ))
-        //     //         ],
-        //     //       ),
-        //     //     ),
-        //     //     SizedBox(
-        //     //       height: 5.0,
-        //     //     ),
-        //     //     Container(
-        //     //       child: Row(
-        //     //         mainAxisSize: MainAxisSize.max,
-        //     //         children: [
-        //     //           Expanded(
-        //     //               child: Text(
-        //     //             model.shortInfo,
-        //     //             style: TextStyle(color: Colors.black38, fontSize: 12.0),
-        //     //           ))
-        //     //         ],
-        //     //       ),
-        //     //     ),
-        //     //     SizedBox(
-        //     //       height: 20.0,
-        //     //     ),
-        //     //     Row(
-        //     //       children: [
-        //     //         Container(
-        //     //           alignment: Alignment.topLeft,
-        //     //           width: 40.0,
-        //     //           height: 43.0,
-        //     //           child: Center(
-        //     //             child: Column(
-        //     //               mainAxisAlignment: MainAxisAlignment.center,
-        //     //               children: [
-        //     //                 Text(
-        //     //                   "50%",
-        //     //                   style: TextStyle(
-        //     //                       color: Colors.white,
-        //     //                       fontSize: 15.0,
-        //     //                       fontWeight: FontWeight.normal),
-        //     //                 ),
-        //     //                 Text(
-        //     //                   "OFF%",
-        //     //                   style: TextStyle(
-        //     //                       color: Colors.white,
-        //     //                       fontSize: 12.0,
-        //     //                       fontWeight: FontWeight.normal),
-        //     //                 )
-        //     //               ],
-        //     //             ),
-        //     //           ),
-        //     //           decoration: BoxDecoration(
-        //     //             shape: BoxShape.rectangle,
-        //     //             color: Colors.black26,
-        //     //           ),
-        //     //         ),
-        //     //         SizedBox(
-        //     //           width: 10.0,
-        //     //         ),
-        //     //         Column(
-        //     //           crossAxisAlignment: CrossAxisAlignment.start,
-        //     //           children: [
-        //     //             Padding(
-        //     //               padding: EdgeInsets.only(top: 0.0),
-        //     //               child: Row(
-        //     //                 children: [
-        //     //                   Text(
-        //     //                     "Original price: Ksh.",
-        //     //                     style: TextStyle(
-        //     //                       fontSize: 12.0,
-        //     //                       decoration: TextDecoration.lineThrough,
-        //     //                       color: Colors.grey,
-        //     //                     ),
-        //     //                   ),
-        //     //                   Text(
-        //     //                     (model.price + model.price).toString(),
-        //     //                     style: TextStyle(
-        //     //                         fontSize: 12.0,
-        //     //                         color: Colors.grey,
-        //     //                         decoration: TextDecoration.lineThrough),
-        //     //                   )
-        //     //                 ],
-        //     //               ),
-        //     //             ),
-        //     //             Padding(
-        //     //               padding: EdgeInsets.only(top: 5.0),
-        //     //               child: Row(
-        //     //                 children: [
-        //     //                   Text(
-        //     //                     "New price: Ksh.",
-        //     //                     style: TextStyle(
-        //     //                       fontSize: 12.0,
-        //     //                       color: Colors.grey,
-        //     //                     ),
-        //     //                   ),
-        //     //                   Text(
-        //     //                     (model.price).toString(),
-        //     //                     style: TextStyle(
-        //     //                       fontSize: 12.0,
-        //     //                       color: Colors.grey,
-        //     //                     ),
-        //     //                   )
-        //     //                 ],
-        //     //               ),>
-        //     //             )
-        //     //           ],
-        //     //         )
-        //     //       ],
-        //     //     ),
-        //     //     Flexible(
-        //     //       child: Container(),
-        //     //     ),
-        //     //     Align(
-        //     //       alignment: Alignment.centerRight,
-        //     //       child: removeCartFunction == null
-        //     //           ? IconButton(
-        //     //               onPressed: () {
-        //     //                 checkItemInCart(model.shortInfo, context);
-        //     //               },
-        //     //               icon: Icon(
-        //     //                 Icons.add_shopping_cart,
-        //     //                 color: Colors.black26,
-        //     //               ))
-        //     //           : IconButton(
-        //     //               icon: Icon(Icons.remove_shopping_cart),
-        //     //               onPressed: () {
-        //     //                 removeCartFunction();
-        //     //                 Route route =
-        //     //                     MaterialPageRoute(builder: (c) => MyHomePage());
-
-        //     //                 Navigator.pushReplacement(context, route);
-        //     //               }),
-        //     //     ),
-        //     //     Divider(
-        //     //       height: 5.0,
-        //     //       color: Colors.black26,
-        //     //     )
-        //     //   ],
-        //     // ))
-        //   ],
-        // ),
+//     //                 Navigator.pushReplacement(context, route);
+//     //               }),
+//     //     ),
+//     //     Divider(
+//     //       height: 5.0,
+//     //       color: Colors.black26,
+//     //     )
+//     //   ],
+//     // ))
+//   ],
+// ),
 
 Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
   return Container(
@@ -776,6 +776,8 @@ addItemToCart(String shortInfoID, BuildContext context) {
       EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
 
   tempCartList.add(shortInfoID);
+
+  print(EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList));
 
   EcommerceApp.firestore
       .collection(EcommerceApp.collectionUser)

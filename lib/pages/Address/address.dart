@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/addressChanger.dart';
+import 'package:ecommerce_application/pages/Counter/totalMoney.dart';
 import 'package:ecommerce_application/pages/Model/address.dart';
+import 'package:ecommerce_application/pages/Model/item.dart';
 import 'package:ecommerce_application/pages/Order/placeOrder.dart';
 import 'package:ecommerce_application/pages/Store/cart.dart';
-import 'package:ecommerce_application/pages/Widgets/customAppBar.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
 import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import 'addAddress.dart';
@@ -22,6 +24,17 @@ class Address extends StatefulWidget {
 }
 
 class _AddressState extends State<Address> {
+  double totalAmount;
+
+  @override
+  void initState() {
+    super.initState();
+
+    totalAmount = 0;
+
+    Provider.of<TotalAmount>(context, listen: false).displayAmount(0);
+  }
+
   _onWillPop(BuildContext context) {
     Route route = MaterialPageRoute(builder: (c) => CartPage());
 
@@ -36,13 +49,37 @@ class _AddressState extends State<Address> {
       },
       child: SafeArea(
         child: Scaffold(
-          appBar: MyAppBar(),
-          body: ListView(children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
+          appBar: AppBar(
+            iconTheme: IconThemeData(
+              color: Colors.white,
+            ),
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [Colors.black26, Colors.white],
+                      begin: const FractionalOffset(0.0, 0.0),
+                      end: const FractionalOffset(1.0, 0.0),
+                      stops: [0.0, 1.0],
+                      tileMode: TileMode.clamp)),
+            ),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Route route = MaterialPageRoute(builder: (c) => CartPage());
+
+                Navigator.pushReplacement(context, route);
+              },
+            ),
+            title: Text(
+              "Check out",
+              style: TextStyle(
+                  fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
+            ),
+          ),
+          body: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Container(
                   height: 50,
                   child: Align(
                     alignment: Alignment.bottomLeft,
@@ -51,12 +88,15 @@ class _AddressState extends State<Address> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Select Address",
-                            style: TextStyle(
-                                color: Colors.black45,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16.0),
+                          Container(
+                            margin: EdgeInsets.only(top: 15),
+                            child: Text(
+                              "Select Address",
+                              style: TextStyle(
+                                  color: Colors.black45,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0),
+                            ),
                           ),
                           TextButton(
                             onPressed: () {
@@ -70,7 +110,7 @@ class _AddressState extends State<Address> {
                               style: TextStyle(
                                   color: Colors.black45,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 14.0),
+                                  fontSize: 13.0),
                             ),
                           ),
                         ],
@@ -78,7 +118,9 @@ class _AddressState extends State<Address> {
                     ),
                   ),
                 ),
-                Consumer<AddressChanger>(builder: (context, address, c) {
+              ),
+              SliverToBoxAdapter(
+                child: Consumer<AddressChanger>(builder: (context, address, c) {
                   return Flexible(
                     child: StreamBuilder<QuerySnapshot>(
                       stream: EcommerceApp.firestore
@@ -112,42 +154,218 @@ class _AddressState extends State<Address> {
                     ),
                   );
                 }),
+              ),
+              SliverToBoxAdapter(
+                child: Container(
+                  height: 50,
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 15),
+                            child: Text(
+                              "Order summary",
+                              style: TextStyle(
+                                  color: Colors.black45,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0),
+                            ),
+                          ),
+                          Consumer<TotalAmount>(
+                              builder: (context, amountProvider, child) {
+                            return Container(
+                              margin: EdgeInsets.only(top: 15),
+                              child: Text(
+                                "Ksh.${amountProvider.totalAmount.toString()}",
+                                style: TextStyle(
+                                    color: Colors.black45,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12.0),
+                              ),
+                            );
+                          }),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              StreamBuilder<QuerySnapshot>(
+                  stream: EcommerceApp.firestore
+                      .collection("items")
+                      .where("shortInfo",
+                          whereIn: EcommerceApp.sharedPreferences
+                              .getStringList(EcommerceApp.userCartList))
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    return !snapshot.hasData
+                        ? SliverToBoxAdapter(
+                            child: Center(
+                              child: circularProgress(),
+                            ),
+                          )
+                        : snapshot.data.docs.length == 0
+                            ? Container()
+                            : SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                  (context, index) {
+                                    ItemModel model = ItemModel.fromJson(
+                                        snapshot.data.docs[index].data());
 
-                
-              ],
-            ),
-          ]),
-          // floatingActionButton: FloatingActionButton.extended(
-          //   onPressed: () {
-          //     Route route = MaterialPageRoute(builder: (c) => AddAddress());
+                                    if (index == 0) {
+                                      totalAmount = 0;
+                                      totalAmount = model.price + totalAmount;
+                                    } else {
+                                      totalAmount = model.price + totalAmount;
+                                    }
+                                    if (snapshot.data.docs.length - 1 ==
+                                        index) {
+                                      WidgetsBinding.instance
+                                          .addPostFrameCallback((t) {
+                                        Provider.of<TotalAmount>(context,
+                                                listen: false)
+                                            .displayAmount(totalAmount);
+                                      });
+                                    }
 
-          //     Navigator.pushReplacement(context, route);
-          //   },
-          //   label: Text("Add new address"),
-          //   backgroundColor: Colors.black26,
-          //   icon: Icon(Icons.add_location),
-          // ),
+                                    return cartSourceInfo(model, context);
+                                  },
+                                  childCount: snapshot.hasData
+                                      ? snapshot.data.docs.length
+                                      : 0,
+                                ),
+                              );
+                  }),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  noAddressCard() {
-    return Card(
-      color: Colors.black26.withOpacity(0.5),
-      child: Container(
-        height: 100.0,
-        alignment: Alignment.center,
-        child: Column(
-          children: [
-            Icon(
-              Icons.add_location,
-              color: Colors.white,
+  Widget cartSourceInfo(ItemModel model, BuildContext context,
+      {Color backgroud,
+      removeCartFunction,
+      increseItemQuantityFunction,
+      decreaseItemQuantityFunction}) {
+    return Container(
+      color: Colors.grey.shade200,
+      child: Column(
+        children: [
+          Container(
+            height: 100.0,
+            child: Container(
+              child: Row(
+                children: [
+                  Container(
+                    child: Center(
+                      child: Image.network(
+                        model.thumbnailUrl,
+                        height: 50.0,
+                        width: 80.0,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Align(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    model.shortInfo,
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 12.0),
+                                  )),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                    child: Text(
+                                  model.title,
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 12.0),
+                                )),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Ksh.",
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Text(
+                                  (model.price).toString(),
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                    color: Colors.black,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            Text("No shipment address has been saved"),
-            Text(
-                "Please add your shipment address so that we can deliver products")
-          ],
+          ),
+          Divider(
+            thickness: 1.0,
+            indent: 5.0,
+            endIndent: 5.0,
+          )
+        ],
+      ),
+    );
+  }
+
+  noAddressCard() {
+    return Container(
+      margin: EdgeInsets.only(left: 5.0, right: 5.0),
+      child: Card(
+        color: Colors.black26.withOpacity(0.5),
+        child: Container(
+          height: 100.0,
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              Icon(
+                Icons.add_location,
+                color: Colors.white,
+              ),
+              Text("No shipment address has been saved"),
+              Text(
+                  "Please add your shipment address so that we can deliver products")
+            ],
+          ),
         ),
       ),
     );
@@ -204,7 +422,7 @@ class _AddressCardState extends State<AddressCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(10.0),
+                        padding: EdgeInsets.all(8.0),
                         width: screenWidth * 0.8,
                         child: Table(
                           children: [
@@ -246,16 +464,19 @@ class _AddressCardState extends State<AddressCard> {
                 ],
               ),
               widget.value == Provider.of<AddressChanger>(context).count
-                  ? WideButton(
-                      msg: " Proceed",
-                      onPressed: () {
-                        Route route = MaterialPageRoute(
-                            builder: (c) => PaymentPage(
-                                  addressId: widget.addressId,
-                                  totalAmount: widget.totalAmount,
-                                ));
-                        Navigator.push(context, route);
-                      },
+                  ? Container(
+                      padding: EdgeInsets.all(20),
+                      child: WideButton(
+                        msg: " PROCEED",
+                        onPressed: () {
+                          Route route = MaterialPageRoute(
+                              builder: (c) => PaymentPage(
+                                    addressId: widget.addressId,
+                                    totalAmount: widget.totalAmount,
+                                  ));
+                          Navigator.push(context, route);
+                        },
+                      ),
                     )
                   : Container()
             ],

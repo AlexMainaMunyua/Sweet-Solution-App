@@ -33,43 +33,7 @@ class AddAddress extends StatelessWidget {
         child: Scaffold(
           key: scaffoldKey,
           appBar: MyAppBar(),
-          // floatingActionButton: FloatingActionButton.extended(
-          //     onPressed: () {
-          //       if (formKey.currentState.validate()) {
-          //         final model = AddressModel(
-          //           name: cName.text.trim(),
-          //           state: cState.text.trim(),
-          //           pincode: cPinCode.text.trim(),
-          //           phoneNumber: cPhoneNumber.text,
-          //           flatNumber: cFlatHomeNumber.text,
-          //           city: cCity.text.trim(),
-          //         ).toJson();
-
-          //         EcommerceApp.firestore
-          //             .collection(EcommerceApp.collectionUser)
-          //             .doc(EcommerceApp.sharedPreferences
-          //                 .getString(EcommerceApp.userUID))
-          //             .collection(EcommerceApp.subCollectionAddress)
-          //             .doc(DateTime.now().millisecondsSinceEpoch.toString())
-          //             .set(model)
-          //             .then((value) {
-          //           final snack = SnackBar(
-          //             content: Text("New Address added successfully."),
-          //           );
-          //           scaffoldKey.currentState.showSnackBar(snack);
-          //           FocusScope.of(context).requestFocus(FocusNode());
-
-          //           formKey.currentState.reset();
-          //         });
-
-          //         Route route = MaterialPageRoute(builder: (c) => MyHomePage());
-
-          //         Navigator.pushReplacement(context, route);
-          //       }
-          //     },
-          //     label: Text("Done"),
-          //     backgroundColor: Colors.black12,
-          //     icon: Icon(Icons.check)),
+       
           body: SingleChildScrollView(
             child: Column(
               children: [

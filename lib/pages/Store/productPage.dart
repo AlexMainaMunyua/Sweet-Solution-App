@@ -13,7 +13,7 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  int quantityOfItems = 1;
+
 
   _onWillPop(BuildContext context) {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
@@ -43,8 +43,11 @@ class _ProductPageState extends State<ProductPage> {
                   children: [
                     Stack(
                       children: [
-                        Center(
-                          child: Image.network(widget.itemModel.thumbnailUrl),
+                        Container(
+                          height: 300.0,
+                          child: Center(
+                            child: Image.network(widget.itemModel.thumbnailUrl),
+                          ),
                         ),
                         Container(
                           color: Colors.grey[300],

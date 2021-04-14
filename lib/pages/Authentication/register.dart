@@ -233,7 +233,9 @@ class _RegisterState extends State<Register> {
       "email": fUser.email,
       "name": _nameTextEditingController.text.trim(),
       "url": userImageUrl,
-      EcommerceApp.userCartList: ["garbageValue"],
+      EcommerceApp.userCartList: [
+        "garbageValue"
+      ],
     });
 
     await EcommerceApp.sharedPreferences

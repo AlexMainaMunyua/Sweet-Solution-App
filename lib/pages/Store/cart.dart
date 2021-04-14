@@ -6,14 +6,15 @@ import 'package:ecommerce_application/pages/Counter/itemQuantity.dart';
 import 'package:ecommerce_application/pages/Counter/totalMoney.dart';
 import 'package:ecommerce_application/pages/Model/item.dart';
 import 'package:ecommerce_application/pages/Store/productPage.dart';
-import 'package:ecommerce_application/pages/Widgets/customAppBar.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
 import 'package:ecommerce_application/pages/Widgets/mydrawer.dart';
+import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 class CartPage extends StatefulWidget {
   @override
@@ -22,17 +23,17 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   double totalAmount;
+  TextEditingController _numberCtrl = new TextEditingController();
 
-  int _itemCount;
+  int quantity;
 
   @override
   void initState() {
     super.initState();
 
+    quantity = 1;
+    _numberCtrl.text = "0720778156";
     totalAmount = 0;
-    _itemCount = 1;
-
-    Provider.of<ItemQuantity>(context, listen: false).display(1);
 
     Provider.of<TotalAmount>(context, listen: false).displayAmount(0);
   }
@@ -50,95 +51,76 @@ class _CartPageState extends State<CartPage> {
         _onWillPop(context);
       },
       child: Scaffold(
-        appBar: MyAppBar(),
-        // floatingActionButton: FloatingActionButton.extended(
-        //   label: Text("Check out"),
-        //   backgroundColor: Colors.black12,
-        //   icon: Icon(Icons.navigate_next),
-        //   onPressed: () {
-        //     if (EcommerceApp.sharedPreferences
-        //             .getStringList(EcommerceApp.userCartList)
-        //             .length ==
-        //         1) {
-        //       Fluttertoast.showToast(msg: "Your cart is empty");
-        //     } else {
-        //       Route route = MaterialPageRoute(
-        //           builder: (c) => Address(totalAmount: totalAmount));
-
-        //       Navigator.pushReplacement(context, route);
-        //     }
-        //   },
-        // ),
-        drawer: MyDrawer(),
-        bottomNavigationBar: BottomAppBar(
-          shape: CircularNotchedRectangle(),
-          child: Container(
-            height: 100.0,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(left: 5.0),
-                  child: Consumer2<TotalAmount, CartItemCounter>(
-                    builder: (context, amountProvider, cartProvider, c) {
-                      return Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: cartProvider.count == 0
-                            ? Container()
-                            : Container(
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Total Amt: ",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      "Ksh.${amountProvider.totalAmount.toString()}",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w500),
-                                    )
-                                  ],
-                                ),
-                              ),
-                      );
-                    },
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 5.0),
-                  padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                  color: Colors.black12,
-                  child: MaterialButton(
-                      onPressed: () {
-                        if (EcommerceApp.sharedPreferences
-                                .getStringList(EcommerceApp.userCartList)
-                                .length ==
-                            1) {
-                          Fluttertoast.showToast(msg: "Your cart is empty");
-                        } else {
-                          Route route = MaterialPageRoute(
-                              builder: (c) =>
-                                  Address(totalAmount: totalAmount));
-
-                          Navigator.pushReplacement(context, route);
-                        }
-                      },
-                      child: Text(
-                        "Check out",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      )),
-                )
-              ],
-            ),
+        appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Colors.white,
           ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Colors.black26, Colors.white],
+                    begin: const FractionalOffset(0.0, 0.0),
+                    end: const FractionalOffset(1.0, 0.0),
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.clamp)),
+          ),
+          centerTitle: true,
+          title: Text(
+            "Cart",
+            style: TextStyle(
+                fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
+          ),
+          actions: [
+            Container(
+              padding: EdgeInsets.only(right: 5.0, top: 5.0),
+              child: Stack(children: [
+                IconButton(
+                    icon: Icon(
+                      Icons.shopping_cart,
+                      // size: 30.0,
+                      color: Colors.black26,
+                    ),
+                    onPressed: () {
+                      Route route =
+                          MaterialPageRoute(builder: (c) => CartPage());
+
+                      Navigator.pushReplacement(context, route);
+                    }),
+                Positioned(
+                    child: Stack(
+                  children: [
+                    Icon(
+                      Icons.brightness_1,
+                      size: 20.0,
+                      color: Colors.black45,
+                    ),
+                    Positioned(
+                      top: 3.0,
+                      bottom: 4.0,
+                      left: 6.0,
+                      child: Consumer<CartItemCounter>(
+                        builder: (context, counter, _) {
+                          return Text(
+                              (EcommerceApp.sharedPreferences
+                                          .getStringList(
+                                              EcommerceApp.userCartList)
+                                          .length -
+                                      1)
+                                  .toString(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w500));
+                        },
+                      ),
+                    )
+                  ],
+                )),
+              ]),
+            )
+          ],
         ),
+        drawer: MyDrawer(),
         body: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
@@ -146,28 +128,6 @@ class _CartPageState extends State<CartPage> {
                 height: 10.0,
               ),
             ),
-            // SliverToBoxAdapter(
-            //   child: Consumer2<TotalAmount, CartItemCounter>(
-            //     builder: (context, amountProvider, cartProvider, c) {
-            //       return Align(
-            //         alignment: Alignment.bottomCenter,
-            //         child: Padding(
-            //             child: Center(
-            //               child: cartProvider.count == 0
-            //                   ? Container()
-            //                   : Text(
-            //                       "Total Price: Ksh. ${amountProvider.totalAmount.toString()}",
-            //                       style: TextStyle(
-            //                           color: Colors.black,
-            //                           fontSize: 18.0,
-            //                           fontWeight: FontWeight.w500),
-            //                     ),
-            //             ),
-            //             padding: EdgeInsets.all(8.0)),
-            //       );
-            //     },
-            //   ),
-            // ),
             StreamBuilder<QuerySnapshot>(
                 stream: EcommerceApp.firestore
                     .collection("items")
@@ -206,7 +166,6 @@ class _CartPageState extends State<CartPage> {
                                   }
 
                                   return cartSourceInfo(model, context,
-                                   
                                       removeCartFunction: () =>
                                           removeItemFromUserCart(
                                               model.shortInfo));
@@ -217,6 +176,84 @@ class _CartPageState extends State<CartPage> {
                               ),
                             );
                 }),
+            SliverToBoxAdapter(
+              child: Container(
+                height: 20,
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      child: Consumer2<TotalAmount, CartItemCounter>(
+                        builder: (context, amountProvider, cartProvider, c) {
+                          return Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: cartProvider.count == 0
+                                ? Container()
+                                : Container(
+                                    padding:
+                                        EdgeInsets.only(left: 20, right: 20),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Total Amount: ",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          "Ksh.${amountProvider.totalAmount.toString()}",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                          );
+                        },
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 10.0),
+                      child: WideButton(
+                        onPressed: () {
+                          if (EcommerceApp.sharedPreferences
+                                  .getStringList(EcommerceApp.userCartList)
+                                  .length ==
+                              1) {
+                            Fluttertoast.showToast(msg: "Your cart is empty");
+                          } else {
+                            Route route = MaterialPageRoute(
+                                builder: (c) =>
+                                    Address(totalAmount: totalAmount));
+
+                            Navigator.pushReplacement(context, route);
+                          }
+                        },
+                        msg: "CHECK OUT",
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 10.0),
+                      child: WideButton(
+                        onPressed: () async {
+                          await FlutterPhoneDirectCaller.callNumber(
+                              _numberCtrl.text);
+                        },
+                        msg: "CALL TO ORDER",
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -226,9 +263,8 @@ class _CartPageState extends State<CartPage> {
   Widget cartSourceInfo(ItemModel model, BuildContext context,
       {Color backgroud,
       removeCartFunction,
-      increseItemQuantityFunction,
-      decreaseItemQuantityFunction}) {
-    final myCounter = context.watch<ItemQuantity>();
+     }) {
+
     return InkWell(
       onTap: () {
         Route route =
@@ -306,38 +342,33 @@ class _CartPageState extends State<CartPage> {
                                     child: Row(
                                       children: [
                                         IconButton(
-                                            icon: Icon(Icons.remove),
+                                            icon: Icon(
+                                              Icons.remove,
+                                              color: Colors.black26,
+                                              size: 18,
+                                            ),
                                             onPressed: () {
-                                              decreaseItemQuantityFunction();
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "You can order add one item");
                                             }),
-
                                         Text(
-                                            myCounter.numberOfItems.toString()),
+                                          quantity.toString(),
+                                          style: TextStyle(
+                                              color: Colors.black26,
+                                              fontSize: 12),
+                                        ),
                                         IconButton(
-                                            icon: Icon(Icons.add),
+                                            icon: Icon(
+                                              Icons.add,
+                                              color: Colors.black26,
+                                              size: 18,
+                                            ),
                                             onPressed: () {
-                                       
-
-                                              myCounter.increment();
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "You can order add one item");
                                             })
-
-                                        // IconButton(
-                                        //     icon: Icon(Icons.remove),
-                                        //     onPressed: () {
-                                        //       setState(() {
-                                        //         if (_quantity > 1) {
-                                        //           _quantity--;
-                                        //         }
-                                        //       });
-                                        //     }),
-                                        // Text("$_quantity".toString()),
-                                        // IconButton(
-                                        //     icon: Icon(Icons.add),
-                                        //     onPressed: () {
-                                        //       setState(() {
-                                        //         _quantity++;
-                                        //       });
-                                        //     })
                                       ],
                                     ),
                                   )
@@ -358,25 +389,15 @@ class _CartPageState extends State<CartPage> {
                       iconSize: 20,
                       color: Colors.black45,
                       icon: Icon(Icons.remove_shopping_cart),
-                      onPressed: () async {
+                      onPressed: () {
                         removeCartFunction();
 
                         Route route =
                             MaterialPageRoute(builder: (c) => MyHomePage());
 
-                        await Navigator.pushReplacement(context, route);
+                        Navigator.pushReplacement(context, route);
                       },
                     ),
-                    // child: Container(
-                    //   width: 30,
-                    //   height: 20,
-                    //   color: Colors.black12,
-                    //   child: Center(
-                    //       child: Text(
-                    //     "5%",
-                    //     style: TextStyle(fontSize: 10, color: Colors.black38),
-                    //   )),
-                    // ),
                   ),
                 ),
               ],
@@ -386,20 +407,6 @@ class _CartPageState extends State<CartPage> {
       ),
     );
     ;
-  }
-
-  increaseQuantity() {
-    setState(() {
-      _itemCount++;
-    });
-  }
-
-  decreaseQuantity(String shortInfoID) {
-    setState(() {
-      if (_itemCount > 1) {
-        _itemCount--;
-      }
-    });
   }
 
   beginBuildingCart() {
