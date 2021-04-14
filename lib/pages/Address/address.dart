@@ -48,12 +48,32 @@ class _AddressState extends State<Address> {
                     alignment: Alignment.bottomLeft,
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "Select Address",
-                        style: TextStyle(
-                            color: Colors.black45,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Select Address",
+                            style: TextStyle(
+                                color: Colors.black45,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.0),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Route route = MaterialPageRoute(
+                                  builder: (c) => AddAddress());
+
+                              Navigator.pushReplacement(context, route);
+                            },
+                            child: Text(
+                              "Add new Address",
+                              style: TextStyle(
+                                  color: Colors.black45,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14.0),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -91,20 +111,22 @@ class _AddressState extends State<Address> {
                       },
                     ),
                   );
-                })
+                }),
+
+                
               ],
             ),
           ]),
-          floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {
-              Route route = MaterialPageRoute(builder: (c) => AddAddress());
+          // floatingActionButton: FloatingActionButton.extended(
+          //   onPressed: () {
+          //     Route route = MaterialPageRoute(builder: (c) => AddAddress());
 
-              Navigator.pushReplacement(context, route);
-            },
-            label: Text("Add new address"),
-            backgroundColor: Colors.black26,
-            icon: Icon(Icons.add_location),
-          ),
+          //     Navigator.pushReplacement(context, route);
+          //   },
+          //   label: Text("Add new address"),
+          //   backgroundColor: Colors.black26,
+          //   icon: Icon(Icons.add_location),
+          // ),
         ),
       ),
     );
@@ -161,80 +183,83 @@ class _AddressCardState extends State<AddressCard> {
         Provider.of<AddressChanger>(context, listen: false)
             .displayResults(widget.value);
       },
-      child: Card(
-        color: Colors.grey.shade400,
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Radio(
-                  groupValue: widget.currentIndex,
-                  value: widget.value,
-                  activeColor: Colors.white,
-                  onChanged: (val) {
-                    Provider.of<AddressChanger>(context, listen: false)
-                        .displayResults(val);
-                  },
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(10.0),
-                      width: screenWidth * 0.8,
-                      child: Table(
-                        children: [
-                          TableRow(children: [
-                            KeyText(
-                              msg: "Name",
-                            ),
-                            Text(widget.model.name),
-                          ]),
-                          TableRow(children: [
-                            KeyText(
-                              msg: "Phone Number",
-                            ),
-                            Text(widget.model.phoneNumber),
-                          ]),
-                          TableRow(children: [
-                            KeyText(
-                              msg: "Flat Number",
-                            ),
-                            Text(widget.model.flatNumber),
-                          ]),
-                          TableRow(children: [
-                            KeyText(
-                              msg: "City",
-                            ),
-                            Text(widget.model.city),
-                          ]),
-                          TableRow(children: [
-                            KeyText(
-                              msg: "Pin Code",
-                            ),
-                            Text(widget.model.pincode),
-                          ])
-                        ],
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-            widget.value == Provider.of<AddressChanger>(context).count
-                ? WideButton(
-                    msg: " Proceed",
-                    onPressed: () {
-                      Route route = MaterialPageRoute(
-                          builder: (c) => PaymentPage(
-                                addressId: widget.addressId,
-                                totalAmount: widget.totalAmount,
-                              ));
-                      Navigator.push(context, route);
+      child: Container(
+        margin: EdgeInsets.only(left: 5.0, right: 5.0),
+        child: Card(
+          color: Colors.grey.shade300,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Radio(
+                    groupValue: widget.currentIndex,
+                    value: widget.value,
+                    activeColor: Colors.white,
+                    onChanged: (val) {
+                      Provider.of<AddressChanger>(context, listen: false)
+                          .displayResults(val);
                     },
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10.0),
+                        width: screenWidth * 0.8,
+                        child: Table(
+                          children: [
+                            TableRow(children: [
+                              KeyText(
+                                msg: "Name",
+                              ),
+                              Text(widget.model.name),
+                            ]),
+                            TableRow(children: [
+                              KeyText(
+                                msg: "Phone Number",
+                              ),
+                              Text(widget.model.phoneNumber),
+                            ]),
+                            TableRow(children: [
+                              KeyText(
+                                msg: "Flat Number",
+                              ),
+                              Text(widget.model.flatNumber),
+                            ]),
+                            TableRow(children: [
+                              KeyText(
+                                msg: "City",
+                              ),
+                              Text(widget.model.city),
+                            ]),
+                            TableRow(children: [
+                              KeyText(
+                                msg: "Pin Code",
+                              ),
+                              Text(widget.model.pincode),
+                            ])
+                          ],
+                        ),
+                      )
+                    ],
                   )
-                : Container()
-          ],
+                ],
+              ),
+              widget.value == Provider.of<AddressChanger>(context).count
+                  ? WideButton(
+                      msg: " Proceed",
+                      onPressed: () {
+                        Route route = MaterialPageRoute(
+                            builder: (c) => PaymentPage(
+                                  addressId: widget.addressId,
+                                  totalAmount: widget.totalAmount,
+                                ));
+                        Navigator.push(context, route);
+                      },
+                    )
+                  : Container()
+            ],
+          ),
         ),
       ),
     );
