@@ -20,7 +20,7 @@ class WideButton extends StatelessWidget {
           child: Center(
             child: Text(
               msg,
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 2,wordSpacing: 3),
             ),
           ),
         ),
