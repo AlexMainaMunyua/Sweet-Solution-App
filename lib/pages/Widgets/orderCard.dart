@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_application/pages/Model/item.dart';
 import 'package:ecommerce_application/pages/Order/orderDetailsPage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 int counter = 0;
 
@@ -17,32 +18,36 @@ class OrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Route route;
-
-        if (counter == 0) {
-          counter = counter + 1;
-          route =
-              MaterialPageRoute(builder: (c) => OrderDetails(orderID: orderID));
-        }
+        Route route = MaterialPageRoute(
+            builder: (c) => OrderDetails(
+                  orderID: orderID,
+                ));
 
         Navigator.push(context, route);
+
+        // if (counter == 0) {
+        //   counter = counter + 1;
+        //   route =
+        //       MaterialPageRoute(builder: (c) => OrderDetails(orderID: orderID));
+
+        //   Navigator.push(context, route);
+        // }
       },
       child: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Colors.black26, Colors.white],
-                begin: const FractionalOffset(0.0, 0.0),
-                end: const FractionalOffset(1.0, 0.0),
-                stops: [0.0, 1.0],
-                tileMode: TileMode.clamp)),
-        padding: EdgeInsets.all(10.0),
-        margin: EdgeInsets.all(10.0),
-        height: itemCount * 190.0,
+        padding:
+            EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0, bottom: 20),
+        color: Colors.grey.shade200,
+        margin: EdgeInsets.only(top: 10.0, left: 30.0, right: 30.0, bottom: 20),
+        height: itemCount * 120.0,
         child: ListView.builder(
             itemCount: itemCount,
             itemBuilder: (c, index) {
               ItemModel model = ItemModel.fromJson(data[index].data());
-              return sourceInfo(model, context);
+              return Column(
+                children: [
+                  sourceInfo(model, context),
+                ],
+              );
             }),
       ),
     );
@@ -53,19 +58,20 @@ Widget sourceInfo(ItemModel model, BuildContext context, {Color background}) {
   var width = MediaQuery.of(context).size.width;
 
   return Container(
-    height: 170.0,
+    height: 100.0,
     // width: width,
-    color: Colors.grey,
+    color: Colors.grey.shade200,
 
     child: Row(
       children: [
         Image.network(
           model.thumbnailUrl,
-          width: 140.0,
+          width: 100.0,
+          height: 60,
         ),
-        SizedBox(
-          width: 10.0,
-        ),
+        // SizedBox(
+        //   width: 10.0,
+        // ),
         Expanded(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,7 +143,7 @@ Widget sourceInfo(ItemModel model, BuildContext context, {Color background}) {
             Divider(
               height: 5.0,
               color: Colors.black26,
-            )
+            ),
           ],
         ))
       ],

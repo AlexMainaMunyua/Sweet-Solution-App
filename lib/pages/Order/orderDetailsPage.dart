@@ -5,8 +5,8 @@ import 'package:ecommerce_application/pages/Model/address.dart';
 import 'package:ecommerce_application/pages/Order/myOder.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
 import 'package:ecommerce_application/pages/Widgets/orderCard.dart';
+import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
@@ -32,6 +32,33 @@ class OrderDetails extends StatelessWidget {
       },
       child: SafeArea(
         child: Scaffold(
+          appBar: AppBar(
+            iconTheme: IconThemeData(
+              color: Colors.white,
+            ),
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [Colors.black26, Colors.white],
+                      begin: const FractionalOffset(0.0, 0.0),
+                      end: const FractionalOffset(1.0, 0.0),
+                      stops: [0.0, 1.0],
+                      tileMode: TileMode.clamp)),
+            ),
+            title: Text(
+              "My Order Details",
+              style: TextStyle(
+                  fontSize: 30.0, color: Colors.white, fontFamily: "Signatra"),
+            ),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Route route = MaterialPageRoute(builder: (c) => MyOrders());
+
+                Navigator.pushReplacement(context, route);
+              },
+            ),
+          ),
           body: SingleChildScrollView(
             child: FutureBuilder<DocumentSnapshot>(
               future: EcommerceApp.firestore
@@ -59,7 +86,7 @@ class OrderDetails extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.all(4.0),
                               child: Align(
-                                alignment: Alignment.centerLeft,
+                                alignment: Alignment.center,
                                 child: Text(
                                   "Ksh." +
                                       dataMap[EcommerceApp.totalAmount]
@@ -72,12 +99,15 @@ class OrderDetails extends StatelessWidget {
                             ),
                             Padding(
                               padding: EdgeInsets.all(4.0),
-                              child: Text("Order ID:" + getOrderId),
+                              child: Text(
+                                "Order ID: " + getOrderId,
+                                style: TextStyle(fontSize: 8.0),
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(4.0),
                               child: Text(
-                                "Ordered at:" +
+                                "Ordered on: " +
                                     DateFormat("dd MMMM, yyyy - hh:mm aa")
                                         .format(
                                             DateTime.fromMicrosecondsSinceEpoch(
@@ -158,33 +188,16 @@ class StatusBanner extends StatelessWidget {
     status ? msg = "Succeful" : msg = "Unsuccessful";
 
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.black26, Colors.white],
-              begin: const FractionalOffset(0.0, 0.0),
-              end: const FractionalOffset(1.0, 0.0),
-              stops: [0.0, 1.0],
-              tileMode: TileMode.clamp)),
+      color: Colors.grey.shade300,
       height: 40.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          GestureDetector(
-            onTap: () {
-              SystemNavigator.pop();
-            },
-            child: Container(
-              child: Icon(
-                Icons.arrow_drop_down_circle,
-                color: Colors.white,
-              ),
-            ),
-          ),
           SizedBox(
             width: 20.0,
           ),
           Text(
-            "Order Placed" + msg,
+            "Order Placed " + msg,
             style: TextStyle(color: Colors.white),
           ),
           SizedBox(
@@ -229,11 +242,17 @@ class ShippingDetails extends StatelessWidget {
           height: 20.0,
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 90.0, vertical: 5.0),
+          padding: EdgeInsets.all(8.0),
           child: Text(
             "Shipment Details",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: Colors.black45,
+                fontSize: 16,
+                fontWeight: FontWeight.bold),
           ),
+        ),
+        SizedBox(
+          height: 10.0,
         ),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -244,60 +263,56 @@ class ShippingDetails extends StatelessWidget {
                 KeyText(
                   msg: "Name",
                 ),
-                Text(model.name),
+                Text(model.name, style: TextStyle(color: Colors.black45)),
               ]),
               TableRow(children: [
                 KeyText(
                   msg: "Phone Number",
                 ),
-                Text(model.phoneNumber),
+                Text(model.phoneNumber,
+                    style: TextStyle(color: Colors.black45)),
               ]),
               TableRow(children: [
                 KeyText(
-                  msg: "Flat Number",
+                  msg: "Business Name",
                 ),
-                Text(model.flatNumber),
+                Text(model.flatNumber, style: TextStyle(color: Colors.black45)),
               ]),
               TableRow(children: [
                 KeyText(
-                  msg: "City",
+                  msg: "Area",
                 ),
-                Text(model.city),
+                Text(model.city, style: TextStyle(color: Colors.black45)),
               ]),
               TableRow(children: [
                 KeyText(
-                  msg: "Pin Code",
+                  msg: "Next to",
                 ),
-                Text(model.pincode),
+                Text(
+                  model.state,
+                  style: TextStyle(color: Colors.black45),
+                ),
+              ]),
+              TableRow(children: [
+                KeyText(
+                  msg: "County",
+                ),
+                Text(
+                  model.pincode,
+                  style: TextStyle(color: Colors.black45),
+                ),
               ])
             ],
           ),
         ),
         Padding(
-          padding: EdgeInsets.all(10.0),
-          child: InkWell(
-            onTap: () {
-              confirmedUserOrderReceived(context, getOrderId);
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width - 40.0,
-              height: 50.0,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [Colors.black26, Colors.white],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(1.0, 0.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp)),
-              child: Center(
-                child: Text(
-                  "Confirmed Item received",
-                  style: TextStyle(color: Colors.white, fontSize: 15.0),
-                ),
-              ),
-            ),
-          ),
-        )
+          padding: EdgeInsets.only(top: 20.0, bottom: 30.0),
+          child: WideButton(
+              onPressed: () {
+                confirmedUserOrderReceived(context, getOrderId);
+              },
+              msg: "CONFIRMED ITEM RECEIVED"),
+        ),
       ],
     );
   }
@@ -327,9 +342,13 @@ class KeyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      msg,
-      style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Text(
+        msg,
+        style: TextStyle(
+            color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+      ),
     );
   }
 }

@@ -9,7 +9,6 @@ import 'package:ecommerce_application/pages/Store/cart.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
 import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import 'addAddress.dart';
@@ -422,7 +421,7 @@ class _AddressCardState extends State<AddressCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(4.0),
                         width: screenWidth * 0.8,
                         child: Table(
                           children: [
@@ -430,31 +429,55 @@ class _AddressCardState extends State<AddressCard> {
                               KeyText(
                                 msg: "Name",
                               ),
-                              Text(widget.model.name),
+                              Text(
+                                widget.model.name,
+                                style: TextStyle(color: Colors.black45),
+                              ),
                             ]),
                             TableRow(children: [
                               KeyText(
                                 msg: "Phone Number",
                               ),
-                              Text(widget.model.phoneNumber),
+                              Text(
+                                widget.model.phoneNumber,
+                                style: TextStyle(color: Colors.black45),
+                              ),
                             ]),
                             TableRow(children: [
                               KeyText(
-                                msg: "Flat Number",
+                                msg: "Business Name",
                               ),
-                              Text(widget.model.flatNumber),
+                              Text(
+                                widget.model.flatNumber,
+                                style: TextStyle(color: Colors.black45),
+                              ),
                             ]),
                             TableRow(children: [
                               KeyText(
-                                msg: "City",
+                                msg: "Area",
                               ),
-                              Text(widget.model.city),
+                              Text(
+                                widget.model.city,
+                                style: TextStyle(color: Colors.black45),
+                              ),
                             ]),
                             TableRow(children: [
                               KeyText(
-                                msg: "Pin Code",
+                                msg: "Next to",
                               ),
-                              Text(widget.model.pincode),
+                              Text(
+                                widget.model.state,
+                                style: TextStyle(color: Colors.black45),
+                              ),
+                            ]),
+                            TableRow(children: [
+                              KeyText(
+                                msg: "County",
+                              ),
+                              Text(
+                                widget.model.pincode,
+                                style: TextStyle(color: Colors.black45),
+                              ),
                             ])
                           ],
                         ),
@@ -494,9 +517,12 @@ class KeyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      msg,
-      style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+    return Padding(
+      padding: const EdgeInsets.all(3.0),
+      child: Text(
+        msg,
+        style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+      ),
     );
   }
 }

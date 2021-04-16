@@ -154,7 +154,7 @@ class AddAddress extends StatelessWidget {
                     child: Column(
                       children: [
                         MyTextField(
-                          hint: "Name",
+                          hint: "Full name",
                           textEditingController: cName,
                         ),
                         MyTextField(
@@ -162,25 +162,25 @@ class AddAddress extends StatelessWidget {
                           textEditingController: cPhoneNumber,
                         ),
                         MyTextField(
-                          hint: "Flat number / House Number",
+                          hint: "Business name",
                           textEditingController: cFlatHomeNumber,
                         ),
                         MyTextField(
-                          hint: "City",
+                          hint: "Area",
                           textEditingController: cCity,
                         ),
                         MyTextField(
-                          hint: "State / Country",
+                          hint: "Next to",
                           textEditingController: cState,
                         ),
                         MyTextField(
-                          hint: "Pin Code",
+                          hint: "County",
                           textEditingController: cPinCode,
                         ),
                       ],
                     )),
                 WideButton(
-                  msg: "Save",
+                  msg: "SAVE DETAILS",
                   // key: formKey,
                   onPressed: () {
                     if (formKey.currentState.validate()) {

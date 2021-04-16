@@ -58,14 +58,7 @@ class MyDrawer extends StatelessWidget {
             height: 12.0,
           ),
           Container(
-         /*    padding: EdgeInsets.only(top: 1.0),
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.black26, Colors.white],
-                    begin: const FractionalOffset(0.0, 0.0),
-                    end: const FractionalOffset(1.0, 0.0),
-                    stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp)), */
+      
             child: Column(
               children: [
                 ListTile(

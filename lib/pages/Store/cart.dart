@@ -2,12 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_application/pages/Address/address.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
-import 'package:ecommerce_application/pages/Counter/itemQuantity.dart';
 import 'package:ecommerce_application/pages/Counter/totalMoney.dart';
 import 'package:ecommerce_application/pages/Model/item.dart';
 import 'package:ecommerce_application/pages/Store/productPage.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
-import 'package:ecommerce_application/pages/Widgets/mydrawer.dart';
+
 import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
@@ -64,11 +63,18 @@ class _CartPageState extends State<CartPage> {
                     stops: [0.0, 1.0],
                     tileMode: TileMode.clamp)),
           ),
-          centerTitle: true,
           title: Text(
             "Cart",
             style: TextStyle(
                 fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
+          ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Route route = MaterialPageRoute(builder: (c) => MyHomePage());
+
+              Navigator.pushReplacement(context, route);
+            },
           ),
           actions: [
             Container(
@@ -120,7 +126,7 @@ class _CartPageState extends State<CartPage> {
             )
           ],
         ),
-        drawer: MyDrawer(),
+        // drawer: MyDrawer(),
         body: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
@@ -191,7 +197,30 @@ class _CartPageState extends State<CartPage> {
                           return Padding(
                             padding: EdgeInsets.all(8.0),
                             child: cartProvider.count == 0
-                                ? Container()
+                                ? Container(
+                                    padding:
+                                        EdgeInsets.only(left: 20, right: 20),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Total Amount: ",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          "Ksh.${amountProvider.totalAmount.toString()}",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
+                                    ),
+                                  )
                                 : Container(
                                     padding:
                                         EdgeInsets.only(left: 20, right: 20),
@@ -260,11 +289,12 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Widget cartSourceInfo(ItemModel model, BuildContext context,
-      {Color backgroud,
-      removeCartFunction,
-     }) {
-
+  Widget cartSourceInfo(
+    ItemModel model,
+    BuildContext context, {
+    Color backgroud,
+    removeCartFunction,
+  }) {
     return InkWell(
       onTap: () {
         Route route =
@@ -350,7 +380,7 @@ class _CartPageState extends State<CartPage> {
                                             onPressed: () {
                                               Fluttertoast.showToast(
                                                   msg:
-                                                      "You can order add one item");
+                                                      "You can order one item only for now");
                                             }),
                                         Text(
                                           quantity.toString(),
@@ -367,7 +397,7 @@ class _CartPageState extends State<CartPage> {
                                             onPressed: () {
                                               Fluttertoast.showToast(
                                                   msg:
-                                                      "You can order add one item");
+                                                      "You can order one item only for now");
                                             })
                                       ],
                                     ),
