@@ -35,7 +35,7 @@ class _UploadPageState extends State<UploadPage>
         : displayAdminUploadFormScreen();
   }
 
-   Future<bool> _onBackPressed() {
+  Future<bool> _onBackPressed() {
     return showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -44,14 +44,20 @@ class _UploadPageState extends State<UploadPage>
               actions: <Widget>[
                 GestureDetector(
                   onTap: () => Navigator.of(context).pop(false),
-                  child: Text("No", style: TextStyle(fontSize: 16.0),),
+                  child: Text(
+                    "No",
+                    style: TextStyle(fontSize: 16.0),
+                  ),
                 ),
                 SizedBox(width: 30.0, height: 30),
                 GestureDetector(
                   onTap: () => Navigator.of(context).pop(true),
-                  child: Text("Yes", style: TextStyle(fontSize: 16.0),),
+                  child: Text(
+                    "Yes",
+                    style: TextStyle(fontSize: 16.0),
+                  ),
                 ),
-                 SizedBox(width: 10.0),
+                SizedBox(width: 10.0),
               ],
             ));
   }
@@ -76,7 +82,8 @@ class _UploadPageState extends State<UploadPage>
               color: Colors.white,
             ),
             onPressed: () {
-              Route route = MaterialPageRoute(builder: (c) => AdminShiftOrders());
+              Route route =
+                  MaterialPageRoute(builder: (c) => AdminShiftOrders());
 
               Navigator.pushReplacement(context, route);
             },
@@ -84,8 +91,8 @@ class _UploadPageState extends State<UploadPage>
           actions: [
             TextButton(
                 onPressed: () {
-               
-                  Route route = MaterialPageRoute(builder: (c) => SplashScreen());
+                  Route route =
+                      MaterialPageRoute(builder: (c) => SplashScreen());
 
                   Navigator.pushReplacement(context, route);
                 },
@@ -267,19 +274,22 @@ class _UploadPageState extends State<UploadPage>
         title: Text(
           "New Product",
           style: TextStyle(
-              color: Colors.white, fontSize: 24.0, fontWeight: FontWeight.bold),
+              fontFamily: "Signatra",
+              color: Colors.white,
+              fontSize: 30.0,
+              fontWeight: FontWeight.bold),
         ),
-        actions: [
-          TextButton(
-              onPressed: () {
-                uploading ? null : uploadImageAndSaveItemInfo();
-              },
-              child: Text("Add",
-                  style: TextStyle(
-                      color: Colors.black26,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold)))
-        ],
+        // actions: [
+        //   TextButton(
+        //       onPressed: () {
+        //         uploading ? null : uploadImageAndSaveItemInfo();
+        //       },
+        //       child: Text("Add",
+        //           style: TextStyle(
+        //               color: Colors.black26,
+        //               fontSize: 16.0,
+        //               fontWeight: FontWeight.bold)))
+        // ],
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -392,6 +402,34 @@ class _UploadPageState extends State<UploadPage>
           ),
           Divider(
             color: Colors.black26,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.grey.shade300,
+                    padding: EdgeInsets.only(
+                        top: 15, right: 25, bottom: 15, left: 25)),
+                onPressed: () {
+                  uploading ? null : uploadFlashImageAndSaveItemInfo();
+                },
+                child: Text("Flash Item"),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.grey.shade300,
+                    padding: EdgeInsets.only(
+                        top: 15, right: 25, bottom: 15, left: 25)),
+                onPressed: () {
+                  uploading ? null : uploadImageAndSaveItemInfo();
+                },
+                child: Text("New Item"),
+              ),
+            ],
           )
         ],
       ),
@@ -408,6 +446,53 @@ class _UploadPageState extends State<UploadPage>
     });
   }
 
+  uploadFlashImageAndSaveItemInfo() async {
+    setState(() {
+      uploading = true;
+    });
+    String imageDownloadUrl = await uploadFlashItemImage(file);
+
+    saveFlashItemInfo(imageDownloadUrl);
+  }
+
+   Future<String> uploadFlashItemImage(mFileImage) async {
+    final Reference storageReference =
+        FirebaseStorage.instance.ref().child("flash");
+
+    TaskSnapshot taskSnapshot = await storageReference
+        .child("product_$productId.jpg")
+        .putFile(mFileImage);
+
+    var downloadUrl = await taskSnapshot.ref.getDownloadURL();
+
+    return downloadUrl;
+  }
+
+   saveFlashItemInfo(String downloadUrl) {
+    final itemsRef = FirebaseFirestore.instance.collection("flash");
+
+    itemsRef.doc(productId).set({
+      "shortInfo": _shortTextEditingController.text.trim(),
+      "longDescription": _descriptionTextEditingController.text.trim(),
+      "title": _titleTextEditingController.text.trim(),
+      "publishedDate": DateTime.now(),
+      "price": int.parse(_priceTextEditingController.text),
+      "thumbnailUrl": downloadUrl,
+      "status": "available",
+    });
+    setState(() {
+      file = null;
+      uploading = false;
+      productId = DateTime.now().microsecondsSinceEpoch.toString();
+      _descriptionTextEditingController.clear();
+      _titleTextEditingController.clear();
+      _shortTextEditingController.clear();
+      _priceTextEditingController.clear();
+    });
+  }
+
+
+
   uploadImageAndSaveItemInfo() async {
     setState(() {
       uploading = true;
@@ -421,8 +506,9 @@ class _UploadPageState extends State<UploadPage>
     final Reference storageReference =
         FirebaseStorage.instance.ref().child("Items");
 
-    TaskSnapshot taskSnapshot =
-      await storageReference.child("product_$productId.jpg").putFile(mFileImage);
+    TaskSnapshot taskSnapshot = await storageReference
+        .child("product_$productId.jpg")
+        .putFile(mFileImage);
 
     var downloadUrl = await taskSnapshot.ref.getDownloadURL();
 

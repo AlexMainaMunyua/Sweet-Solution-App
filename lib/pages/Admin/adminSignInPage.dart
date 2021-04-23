@@ -20,7 +20,7 @@ class AdminSignInPage extends StatelessWidget {
                   tileMode: TileMode.clamp)),
         ),
         title: Text(
-          "P-shop",
+          "Cady World",
           style: TextStyle(
               fontSize: 20.0, color: Colors.white, fontFamily: "Signatra"),
         ),

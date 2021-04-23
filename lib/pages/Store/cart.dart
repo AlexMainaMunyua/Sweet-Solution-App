@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_application/pages/Address/address.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
@@ -6,7 +8,7 @@ import 'package:ecommerce_application/pages/Counter/totalMoney.dart';
 import 'package:ecommerce_application/pages/Model/item.dart';
 import 'package:ecommerce_application/pages/Store/productPage.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
-
+import 'package:async/async.dart';
 import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,9 @@ import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:observable/observable.dart';
+import 'package:async/async.dart';
 
 class CartPage extends StatefulWidget {
   @override
@@ -26,6 +31,40 @@ class _CartPageState extends State<CartPage> {
 
   int quantity;
 
+  Stream streamA = EcommerceApp.firestore
+      .collection("items")
+      .where("shortInfo",
+          whereIn: EcommerceApp.sharedPreferences
+              .getStringList(EcommerceApp.userCartList))
+      .snapshots();
+  Stream streamB = EcommerceApp.firestore
+      .collection("flash")
+      .where("shortInfo",
+          whereIn: EcommerceApp.sharedPreferences
+              .getStringList(EcommerceApp.userCartList))
+      .snapshots();
+
+  List<QuerySnapshot> getList(QuerySnapshot list1) {
+    List<QuerySnapshot> result = [];
+
+    (list1 as List).forEach((element) {
+      result.add(element);
+    });
+    return result;
+  }
+
+  List<QuerySnapshot> combineLists(
+      List<QuerySnapshot> list1, List<QuerySnapshot> list2) {
+    List<QuerySnapshot> result = [];
+    list1.forEach((element) {
+      result.add(element);
+    });
+    list2.forEach((element) {
+      result.add(element);
+    });
+    return result;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +76,25 @@ class _CartPageState extends State<CartPage> {
     Provider.of<TotalAmount>(context, listen: false).displayAmount(0);
   }
 
+  // Observable<List<QuerySnapshot>> combineStream = Observable.combineLatest2()
+
+  Stream<List<QuerySnapshot>> getData() {
+    Stream stream1 = EcommerceApp.firestore
+        .collection("items")
+        .where("shortInfo",
+            whereIn: EcommerceApp.sharedPreferences
+                .getStringList(EcommerceApp.userCartList))
+        .snapshots();
+    Stream stream2 = EcommerceApp.firestore
+        .collection("flash")
+        .where("shortInfo",
+            whereIn: EcommerceApp.sharedPreferences
+                .getStringList(EcommerceApp.userCartList))
+        .snapshots();
+
+    return StreamZip([stream1, stream2]);
+  }
+
   _onWillPop(BuildContext context) {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
@@ -45,6 +103,8 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Stream combineStream =
+    //     Rx.combineLatest2(streamA, streamB, (a, b) => [a, b]);
     return WillPopScope(
       onWillPop: () {
         _onWillPop(context);
@@ -134,54 +194,233 @@ class _CartPageState extends State<CartPage> {
                 height: 10.0,
               ),
             ),
-            StreamBuilder<QuerySnapshot>(
-                stream: EcommerceApp.firestore
-                    .collection("items")
-                    .where("shortInfo",
-                        whereIn: EcommerceApp.sharedPreferences
-                            .getStringList(EcommerceApp.userCartList))
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  return !snapshot.hasData
-                      ? SliverToBoxAdapter(
-                          child: Center(
-                            child: circularProgress(),
-                          ),
-                        )
-                      : snapshot.data.docs.length == 0
-                          ? beginBuildingCart()
-                          : SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                (context, index) {
-                                  ItemModel model = ItemModel.fromJson(
-                                      snapshot.data.docs[index].data());
+            // StreamBuilder<QuerySnapshot>(
+            //     stream: streamA,
+            //     builder: (BuildContext context,
+            //         AsyncSnapshot<QuerySnapshot> itemSnapshot) {
+            //       return StreamBuilder(
+            //         stream: streamB,
+            //         builder: (context, flashSnapShot) {
+            //           if (itemSnapshot.hasError ||
+            //               flashSnapShot.hasError ||
+            //               !flashSnapShot.hasData)
+            //             return Text(
+            //                 "Error: ${itemSnapshot.error}, ${flashSnapShot.error}");
+            //           switch (itemSnapshot.connectionState) {
+            //             case ConnectionState.waiting:
+            //               return Text("Loading...");
+            //             default:
+            //               return ListView(children: itemSnapshot.data.docs
+            //                   .map((DocumentSnapshot doc) {
+            //                 var item = "";
+            //                 if (doc['uid'] != null &&
+            //                     itemSnapshot.data != null) {
+            //                   item = doc['uid'];
+            //                   item = itemSnapshot.data.docs
+            //                       .firstWhere((element) => element.id == item)
+            //                       .data();
+            //                 }
+            //               }).toList()
+            //               );
+            //           }
+            //         },
+            //       );
+            //     }),
+            StreamBuilder(
+                stream: getData(),
+                builder:
+                    (context, AsyncSnapshot<List<QuerySnapshot>> snapshot) {
+                  List<QuerySnapshot> querySnapshotData =
+                      snapshot.data.toList();
 
-                                  if (index == 0) {
-                                    totalAmount = 0;
-                                    totalAmount = model.price + totalAmount;
-                                  } else {
-                                    totalAmount = model.price + totalAmount;
-                                  }
-                                  if (snapshot.data.docs.length - 1 == index) {
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((t) {
-                                      Provider.of<TotalAmount>(context,
-                                              listen: false)
-                                          .displayAmount(totalAmount);
-                                    });
-                                  }
+                  //copy document snapshots from second stream to first so querySnapshotData[0].documents will have all documents from both query snapshots
+                  querySnapshotData[0].docs.addAll(querySnapshotData[1].docs);
 
-                                  return cartSourceInfo(model, context,
-                                      removeCartFunction: () =>
-                                          removeItemFromUserCart(
-                                              model.shortInfo));
-                                },
-                                childCount: snapshot.hasData
-                                    ? snapshot.data.docs.length
-                                    : 0,
-                              ),
-                            );
+                  if (querySnapshotData[0].docs.isEmpty) {
+                    return SliverToBoxAdapter(
+                      child: Center(
+                        child: circularProgress(),
+                      ),
+                    );
+                  } else {
+                    // List<QuerySnapshot> _list = [];
+                    // _list.addAll(getList(snapshot.data[0]));
+                    // _list.addAll(getList(snapshot.data[1]));
+                    if (querySnapshotData[0].docs.length == 0) {
+                      return beginBuildingCart();
+                    } else {
+                      return ListView(
+                        children: List.generate(
+                            querySnapshotData[0].docs.length, (index) {
+                          DocumentSnapshot documentSnapshot =
+                              querySnapshotData[0].docs[index];
+
+                          return Text(documentSnapshot["title"]);
+                        }),
+                        // children: querySnapshotData[0]
+                        //     .docs
+                        //     .map((DocumentSnapshot documentSnapshot) {
+                        //   var userDocument = documentSnapshot;
+                        //   print(userDocument['title']);
+                        //   // return Text(userDocument["items"]);
+                        // }),
+                      );
+                      // return SliverList(
+                      //   delegate: SliverChildBuilderDelegate(
+                      //     (context, index) {
+                      //       ItemModel model = ItemModel.fromJson(
+                      //           querySnapshotData[0].docs[index].data());
+
+                      //       if (index == 0) {
+                      //         totalAmount = 0;
+                      //         totalAmount = model.price + totalAmount;
+                      //       } else {
+                      //         totalAmount = model.price + totalAmount;
+                      //       }
+                      //       if ( querySnapshotData[0].docs.length - 1 == index) {
+                      //         WidgetsBinding.instance.addPostFrameCallback((t) {
+                      //           Provider.of<TotalAmount>(context, listen: false)
+                      //               .displayAmount(totalAmount);
+                      //         });
+                      //       }
+                      //       print(snapshot.data[0].docs.length +
+                      //           snapshot.data[1].docs.length);
+
+                      //       return cartSourceInfo(model, context,
+                      //           removeCartFunction: () =>
+                      //               removeItemFromUserCart(model.shortInfo));
+                      //     },
+                      //     childCount: snapshot.hasData ?  querySnapshotData[0].docs.length : 0,
+                      //   ),
+                      // );
+                    }
+                  }
                 }),
+
+            // StreamBuilder(
+            //     stream: getData(),
+            //     builder: (BuildContext context,
+            //         AsyncSnapshot<List<QuerySnapshot>> snapshot) {
+            //       List<QuerySnapshot> querySnapshotData =
+            //           snapshot.data.toList();
+
+            //       querySnapshotData[0].docs.addAll(querySnapshotData[1].docs);
+
+            //       if (querySnapshotData[0].docs.isEmpty)
+            //         return SliverToBoxAdapter(
+            //             child: Center(
+            //           child: circularProgress(),
+            //         ));
+
+            //       if (querySnapshotData[0].docs.length == 0) {
+            //         return beginBuildingCart();
+            //       } else {
+            //         return SliverList(delegate: SliverChildBuilderDelegate((context, index){
+
+            //             ItemModel model = ItemModel.fromJson(
+            //                           snapshot.data.docs[index].data());
+
+            //                       if (index == 0) {
+            //                         totalAmount = 0;
+            //                         totalAmount = model.price + totalAmount;
+            //                       } else {
+            //                         totalAmount = model.price + totalAmount;
+            //                       }
+            //                       if (snapshot.data.docs.length - 1 == index) {
+            //                         WidgetsBinding.instance
+            //                             .addPostFrameCallback((t) {
+            //                           Provider.of<TotalAmount>(context,
+            //                                   listen: false)
+            //                               .displayAmount(totalAmount);
+            //                         });
+            //                       }
+
+            //         })
+            //         );
+
+            //       }
+            //       // return ListView(
+            //       //   children: querySnapshotData[0]
+            //       //       .docs
+            //       //       .map((DocumentSnapshot documentSnapshot) {
+            //       //     return Text(documentSnapshot.id);
+            //       //   }).toList(),
+            //       // );
+            //     }),
+
+            // StreamBuilder(
+            //     stream: Rx.combineLatest2(
+            //         streamA, streamB, (a, b) => a != null || b != null),
+            //     builder: (context, snapshot) {}),
+            // StreamBuilder<QuerySnapshot>(
+            //     // stream: EcommerceApp.firestore
+            //     //     .collection("items")
+            //     //     .where("shortInfo",
+            //     //         whereIn: EcommerceApp.sharedPreferences
+            //     //             .getStringList(EcommerceApp.userCartList))
+            //     //     .snapshots(),
+            //     stream: streamA,
+            //     //  stream: StreamGroup.merge(streamA,streamB),
+
+            //     // final item = a.docs.first.data();
+            //     // final flash = b.docs.first.data();
+
+            //     // return (item["shortInfo"] as List<String>)
+            //     //     .where((element) => element == flash["shortInfo"])
+            //     //     .toList();
+            //     // stream: getData(),
+            //     // stream: Rx.combineLatest2(streamA, streamB, (a, b) {
+            //     //   streamB.where((event) => event.startWith(streamA));
+            //     // }),
+            //     // stream: Rx.combineLatest([streamA], (values) => true),
+            //     builder: (context, snapshot) {
+            //       StreamBuilder(
+            //         stream: streamB,
+            //         builder: (context, snapshot) {
+            //             return !snapshot.hasData
+            //           ? SliverToBoxAdapter(
+            //               child: Center(
+            //                 child: circularProgress(),
+            //               ),
+            //             )
+            //           : snapshot.data.docs.length == 0
+            //               ? beginBuildingCart()
+            //               : SliverList(
+            //                   delegate: SliverChildBuilderDelegate(
+            //                     (context, index) {
+            //                       ItemModel model = ItemModel.fromJson(
+            //                           snapshot.data.docs[index].data());
+
+            //                       if (index == 0) {
+            //                         totalAmount = 0;
+            //                         totalAmount = model.price + totalAmount;
+            //                       } else {
+            //                         totalAmount = model.price + totalAmount;
+            //                       }
+            //                       if (snapshot.data.docs.length - 1 == index) {
+            //                         WidgetsBinding.instance
+            //                             .addPostFrameCallback((t) {
+            //                           Provider.of<TotalAmount>(context,
+            //                                   listen: false)
+            //                               .displayAmount(totalAmount);
+            //                         });
+            //                       }
+
+            //                       return cartSourceInfo(model, context,
+            //                           removeCartFunction: () =>
+            //                               removeItemFromUserCart(
+            //                                   model.shortInfo));
+            //                     },
+            //                     childCount: snapshot.hasData
+            //                         ? snapshot.data.docs.length
+            //                         : 0,
+            //                   ),
+            //                 );
+
+            //         },
+            //       );
+
+            //     }),
             SliverToBoxAdapter(
               child: Container(
                 height: 20,

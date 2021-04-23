@@ -134,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
-                  .collection("items")
+                  .collection("flash")
                   .limit(4)
                   .orderBy("publishedDate", descending: true)
                   .snapshots(),
@@ -523,10 +523,14 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                     height: 10.0,
                   ),
                   Expanded(
-                      child: Text(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
                     model.shortInfo,
+                    textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.grey, fontSize: 12.0),
-                  )),
+                  ),
+                      )),
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
