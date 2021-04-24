@@ -25,9 +25,9 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
                       tileMode: TileMode.clamp)),
             ),
             title: Text(
-              "Cady World",
+              "Cady",
               style: TextStyle(
-                  fontSize: 40.0, color: Colors.white, fontFamily: "Signatra"),
+                  fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
             ),
             centerTitle: true,
             bottom: TabBar(

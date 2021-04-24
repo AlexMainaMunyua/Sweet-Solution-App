@@ -52,6 +52,7 @@ dependencies:
   rxdart: ^0.26.0
   observable: ^0.23.0
   async: ^2.5.0
+  wc_form_validators: ^0.1.1
 
 dev_dependencies:
   flutter_test:

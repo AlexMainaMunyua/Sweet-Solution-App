@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_application/pages/Authentication/login.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/addressChanger.dart';
 import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
@@ -74,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
         Navigator.pushReplacement(context, route);
       } else {
-        Route route = MaterialPageRoute(builder: (_) => AuthenticScreen());
+        Route route = MaterialPageRoute(builder: (_) => Login());
 
         Navigator.pushReplacement(context, route);
       }
@@ -85,35 +86,24 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Material(
       child: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Colors.white, Colors.white],
-                begin: const FractionalOffset(0.0, 0.0),
-                end: const FractionalOffset(1.0, 0.0),
-                stops: [0.0, 1.0],
-                tileMode: TileMode.clamp)),
+       
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Center(
-                  child: Text(
-                "Cady",
-                style: TextStyle(
-                    fontSize: 55.0,
-                    color: Colors.black45,
-                    fontFamily: "Signatra",
-                    fontWeight: FontWeight.bold),
-              )),
-               SizedBox(
+            
+              SizedBox(
                 height: 40.0,
               ),
               Image.asset("images/welcome.png"),
               SizedBox(
                 height: 40.0,
               ),
-              Text("Kenya's largest fast moving good online store",
-                  style: TextStyle(fontFamily: "Signatra",color: Colors.black45))
+              Center(
+                child: Text("Fast Delivery, Low Prices, Vast Selection",
+                    style:
+                        TextStyle(fontFamily: "Signatra", fontSize: 24, color: Colors.black45)),
+              )
             ],
           ),
         ),

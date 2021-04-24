@@ -9,24 +9,34 @@ class AdminSignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Colors.black26, Colors.white],
-                  begin: const FractionalOffset(0.0, 0.0),
-                  end: const FractionalOffset(1.0, 0.0),
-                  stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp)),
-        ),
-        title: Text(
-          "Cady World",
-          style: TextStyle(
-              fontSize: 20.0, color: Colors.white, fontFamily: "Signatra"),
-        ),
-        centerTitle: true,
-      ),
-      body: AdminSignInScreen(),
+      // appBar: AppBar(
+      //   flexibleSpace: Container(
+      //     decoration: BoxDecoration(
+      //         gradient: LinearGradient(
+      //             colors: [Colors.black26, Colors.white],
+      //             begin: const FractionalOffset(0.0, 0.0),
+      //             end: const FractionalOffset(1.0, 0.0),
+      //             stops: [0.0, 1.0],
+      //             tileMode: TileMode.clamp)),
+      //   ),
+      //   leading: IconButton(
+      //     icon: Icon(
+      //       Icons.arrow_back,
+      //       color: Colors.white,
+      //     ),
+      //     onPressed: () {
+      //       Route route = MaterialPageRoute(builder: (c) => AuthenticScreen());
+
+      //       Navigator.pushReplacement(context, route);
+      //     },
+      //   ),
+      //   title: Text(
+      //     "Cady administrator",
+      //     style: TextStyle(
+      //         fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
+      //   ),
+      // ),
+      body: SafeArea(child: AdminSignInScreen()),
     );
   }
 }
@@ -43,26 +53,50 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
       TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  bool _obscureText = true;
+
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double _screenWidth = MediaQuery.of(context).size.width;
 
     return SingleChildScrollView(
       child: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Colors.black26, Colors.white],
-                begin: const FractionalOffset(0.0, 0.0),
-                end: const FractionalOffset(1.0, 0.0),
-                stops: [0.0, 1.0],
-                tileMode: TileMode.clamp)),
+        // decoration: BoxDecoration(
+        //     gradient: LinearGradient(
+        //         colors: [Colors.black26, Colors.white],
+        //         begin: const FractionalOffset(0.0, 0.0),
+        //         end: const FractionalOffset(1.0, 0.0),
+        //         stops: [0.0, 1.0],
+        //         tileMode: TileMode.clamp)),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: EdgeInsets.all(10.0),
+              height: 70,
+              child: Center(
+                child: Text("Cady administrator",
+                    style: TextStyle(
+                        fontSize: 45.0,
+                        color: Colors.grey.shade500,
+                        fontFamily: "Signatra")),
+              ),
+            ),
+          
             Container(
               alignment: Alignment.center,
               child: Image.asset("images/admin.png"),
-              height: 240.0,
+              height: 200.0,
               width: 240.0,
             ),
             SizedBox(
@@ -75,7 +109,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 28.0,
-                    color: Colors.white),
+                    color: Colors.grey.shade400),
               ),
             ),
             Form(
@@ -88,16 +122,52 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
                     hintText: "ID",
                     isObsecure: false,
                   ),
-                  CustomTextField(
-                    controller: _passwordTextEditingController,
-                    data: Icons.lock,
-                    hintText: "password",
-                    isObsecure: true,
-                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.grey.shade400),
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                    padding: EdgeInsets.all(8.0),
+                    margin: EdgeInsets.all(8.0),
+                    child: Stack(
+                      children: [
+                        TextFormField(
+                          controller: _passwordTextEditingController,
+                          obscureText: _obscureText,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            prefixIcon: Icon(
+                              Icons.lock,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            focusColor: Theme.of(context).primaryColor,
+                            hintText: "password",
+                          ),
+                        ),
+                        Align(
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                              icon: Icon(
+                                _obscureText
+                                    ? Icons.remove_red_eye
+                                    : Icons.remove_red_eye_outlined,
+                                color: Colors.grey,
+                              ),
+                              onPressed: _toggle,
+                            ))
+                      ],
+                    ),
+                  )
+                  // CustomTextField(
+                  //   controller: _passwordTextEditingController,
+                  //   data: Icons.lock,
+                  //   hintText: "password",
+                  //   isObsecure: true,
+                  // ),
                 ],
               ),
             ),
-             SizedBox(
+            SizedBox(
               height: 15.0,
             ),
             ElevatedButton(
