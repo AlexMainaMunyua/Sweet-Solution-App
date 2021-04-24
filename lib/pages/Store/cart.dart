@@ -16,9 +16,7 @@ import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:observable/observable.dart';
-import 'package:async/async.dart';
+
 
 class CartPage extends StatefulWidget {
   @override
@@ -227,75 +225,119 @@ class _CartPageState extends State<CartPage> {
             //       );
             //     }),
             StreamBuilder(
-                stream: getData(),
-                builder:
-                    (context, AsyncSnapshot<List<QuerySnapshot>> snapshot) {
-                  List<QuerySnapshot> querySnapshotData =
-                      snapshot.data.toList();
+              stream: streamA,
+              builder: (context, snapshot) {
+                return !snapshot.hasData
+                    ? SliverToBoxAdapter(
+                        child: Center(
+                          child: circularProgress(),
+                        ),
+                      )
+                    : snapshot.data.docs.length == 0
+                        ? beginBuildingCart()
+                        : SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                              (context, index) {
+                                ItemModel model = ItemModel.fromJson(
+                                    snapshot.data.docs[index].data());
 
-                  //copy document snapshots from second stream to first so querySnapshotData[0].documents will have all documents from both query snapshots
-                  querySnapshotData[0].docs.addAll(querySnapshotData[1].docs);
+                                if (index == 0) {
+                                  totalAmount = 0;
+                                  totalAmount = model.price + totalAmount;
+                                } else {
+                                  totalAmount = model.price + totalAmount;
+                                }
+                                if (snapshot.data.docs.length - 1 == index) {
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((t) {
+                                    Provider.of<TotalAmount>(context,
+                                            listen: false)
+                                        .displayAmount(totalAmount);
+                                  });
+                                }
 
-                  if (querySnapshotData[0].docs.isEmpty) {
-                    return SliverToBoxAdapter(
-                      child: Center(
-                        child: circularProgress(),
-                      ),
-                    );
-                  } else {
-                    // List<QuerySnapshot> _list = [];
-                    // _list.addAll(getList(snapshot.data[0]));
-                    // _list.addAll(getList(snapshot.data[1]));
-                    if (querySnapshotData[0].docs.length == 0) {
-                      return beginBuildingCart();
-                    } else {
-                      return ListView(
-                        children: List.generate(
-                            querySnapshotData[0].docs.length, (index) {
-                          DocumentSnapshot documentSnapshot =
-                              querySnapshotData[0].docs[index];
+                                return cartSourceInfo(model, context,
+                                    removeCartFunction: () =>
+                                        removeItemFromUserCart(
+                                            model.shortInfo));
+                              },
+                              childCount: snapshot.hasData
+                                  ? snapshot.data.docs.length
+                                  : 0,
+                            ),
+                          );
+              },
+            ),
+            // StreamBuilder(
+            //     stream: getData(),
+            //     builder:
+            //         (context, AsyncSnapshot<List<QuerySnapshot>> snapshot) {
+            //       List<QuerySnapshot> querySnapshotData =
+            //           snapshot.data.toList();
 
-                          return Text(documentSnapshot["title"]);
-                        }),
-                        // children: querySnapshotData[0]
-                        //     .docs
-                        //     .map((DocumentSnapshot documentSnapshot) {
-                        //   var userDocument = documentSnapshot;
-                        //   print(userDocument['title']);
-                        //   // return Text(userDocument["items"]);
-                        // }),
-                      );
-                      // return SliverList(
-                      //   delegate: SliverChildBuilderDelegate(
-                      //     (context, index) {
-                      //       ItemModel model = ItemModel.fromJson(
-                      //           querySnapshotData[0].docs[index].data());
+            //       //copy document snapshots from second stream to first so querySnapshotData[0].documents will have all documents from both query snapshots
+            //       querySnapshotData[0].docs.addAll(querySnapshotData[1].docs);
 
-                      //       if (index == 0) {
-                      //         totalAmount = 0;
-                      //         totalAmount = model.price + totalAmount;
-                      //       } else {
-                      //         totalAmount = model.price + totalAmount;
-                      //       }
-                      //       if ( querySnapshotData[0].docs.length - 1 == index) {
-                      //         WidgetsBinding.instance.addPostFrameCallback((t) {
-                      //           Provider.of<TotalAmount>(context, listen: false)
-                      //               .displayAmount(totalAmount);
-                      //         });
-                      //       }
-                      //       print(snapshot.data[0].docs.length +
-                      //           snapshot.data[1].docs.length);
+            //       if (querySnapshotData[0].docs.isEmpty) {
+            //         return SliverToBoxAdapter(
+            //           child: Center(
+            //             child: circularProgress(),
+            //           ),
+            //         );
+            //       } else {
+            //         // List<QuerySnapshot> _list = [];
+            //         // _list.addAll(getList(snapshot.data[0]));
+            //         // _list.addAll(getList(snapshot.data[1]));
+            //         if (querySnapshotData[0].docs.length == 0) {
+            //           return beginBuildingCart();
+            //         } else {
+            //           // return ListView(
+            //           //   children: List.generate(
+            //           //       querySnapshotData[0].docs.length, (index) {
+            //           //     DocumentSnapshot documentSnapshot =
+            //           //         querySnapshotData[0].docs[index];
 
-                      //       return cartSourceInfo(model, context,
-                      //           removeCartFunction: () =>
-                      //               removeItemFromUserCart(model.shortInfo));
-                      //     },
-                      //     childCount: snapshot.hasData ?  querySnapshotData[0].docs.length : 0,
-                      //   ),
-                      // );
-                    }
-                  }
-                }),
+            //           //     return Text(documentSnapshot["title"]);
+            //           //   }),
+            //           //   // children: querySnapshotData[0]
+            //           //   //     .docs
+            //           //   //     .map((DocumentSnapshot documentSnapshot) {
+            //           //   //   var userDocument = documentSnapshot;
+            //           //   //   print(userDocument['title']);
+            //           //   //   // return Text(userDocument["items"]);
+            //           //   // }),
+            //           // );
+            //           return SliverList(
+            //             delegate: SliverChildBuilderDelegate(
+            //               (context, index) {
+            //                 ItemModel model = ItemModel.fromJson(
+            //                     querySnapshotData[0].docs[index].data());
+
+            //                 if (index == 0) {
+            //                   totalAmount = 0;
+            //                   totalAmount = model.price + totalAmount;
+            //                 } else {
+            //                   totalAmount = model.price + totalAmount;
+            //                 }
+            //                 if ( querySnapshotData[0].docs.length - 1 == index) {
+            //                   WidgetsBinding.instance.addPostFrameCallback((t) {
+            //                     Provider.of<TotalAmount>(context, listen: false)
+            //                         .displayAmount(totalAmount);
+            //                   });
+            //                 }
+            //                 print(snapshot.data[0].docs.length +
+            //                     snapshot.data[1].docs.length);
+
+            //                 return cartSourceInfo(model, context,
+            //                     removeCartFunction: () =>
+            //                         removeItemFromUserCart(model.shortInfo));
+            //               },
+            //               childCount: snapshot.hasData ?  querySnapshotData[0].docs.length : 0,
+            //             ),
+            //           );
+            //         }
+            //       }
+            //     }),
 
             // StreamBuilder(
             //     stream: getData(),

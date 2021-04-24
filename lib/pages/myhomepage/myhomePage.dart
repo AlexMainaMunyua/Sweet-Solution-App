@@ -1,5 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_application/pages/Categories/chocolatepage.dart';
+import 'package:ecommerce_application/pages/Categories/gumpage.dart';
+import 'package:ecommerce_application/pages/Categories/lollipoppage.dart';
+import 'package:ecommerce_application/pages/Categories/toffeepage.dart';
+import 'package:ecommerce_application/pages/Categories/toypage.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
 import 'package:ecommerce_application/pages/Model/item.dart';
@@ -127,16 +132,17 @@ class _MyHomePageState extends State<MyHomePage> {
               child: _createCarousel(),
             ),
             SliverToBoxAdapter(
-              child: _createCategories(),
+              child: _createCategories(context),
             ),
             SliverToBoxAdapter(
               child: _createFlashSalesHeader(),
             ),
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
-                  .collection("flash")
+                  .collection("items")
+                  .where("shortInfo", isEqualTo: "Flash Sales")
                   .limit(4)
-                  .orderBy("publishedDate", descending: true)
+                  // .orderBy("publishedDate", descending: true)
                   .snapshots(),
               builder: (context, dataSnapshot) {
                 return !dataSnapshot.hasData
@@ -169,7 +175,9 @@ class _MyHomePageState extends State<MyHomePage> {
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection("items")
-                  .limit(15)
+
+                  // .where("ShortInfo", whereIn: "Flash Sales")
+
                   .orderBy("publishedDate", descending: true)
                   .snapshots(),
               builder: (context, dataSnapshot) {
@@ -306,7 +314,7 @@ Widget _createStreamBuilderHeader() {
   );
 }
 
-Widget _createCategories() {
+Widget _createCategories(BuildContext context) {
   return Container(
     color: Colors.white,
     height: 100.0,
@@ -315,92 +323,130 @@ Widget _createCategories() {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Container(
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: 20.0,
-                backgroundImage: NetworkImage(
-                    "https://images.unsplash.com/photo-1576644461179-ddd318c669e4?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80"),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Text(
-                "Gums",
-                style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-        ),
-        Container(
-          child: Column(
-            children: [
-              CircleAvatar(
+          child: GestureDetector(
+            onTap: () {
+              Route route = MaterialPageRoute(builder: (context) => GumPage());
+
+              Navigator.pushReplacement(context, route);
+            },
+            child: Column(
+              children: [
+                CircleAvatar(
                   radius: 20.0,
                   backgroundImage: NetworkImage(
-                      "https://images.unsplash.com/photo-1610112908715-bfb038058815?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80")),
-              SizedBox(
-                height: 10.0,
-              ),
-              Text(
-                "Toffees",
-                style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
-              )
-            ],
+                      "https://images.unsplash.com/photo-1576644461179-ddd318c669e4?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80"),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  "Gums",
+                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
           ),
         ),
         Container(
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: 20.0,
-                backgroundImage: NetworkImage(
-                    "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80"),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Text(
-                "Chocolates",
-                style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
-              )
-            ],
+          child: GestureDetector(
+            onTap: () {
+              Route route =
+                  MaterialPageRoute(builder: (context) => ToffeePage());
+
+              Navigator.pushReplacement(context, route);
+            },
+            child: Column(
+              children: [
+                CircleAvatar(
+                    radius: 20.0,
+                    backgroundImage: NetworkImage(
+                        "https://images.unsplash.com/photo-1610112908715-bfb038058815?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80")),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  "Toffees",
+                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
           ),
         ),
         Container(
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: 20.0,
-                backgroundImage: NetworkImage(
-                    "https://images.unsplash.com/photo-1575729853435-c3aac6ca37df?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Text(
-                "Lollipops",
-                style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
-              )
-            ],
+          child: GestureDetector(
+            onTap: () {
+              Route route =
+                  MaterialPageRoute(builder: (context) => ChocolatePage());
+
+              Navigator.pushReplacement(context, route);
+            },
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 20.0,
+                  backgroundImage: NetworkImage(
+                      "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80"),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  "Chocolates",
+                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
           ),
         ),
         Container(
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: 20.0,
-                backgroundImage: NetworkImage(
-                    "https://images.unsplash.com/photo-1584609973729-4a8bc988e2e2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Text(
-                "Toys",
-                style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
-              )
-            ],
+          child: GestureDetector(
+            onTap: () {
+              Route route =
+                  MaterialPageRoute(builder: (context) => LollipopPage());
+
+              Navigator.pushReplacement(context, route);
+            },
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 20.0,
+                  backgroundImage: NetworkImage(
+                      "https://images.unsplash.com/photo-1575729853435-c3aac6ca37df?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  "Lollipops",
+                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+          ),
+        ),
+        Container(
+          child: GestureDetector(
+            onTap: () {
+              Route route = MaterialPageRoute(builder: (context) => ToyPage());
+
+              Navigator.pushReplacement(context, route);
+            },
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 20.0,
+                  backgroundImage: NetworkImage(
+                      "https://images.unsplash.com/photo-1584609973729-4a8bc988e2e2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  "Toys",
+                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
           ),
         ),
       ],
@@ -524,13 +570,13 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                   ),
                   Expanded(
                       child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                    model.shortInfo,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.grey, fontSize: 12.0),
-                  ),
-                      )),
+                    alignment: Alignment.center,
+                    child: Text(
+                      model.shortInfo,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.grey, fontSize: 12.0),
+                    ),
+                  )),
                   Expanded(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -781,7 +827,8 @@ addItemToCart(String shortInfoID, BuildContext context) {
 
   tempCartList.add(shortInfoID);
 
-  print(EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList));
+  print(
+      EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList));
 
   EcommerceApp.firestore
       .collection(EcommerceApp.collectionUser)
