@@ -530,7 +530,7 @@ class _CartPageState extends State<CartPage> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(top: 10.0),
+                      padding: EdgeInsets.only(top: 20.0),
                       child: WideButton(
                         onPressed: () {
                           if (EcommerceApp.sharedPreferences
@@ -550,7 +550,7 @@ class _CartPageState extends State<CartPage> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(top: 10.0),
+                      padding: EdgeInsets.only(top: 20.0),
                       child: WideButton(
                         onPressed: () async {
                           await FlutterPhoneDirectCaller.callNumber(
@@ -721,8 +721,10 @@ class _CartPageState extends State<CartPage> {
 
   beginBuildingCart() {
     return SliverToBoxAdapter(
-     
-        child: Container(
+      child: Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Container(
+            color: Colors.grey.shade400,
             height: 100.0,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -740,8 +742,7 @@ class _CartPageState extends State<CartPage> {
                     ))
               ],
             ),
-            color: Colors.grey.shade300),
-      
+          )),
     );
   }
 
