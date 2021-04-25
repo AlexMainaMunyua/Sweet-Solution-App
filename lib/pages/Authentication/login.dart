@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_application/pages/Admin/adminSignInPage.dart';
+import 'package:ecommerce_application/pages/Authentication/forgotPassword.dart';
 import 'package:ecommerce_application/pages/Authentication/register.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/DialogBox/errorDialog.dart';
@@ -93,7 +94,7 @@ class _LoginState extends State<Login> {
                     height: 10,
                   ),
                   Container(
-                    padding: EdgeInsets.all(10.0),
+                    padding: EdgeInsets.only(top:10.0),
                     height: 70,
                     child: Center(
                       child: Text("LOGIN",
@@ -113,7 +114,7 @@ class _LoginState extends State<Login> {
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       "Login to your account",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.grey.shade500),
                     ),
                   ),
                   Form(
@@ -211,7 +212,12 @@ class _LoginState extends State<Login> {
                     height: 20.0,
                   ),
                   TextButton(
-                      onPressed: () {}, child: Text("Forgot Password ?")),
+                      onPressed: () {
+                           Route route =
+                              MaterialPageRoute(builder: (c) => ForgotPassword());
+
+                          Navigator.pushReplacement(context, route);
+                      }, child: Text("Forgot Password ?")),
                   SizedBox(
                     height: 5.0,
                   ),

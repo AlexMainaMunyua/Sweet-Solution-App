@@ -12,7 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
-class ToyPage extends StatelessWidget {
+class FlashSale extends StatefulWidget {
+  @override
+  _FlashSaleState createState() => _FlashSaleState();
+}
+
+class _FlashSaleState extends State<FlashSale> {
   _onWillPop(BuildContext context) {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
@@ -50,7 +55,7 @@ class ToyPage extends StatelessWidget {
                 },
               ),
               title: Text(
-                "Toys",
+                "Flash Sales",
                 style: TextStyle(
                     fontSize: 35.0,
                     color: Colors.white,
@@ -107,7 +112,7 @@ class ToyPage extends StatelessWidget {
               ],
             ),
             body: CustomScrollView(slivers: [
-             SliverToBoxAdapter(
+              SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10.0),
                   child: TabBar(
@@ -136,7 +141,7 @@ class ToyPage extends StatelessWidget {
               StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection("items")
-                      .where("shortInfo", isEqualTo: "Toys")
+                      .where("shortInfo", isEqualTo: "Flash Sales")
                       .limit(4)
                       // .orderBy("publishedDate", descending: true)
                       .snapshots(),
@@ -162,95 +167,92 @@ class ToyPage extends StatelessWidget {
   }
 
   Widget categorySourceInfo(ItemModel model, BuildContext context,
-    {Color background, removeCartFunction}) {
-  return InkWell(
-    onTap: () {
-      Route route =
-          MaterialPageRoute(builder: (c) => ProductPage(itemModel: model));
+      {Color background, removeCartFunction}) {
+    return InkWell(
+      onTap: () {
+        Route route =
+            MaterialPageRoute(builder: (c) => ProductPage(itemModel: model));
 
-      Navigator.pushReplacement(context, route);
-    },
-    splashColor: Colors.black26,
-    child: Container(
-      height: 200.0,
-      child: Card(
-        child: Container(
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Image.network(
-                    model.thumbnailUrl,
-                    height: 100.0,
-                    width: 120.0,
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Expanded(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                    model.shortInfo,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.grey, fontSize: 12.0),
-                  ),
+        Navigator.pushReplacement(context, route);
+      },
+      splashColor: Colors.black26,
+      child: Container(
+        height: 200.0,
+        child: Card(
+          child: Container(
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Image.network(
+                      model.thumbnailUrl,
+                      height: 100.0,
+                      width: 120.0,
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Expanded(
+                        child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        model.shortInfo,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.grey, fontSize: 12.0),
+                      ),
+                    )),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Ksh.",
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Text(
+                            (model.price).toString(),
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.black,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                  ],
+                ),
+                Container(
+                  padding: EdgeInsets.only(right: 10.0, top: 10.0),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      width: 30,
+                      height: 20,
+                      color: Colors.black12,
+                      child: Center(
+                          child: Text(
+                        "5%",
+                        style: TextStyle(fontSize: 10, color: Colors.black38),
                       )),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Ksh.",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Text(
-                          (model.price).toString(),
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: Colors.black,
-                          ),
-                        )
-                      ],
                     ),
                   ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                ],
-              ),
-              Container(
-                padding: EdgeInsets.only(right: 10.0, top: 10.0),
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Container(
-                    width: 30,
-                    height: 20,
-                    color: Colors.black12,
-                    child: Center(
-                        child: Text(
-                      "5%",
-                      style: TextStyle(fontSize: 10, color: Colors.black38),
-                    )),
-                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-    ),
-  );
-}
-
-
-
+    );
+  }
 
   Widget _createCarousel() {
     return Column(

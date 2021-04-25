@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_application/pages/Categories/chocolatepage.dart';
+import 'package:ecommerce_application/pages/Categories/flashsales.dart';
 import 'package:ecommerce_application/pages/Categories/gumpage.dart';
 import 'package:ecommerce_application/pages/Categories/lollipoppage.dart';
 import 'package:ecommerce_application/pages/Categories/toffeepage.dart';
@@ -135,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: _createCategories(context),
             ),
             SliverToBoxAdapter(
-              child: _createFlashSalesHeader(),
+              child: _createFlashSalesHeader(context),
             ),
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
@@ -247,7 +248,7 @@ Widget _createBanner() {
 //   );
 // }
 
-Widget _createFlashSalesHeader() {
+Widget _createFlashSalesHeader(context) {
   return Container(
     padding: EdgeInsets.only(left: 5.0, right: 5.0),
     margin: EdgeInsets.only(left: 5.0, right: 5.0),
@@ -263,17 +264,25 @@ Widget _createFlashSalesHeader() {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text("FLASH SALES", style: TextStyle(fontWeight: FontWeight.w700)),
-        Row(
-          children: [
-            Text(
-              "See All",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-            Icon(
-              Icons.arrow_forward_ios,
-              size: 12,
-            )
-          ],
+        GestureDetector(
+          onTap: (){
+              Route route = MaterialPageRoute(builder: (context) => FlashSale());
+
+              Navigator.pushReplacement(context, route);
+
+          },
+          child: Row(
+            children: [
+              Text(
+                "See All",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              ),
+              Icon(
+                Icons.arrow_forward_ios,
+                size: 12,
+              )
+            ],
+          ),
         )
       ],
     ),
@@ -299,14 +308,14 @@ Widget _createStreamBuilderHeader() {
             style: TextStyle(fontWeight: FontWeight.w700)),
         Row(
           children: [
-            Text(
-              "See All",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-            Icon(
-              Icons.arrow_forward_ios,
-              size: 12,
-            )
+            // Text(
+            //   "See All",
+            //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            // ),
+            // Icon(
+            //   Icons.arrow_forward_ios,
+            //   size: 12,
+            // )
           ],
         )
       ],
@@ -532,7 +541,7 @@ Widget _createCarousel() {
           autoPlayCurve: Curves.fastOutSlowIn,
           enableInfiniteScroll: true,
           autoPlayAnimationDuration: Duration(milliseconds: 800),
-          viewportFraction: 0.8,
+          viewportFraction: 0.95,
         ),
       )
     ],
@@ -572,7 +581,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                       child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      model.shortInfo,
+                      model.title,
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.grey, fontSize: 12.0),
                     ),

@@ -19,13 +19,14 @@ class MyDrawer extends StatelessWidget {
               top: 25.0,
               bottom: 10.0,
             ),
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.black26, Colors.white],
-                    begin: const FractionalOffset(0.0, 0.0),
-                    end: const FractionalOffset(1.0, 0.0),
-                    stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp)),
+            color: Colors.grey.shade400,
+            // decoration: BoxDecoration(
+            //     gradient: LinearGradient(
+            //         colors: [Colors.black26, Colors.white],
+            //         begin: const FractionalOffset(0.0, 0.0),
+            //         end: const FractionalOffset(1.0, 0.0),
+            //         stops: [0.0, 1.0],
+            //         tileMode: TileMode.clamp)),
             child: Column(
               children: [
                 Material(

@@ -17,7 +17,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
-
 class CartPage extends StatefulWidget {
   @override
   _CartPageState createState() => _CartPageState();
@@ -700,7 +699,7 @@ class _CartPageState extends State<CartPage> {
                       iconSize: 20,
                       color: Colors.black45,
                       icon: Icon(Icons.remove_shopping_cart),
-                      onPressed: () {
+                      onPressed: () async {
                         removeCartFunction();
 
                         Route route =
@@ -722,8 +721,8 @@ class _CartPageState extends State<CartPage> {
 
   beginBuildingCart() {
     return SliverToBoxAdapter(
-      child: Card(
-          child: Container(
+     
+        child: Container(
             height: 100.0,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -741,8 +740,8 @@ class _CartPageState extends State<CartPage> {
                     ))
               ],
             ),
-          ),
-          color: Colors.grey.shade400),
+            color: Colors.grey.shade300),
+      
     );
   }
 

@@ -108,20 +108,30 @@ class GumPage extends StatelessWidget {
             ),
             body: CustomScrollView(slivers: [
               SliverToBoxAdapter(
-                child: TabBar(
-                  isScrollable: true,
-                  tabs: [
-                    Tab(
-                      child: Text(
-                        "All",
-                        style: TextStyle(fontSize: 16),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: TabBar(
+                    indicatorWeight: 5,
+                    isScrollable: true,
+                    tabs: [
+                      Tab(
+                        child: Text(
+                          "All",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey.shade700,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               SliverToBoxAdapter(
-                child: _createCarousel(),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: _createCarousel(),
+                ),
               ),
                       StreamBuilder(
                   stream: FirebaseFirestore.instance
