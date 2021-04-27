@@ -261,7 +261,7 @@ class GumPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://images.unsplash.com/photo-1517683551739-7f3f08efba84?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FGumJumboTron%2Fgumjumbo1.jpg?alt=media&token=db5bb208-d797-4de1-b7e4-e8d7e3dcc3f9"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -274,7 +274,7 @@ class GumPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://images.unsplash.com/photo-1611250503393-9424f314d265?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1266&q=80"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FGumJumboTron%2Fgumjumbo3.jpg?alt=media&token=73cd77a7-0802-4613-b8f7-b9f8d7194074"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -287,7 +287,7 @@ class GumPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://images.unsplash.com/photo-1594243968753-6a0fc79e86dd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FGumJumboTron%2Fgumjumbo2.jpg?alt=media&token=296fc78c-e89e-4aec-83aa-2fc72d3eb6c6"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -300,7 +300,7 @@ class GumPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://images.unsplash.com/photo-1597892822997-309a4f7223d3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FGumJumboTron%2Fgumjumbo4.jpg?alt=media&token=1f0d9e47-ae1e-4661-b882-34a2be8776fc"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -313,7 +313,7 @@ class GumPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://images.unsplash.com/photo-1511348398635-8efff213a280?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FGumJumboTron%2Fgumjumbo5.jpeg?alt=media&token=7d28b272-abf3-4493-8fce-06a4069cbba0"),
                   fit: BoxFit.cover,
                 ),
               ),

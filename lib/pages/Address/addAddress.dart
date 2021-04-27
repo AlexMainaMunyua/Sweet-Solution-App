@@ -3,7 +3,6 @@ import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
 import 'package:ecommerce_application/pages/Model/address.dart';
 import 'package:ecommerce_application/pages/Store/cart.dart';
-import 'package:ecommerce_application/pages/Widgets/customAppBar.dart';
 import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,7 @@ class AddAddress extends StatelessWidget {
   final cState = TextEditingController();
   final cPinCode = TextEditingController();
 
-  _onWillPop(BuildContext context) {
+   _onWillPop(BuildContext context) {
     Route route = MaterialPageRoute(builder: (c) => Address());
 
     Navigator.pushReplacement(context, route);
@@ -55,7 +54,6 @@ class AddAddress extends StatelessWidget {
                   IconButton(
                       icon: Icon(
                         Icons.shopping_cart,
-                        // size: 30.0,
                         color: Colors.black26,
                       ),
                       onPressed: () {

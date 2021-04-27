@@ -26,6 +26,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _current = 0;
   Future<bool> _onBackPressed() {
     return showDialog(
         context: context,
@@ -143,7 +144,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   .collection("items")
                   .where("shortInfo", isEqualTo: "Flash Sales")
                   .limit(4)
-                  // .orderBy("publishedDate", descending: true)
                   .snapshots(),
               builder: (context, dataSnapshot) {
                 return !dataSnapshot.hasData
@@ -167,18 +167,14 @@ class _MyHomePageState extends State<MyHomePage> {
             SliverToBoxAdapter(
               child: _createBanner(),
             ),
-            // SliverToBoxAdapter(
-            //   child: _createOfficialBrands(),
-            // ),
             SliverToBoxAdapter(
               child: _createStreamBuilderHeader(),
             ),
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection("items")
-
-                  // .where("ShortInfo", whereIn: "Flash Sales")
-
+                  // .where("ShortInfo", isEqualTo: "Flash Sales")
+                  // .limit(4)
                   .orderBy("publishedDate", descending: true)
                   .snapshots(),
               builder: (context, dataSnapshot) {
@@ -199,7 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         itemCount: dataSnapshot.data.docs.length,
                       );
               },
-            )
+            ),
           ],
         ),
       )),
@@ -214,7 +210,7 @@ Widget _createBanner() {
     child: Image(
       fit: BoxFit.cover,
       image: NetworkImage(
-          "https://images.unsplash.com/photo-1519087318609-bfb5c04c27f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80"),
+          "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Fbanner.jpeg?alt=media&token=d4a80868-686c-405b-b293-014f2d340f29"),
     ),
   );
 }
@@ -265,11 +261,10 @@ Widget _createFlashSalesHeader(context) {
       children: [
         Text("FLASH SALES", style: TextStyle(fontWeight: FontWeight.w700)),
         GestureDetector(
-          onTap: (){
-              Route route = MaterialPageRoute(builder: (context) => FlashSale());
+          onTap: () {
+            Route route = MaterialPageRoute(builder: (context) => FlashSale());
 
-              Navigator.pushReplacement(context, route);
-
+            Navigator.pushReplacement(context, route);
           },
           child: Row(
             children: [
@@ -343,7 +338,7 @@ Widget _createCategories(BuildContext context) {
                 CircleAvatar(
                   radius: 20.0,
                   backgroundImage: NetworkImage(
-                      "https://images.unsplash.com/photo-1576644461179-ddd318c669e4?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Fgum.jpeg?alt=media&token=69325cc3-ad9a-4280-be32-51a219022963"),
                 ),
                 SizedBox(
                   height: 10.0,
@@ -369,7 +364,7 @@ Widget _createCategories(BuildContext context) {
                 CircleAvatar(
                     radius: 20.0,
                     backgroundImage: NetworkImage(
-                        "https://images.unsplash.com/photo-1610112908715-bfb038058815?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80")),
+                        "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Ftoffee.jpeg?alt=media&token=2ef31932-a2fd-4d56-b7e4-538474b93827")),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -394,7 +389,7 @@ Widget _createCategories(BuildContext context) {
                 CircleAvatar(
                   radius: 20.0,
                   backgroundImage: NetworkImage(
-                      "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Fchocolates.jpeg?alt=media&token=c99dd0e9-4ed8-4bfd-9c60-a2d4df3cfad0"),
                 ),
                 SizedBox(
                   height: 10.0,
@@ -420,7 +415,7 @@ Widget _createCategories(BuildContext context) {
                 CircleAvatar(
                   radius: 20.0,
                   backgroundImage: NetworkImage(
-                      "https://images.unsplash.com/photo-1575729853435-c3aac6ca37df?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Flollipops.jpeg?alt=media&token=bff83178-9479-4bde-a7c0-1681671702cd"),
                 ),
                 SizedBox(
                   height: 10.0,
@@ -445,7 +440,7 @@ Widget _createCategories(BuildContext context) {
                 CircleAvatar(
                   radius: 20.0,
                   backgroundImage: NetworkImage(
-                      "https://images.unsplash.com/photo-1584609973729-4a8bc988e2e2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Ftoys.jpeg?alt=media&token=5799e1c5-cd24-4ef0-a35b-8b329a13912d"),
                 ),
                 SizedBox(
                   height: 10.0,
@@ -475,13 +470,13 @@ Widget _createCarousel() {
               borderRadius: BorderRadius.circular(8.0),
               image: DecorationImage(
                 image: NetworkImage(
-                    "https://images.unsplash.com/photo-1517683551739-7f3f08efba84?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
+                    "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2Fjumbo1.png?alt=media&token=628b3a16-eada-48d1-a7f5-0ed3b95accf4"),
                 fit: BoxFit.cover,
               ),
             ),
           ),
 
-          //2nd Image of Slider
+          // 2nd Image of Slider
           Container(
             margin: EdgeInsets.only(top: 6.0, bottom: 6.0),
             decoration: BoxDecoration(
@@ -501,7 +496,7 @@ Widget _createCarousel() {
               borderRadius: BorderRadius.circular(8.0),
               image: DecorationImage(
                 image: NetworkImage(
-                    "https://images.unsplash.com/photo-1594243968753-6a0fc79e86dd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
+                    "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2Fjumbo3.png?alt=media&token=35a8f8c5-8f7f-442a-ab85-c7b27644d6d7"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -514,35 +509,36 @@ Widget _createCarousel() {
               borderRadius: BorderRadius.circular(8.0),
               image: DecorationImage(
                 image: NetworkImage(
-                    "https://images.unsplash.com/photo-1597892822997-309a4f7223d3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
+                    "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2Fbanner4.png?alt=media&token=66df1029-84e7-4480-89fb-9347b356a490"),
                 fit: BoxFit.cover,
               ),
             ),
           ),
 
           //5th Image of Slider
-          Container(
-            margin: EdgeInsets.only(top: 6.0, bottom: 6.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              image: DecorationImage(
-                image: NetworkImage(
-                    "https://images.unsplash.com/photo-1511348398635-8efff213a280?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          // Container(
+          //   margin: EdgeInsets.only(top: 6.0, bottom: 6.0),
+          //   decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.circular(8.0),
+          //     image: DecorationImage(
+          //       image: NetworkImage(
+          //           "https://images.unsplash.com/photo-1511348398635-8efff213a280?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
         ],
         options: CarouselOptions(
-          height: 150.0,
-          enlargeCenterPage: true,
-          autoPlay: true,
-          aspectRatio: 16 / 9,
-          autoPlayCurve: Curves.fastOutSlowIn,
-          enableInfiniteScroll: true,
-          autoPlayAnimationDuration: Duration(milliseconds: 800),
-          viewportFraction: 0.95,
-        ),
+            height: 150.0,
+            enlargeCenterPage: true,
+            autoPlay: true,
+            aspectRatio: 16 / 9,
+            autoPlayCurve: Curves.fastOutSlowIn,
+            enableInfiniteScroll: true,
+            autoPlayAnimationDuration: Duration(milliseconds: 800),
+            viewportFraction: 0.95,
+       
+            ),
       )
     ],
   );
