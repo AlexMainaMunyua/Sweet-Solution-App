@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_application/main.dart';
 import 'package:ecommerce_application/pages/Admin/shiftOrders.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
+import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -35,7 +36,7 @@ class _UploadPageState extends State<UploadPage>
         : displayAdminUploadFormScreen();
   }
 
-   Future<bool> _onBackPressed() {
+  Future<bool> _onBackPressed() {
     return showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -44,14 +45,20 @@ class _UploadPageState extends State<UploadPage>
               actions: <Widget>[
                 GestureDetector(
                   onTap: () => Navigator.of(context).pop(false),
-                  child: Text("No", style: TextStyle(fontSize: 16.0),),
+                  child: Text(
+                    "No",
+                    style: TextStyle(fontSize: 16.0),
+                  ),
                 ),
                 SizedBox(width: 30.0, height: 30),
                 GestureDetector(
                   onTap: () => Navigator.of(context).pop(true),
-                  child: Text("Yes", style: TextStyle(fontSize: 16.0),),
+                  child: Text(
+                    "Yes",
+                    style: TextStyle(fontSize: 16.0),
+                  ),
                 ),
-                 SizedBox(width: 10.0),
+                SizedBox(width: 10.0),
               ],
             ));
   }
@@ -60,44 +67,45 @@ class _UploadPageState extends State<UploadPage>
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
-        appBar: AppBar(
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.black26, Colors.white],
-                    begin: const FractionalOffset(0.0, 0.0),
-                    end: const FractionalOffset(1.0, 0.0),
-                    stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp)),
-          ),
-          leading: IconButton(
-            icon: Icon(
-              Icons.border_color,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Route route = MaterialPageRoute(builder: (c) => AdminShiftOrders());
+        // appBar: AppBar(
+        //   flexibleSpace: Container(
+        //     decoration: BoxDecoration(
+        //         gradient: LinearGradient(
+        //             colors: [Colors.black26, Colors.white],
+        //             begin: const FractionalOffset(0.0, 0.0),
+        //             end: const FractionalOffset(1.0, 0.0),
+        //             stops: [0.0, 1.0],
+        //             tileMode: TileMode.clamp)),
+        //   ),
+        //   leading: IconButton(
+        //     icon: Icon(
+        //       Icons.border_color,
+        //       color: Colors.white,
+        //     ),
+        //     onPressed: () {
+        //       Route route =
+        //           MaterialPageRoute(builder: (c) => AdminShiftOrders());
 
-              Navigator.pushReplacement(context, route);
-            },
-          ),
-          actions: [
-            TextButton(
-                onPressed: () {
-               
-                  Route route = MaterialPageRoute(builder: (c) => SplashScreen());
+        //       Navigator.pushReplacement(context, route);
+        //     },
+        //   ),
+        //   actions: [
+        //     // TextButton(
+        //     //     onPressed: () {
+        //     //       Route route =
+        //     //           MaterialPageRoute(builder: (c) => SplashScreen());
 
-                  Navigator.pushReplacement(context, route);
-                },
-                child: Text(
-                  "Logout",
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black26),
-                ))
-          ],
-        ),
+        //     //       Navigator.pushReplacement(context, route);
+        //     //     },
+        //     //     child: Text(
+        //     //       "Logout",
+        //     //       style: TextStyle(
+        //     //           fontSize: 16.0,
+        //     //           fontWeight: FontWeight.bold,
+        //     //           color: Colors.black26),
+        //     //     ))
+        //   ],
+        // ),
         body: getAdminHomeScreenBody(),
       ),
     );
@@ -105,35 +113,81 @@ class _UploadPageState extends State<UploadPage>
 
   getAdminHomeScreenBody() {
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.black26, Colors.white],
-              begin: const FractionalOffset(0.0, 0.0),
-              end: const FractionalOffset(1.0, 0.0),
-              stops: [0.0, 1.0],
-              tileMode: TileMode.clamp)),
+      // decoration: BoxDecoration(
+      //     gradient: LinearGradient(
+      //         colors: [Colors.black26, Colors.white],
+      //         begin: const FractionalOffset(0.0, 0.0),
+      //         end: const FractionalOffset(1.0, 0.0),
+      //         stops: [0.0, 1.0],
+      //         tileMode: TileMode.clamp)),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.shop_two, color: Colors.white, size: 200.0),
+               SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10.0),
+                    height: 70,
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text("Admin dashboad",
+                          style: TextStyle(
+                              fontSize: 45.0,
+                              color: Colors.grey.shade500,
+                              fontFamily: "Signatra")),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 8.0,
+                  ),
+            Icon(Icons.shop_two, color: Colors.grey.shade400, size: 200.0),
             Padding(
-              padding: EdgeInsets.only(
-                top: 20.0,
-              ),
-              child: RaisedButton(
-                onPressed: () {
-                  takeImage(context);
-                },
-                color: Colors.green,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(9.0)),
-                child: Text(
-                  "Add new Item",
-                  style: TextStyle(fontSize: 20.0, color: Colors.white),
+                padding: EdgeInsets.only(
+                  top: 20.0,
                 ),
-              ),
-            )
+                child: WideButton(
+                    onPressed: () {
+                      takeImage(context);
+                    },
+                    msg: "Add New Items")),
+                      Padding(
+                padding: EdgeInsets.only(
+                  top: 20.0,
+                ),
+                child: WideButton(
+                    onPressed: () {
+              //         Route route =
+              //     MaterialPageRoute(builder: (c) => AdminShiftOrders());
+
+              // Navigator.pushReplacement(context, route);
+                    },
+                    msg: "View Registered Users")),
+            Padding(
+                padding: EdgeInsets.only(
+                  top: 20.0,
+                ),
+                child: WideButton(
+                    onPressed: () {
+                      Route route =
+                  MaterialPageRoute(builder: (c) => AdminShiftOrders());
+
+              Navigator.pushReplacement(context, route);
+                    },
+                    msg: "View Available Orders")),
+            Padding(
+                padding: EdgeInsets.only(
+                  top: 20.0,
+                ),
+                child: WideButton(
+                    onPressed: () {
+                       Route route =
+                      MaterialPageRoute(builder: (c) => SplashScreen());
+
+                  Navigator.pushReplacement(context, route);
+                    },
+                    msg: "LOGOUT"))
           ],
         ),
       ),
@@ -267,19 +321,22 @@ class _UploadPageState extends State<UploadPage>
         title: Text(
           "New Product",
           style: TextStyle(
-              color: Colors.white, fontSize: 24.0, fontWeight: FontWeight.bold),
+              fontFamily: "Signatra",
+              color: Colors.white,
+              fontSize: 30.0,
+              fontWeight: FontWeight.bold),
         ),
-        actions: [
-          TextButton(
-              onPressed: () {
-                uploading ? null : uploadImageAndSaveItemInfo();
-              },
-              child: Text("Add",
-                  style: TextStyle(
-                      color: Colors.black26,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold)))
-        ],
+        // actions: [
+        //   TextButton(
+        //       onPressed: () {
+        //         uploading ? null : uploadImageAndSaveItemInfo();
+        //       },
+        //       child: Text("Add",
+        //           style: TextStyle(
+        //               color: Colors.black26,
+        //               fontSize: 16.0,
+        //               fontWeight: FontWeight.bold)))
+        // ],
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -392,6 +449,34 @@ class _UploadPageState extends State<UploadPage>
           ),
           Divider(
             color: Colors.black26,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.grey.shade300,
+                    padding: EdgeInsets.only(
+                        top: 15, right: 25, bottom: 15, left: 25)),
+                onPressed: () {
+                  uploading ? null : uploadFlashImageAndSaveItemInfo();
+                },
+                child: Text("Flash Item"),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.grey.shade300,
+                    padding: EdgeInsets.only(
+                        top: 15, right: 25, bottom: 15, left: 25)),
+                onPressed: () {
+                  uploading ? null : uploadImageAndSaveItemInfo();
+                },
+                child: Text("New Item"),
+              ),
+            ],
           )
         ],
       ),
@@ -408,6 +493,51 @@ class _UploadPageState extends State<UploadPage>
     });
   }
 
+  uploadFlashImageAndSaveItemInfo() async {
+    setState(() {
+      uploading = true;
+    });
+    String imageDownloadUrl = await uploadFlashItemImage(file);
+
+    saveFlashItemInfo(imageDownloadUrl);
+  }
+
+  Future<String> uploadFlashItemImage(mFileImage) async {
+    final Reference storageReference =
+        FirebaseStorage.instance.ref().child("flash");
+
+    TaskSnapshot taskSnapshot = await storageReference
+        .child("product_$productId.jpg")
+        .putFile(mFileImage);
+
+    var downloadUrl = await taskSnapshot.ref.getDownloadURL();
+
+    return downloadUrl;
+  }
+
+  saveFlashItemInfo(String downloadUrl) {
+    final itemsRef = FirebaseFirestore.instance.collection("flash");
+
+    itemsRef.doc(productId).set({
+      "shortInfo": _shortTextEditingController.text.trim(),
+      "longDescription": _descriptionTextEditingController.text.trim(),
+      "title": _titleTextEditingController.text.trim(),
+      "publishedDate": DateTime.now(),
+      "price": int.parse(_priceTextEditingController.text),
+      "thumbnailUrl": downloadUrl,
+      "status": "available",
+    });
+    setState(() {
+      file = null;
+      uploading = false;
+      productId = DateTime.now().microsecondsSinceEpoch.toString();
+      _descriptionTextEditingController.clear();
+      _titleTextEditingController.clear();
+      _shortTextEditingController.clear();
+      _priceTextEditingController.clear();
+    });
+  }
+
   uploadImageAndSaveItemInfo() async {
     setState(() {
       uploading = true;
@@ -421,8 +551,9 @@ class _UploadPageState extends State<UploadPage>
     final Reference storageReference =
         FirebaseStorage.instance.ref().child("Items");
 
-    TaskSnapshot taskSnapshot =
-      await storageReference.child("product_$productId.jpg").putFile(mFileImage);
+    TaskSnapshot taskSnapshot = await storageReference
+        .child("product_$productId.jpg")
+        .putFile(mFileImage);
 
     var downloadUrl = await taskSnapshot.ref.getDownloadURL();
 

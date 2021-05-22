@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_application/pages/Admin/shiftOrders.dart';
 import 'package:ecommerce_application/pages/Admin/uploadItems.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Model/address.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
 import 'package:ecommerce_application/pages/Widgets/orderCard.dart';
+import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-
 
 String getOrderId = "";
 
@@ -20,8 +20,8 @@ class AdminOrderDetails extends StatelessWidget {
   const AdminOrderDetails({Key key, this.orderID, this.orderBy, this.addressID})
       : super(key: key);
 
-    _onWillPop(BuildContext context) {
-    Route route = MaterialPageRoute(builder: (c) => UploadPage());
+  _onWillPop(BuildContext context) {
+    Route route = MaterialPageRoute(builder: (c) => AdminShiftOrders());
 
     Navigator.pushReplacement(context, route);
   }
@@ -35,6 +35,33 @@ class AdminOrderDetails extends StatelessWidget {
       },
       child: SafeArea(
         child: Scaffold(
+          appBar: AppBar(
+            iconTheme: IconThemeData(
+              color: Colors.white,
+            ),
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [Colors.black26, Colors.white],
+                      begin: const FractionalOffset(0.0, 0.0),
+                      end: const FractionalOffset(1.0, 0.0),
+                      stops: [0.0, 1.0],
+                      tileMode: TileMode.clamp)),
+            ),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Route route =
+                    MaterialPageRoute(builder: (c) => AdminShiftOrders());
+                Navigator.pushReplacement(context, route);
+              },
+            ),
+            title: Text(
+              "Order Details",
+              style: TextStyle(
+                  fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
+            ),
+          ),
           body: SingleChildScrollView(
             child: FutureBuilder<DocumentSnapshot>(
               future: EcommerceApp.firestore
@@ -59,7 +86,7 @@ class AdminOrderDetails extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.all(4.0),
                               child: Align(
-                                alignment: Alignment.centerLeft,
+                                alignment: Alignment.center,
                                 child: Text(
                                   "Ksh." +
                                       dataMap[EcommerceApp.totalAmount]
@@ -72,7 +99,9 @@ class AdminOrderDetails extends StatelessWidget {
                             ),
                             Padding(
                               padding: EdgeInsets.all(4.0),
-                              child: Text("Order ID:" + getOrderId),
+                              child: Text("Order ID:" + getOrderId,
+                               style: TextStyle(fontSize: 8.0)
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(4.0),
@@ -157,28 +186,29 @@ class AdminStatusBanner extends StatelessWidget {
     status ? msg = "Succeful" : msg = "Unsuccessful";
 
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.black26, Colors.white],
-              begin: const FractionalOffset(0.0, 0.0),
-              end: const FractionalOffset(1.0, 0.0),
-              stops: [0.0, 1.0],
-              tileMode: TileMode.clamp)),
+      // decoration: BoxDecoration(
+      //     gradient: LinearGradient(
+      //         colors: [Colors.black26, Colors.white],
+      //         begin: const FractionalOffset(0.0, 0.0),
+      //         end: const FractionalOffset(1.0, 0.0),
+      //         stops: [0.0, 1.0],
+      //         tileMode: TileMode.clamp)),
+      color: Colors.grey.shade300,
       height: 40.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          GestureDetector(
-            onTap: () {
-              SystemNavigator.pop();
-            },
-            child: Container(
-              child: Icon(
-                Icons.arrow_drop_down_circle,
-                color: Colors.white,
-              ),
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     SystemNavigator.pop();
+          //   },
+          //   child: Container(
+          //     child: Icon(
+          //       Icons.arrow_drop_down_circle,
+          //       color: Colors.white,
+          //     ),
+          //   ),
+          // ),
           SizedBox(
             width: 20.0,
           ),
@@ -189,17 +219,17 @@ class AdminStatusBanner extends StatelessWidget {
           SizedBox(
             width: 5.0,
           ),
-          CircleAvatar(
-            radius: 8.0,
-            backgroundColor: Colors.grey,
-            child: Center(
-              child: Icon(
-                iconData,
-                color: Colors.white,
-                size: 14.0,
-              ),
-            ),
-          )
+          // CircleAvatar(
+          //   radius: 8.0,
+          //   backgroundColor: Colors.grey,
+          //   child: Center(
+          //     child: Icon(
+          //       iconData,
+          //       color: Colors.white,
+          //       size: 14.0,
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
@@ -228,11 +258,17 @@ class AdminShippingDetails extends StatelessWidget {
           height: 20.0,
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 90.0, vertical: 5.0),
+          padding: EdgeInsets.all(8.0),
           child: Text(
             "Shipment Details",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: Colors.black45,
+                fontSize: 16,
+                fontWeight: FontWeight.bold),
           ),
+        ),
+        SizedBox(
+          height: 10.0,
         ),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -243,60 +279,83 @@ class AdminShippingDetails extends StatelessWidget {
                 KeyText(
                   msg: "Name",
                 ),
-                Text(model.name),
+                Text(model.name, style: TextStyle(color: Colors.black45)),
               ]),
               TableRow(children: [
                 KeyText(
                   msg: "Phone Number",
                 ),
-                Text(model.phoneNumber),
+                Text(model.phoneNumber,
+                    style: TextStyle(color: Colors.black45)),
               ]),
               TableRow(children: [
                 KeyText(
-                  msg: "Flat Number",
+                  msg: "Business Name",
                 ),
-                Text(model.flatNumber),
+                Text(model.flatNumber, style: TextStyle(color: Colors.black45)),
               ]),
               TableRow(children: [
                 KeyText(
-                  msg: "City",
+                  msg: "Area",
                 ),
-                Text(model.city),
+                Text(model.city, style: TextStyle(color: Colors.black45)),
               ]),
-              TableRow(children: [
+                TableRow(children: [
                 KeyText(
-                  msg: "Pin Code",
+                  msg: "Next to",
                 ),
-                Text(model.pincode),
-              ])
+                Text(
+                  model.state,
+                  style: TextStyle(color: Colors.black45),
+                ),
+              ]),
+                TableRow(children: [
+                KeyText(
+                  msg: "County",
+                ),
+                Text(
+                  model.pincode,
+                  style: TextStyle(color: Colors.black45),
+                ),
+              ]),
+             
             ],
           ),
         ),
         Padding(
-          padding: EdgeInsets.all(10.0),
-          child: InkWell(
-            onTap: () {
+          padding: EdgeInsets.only(top: 20.0, bottom: 30.0),
+          child: WideButton(
+            msg: "CONFIRMED ORDER SHIFTED",
+            onPressed: () {
               confirmedOrderShifted(context, getOrderId);
             },
-            child: Container(
-              width: MediaQuery.of(context).size.width - 40.0,
-              height: 50.0,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [Colors.black26, Colors.white],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(1.0, 0.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp)),
-              child: Center(
-                child: Text(
-                  "Confirmed Order shifted ",
-                  style: TextStyle(color: Colors.white, fontSize: 15.0),
-                ),
-              ),
-            ),
           ),
-        )
+        ),
+        // Padding(
+        //   padding: EdgeInsets.all(10.0),
+        //   child: InkWell(
+        //     onTap: () {
+        //       confirmedOrderShifted(context, getOrderId);
+        //     },
+        //     child: Container(
+        //       width: MediaQuery.of(context).size.width - 40.0,
+        //       height: 50.0,
+        //       decoration: BoxDecoration(
+        //           gradient: LinearGradient(
+        //               colors: [Colors.black26, Colors.white],
+        //               begin: const FractionalOffset(0.0, 0.0),
+        //               end: const FractionalOffset(1.0, 0.0),
+        //               stops: [0.0, 1.0],
+        //               tileMode: TileMode.clamp)),
+        //       child: Center(
+        //         child: Text(
+        //           "Confirmed Order shifted ",
+        //           style: TextStyle(color: Colors.white, fontSize: 15.0),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // )
       ],
     );
   }
@@ -324,9 +383,13 @@ class KeyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      msg,
-      style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Text(
+        msg,
+        style: TextStyle(
+            color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+      ),
     );
   }
 }

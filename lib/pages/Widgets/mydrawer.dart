@@ -1,3 +1,4 @@
+import 'package:ecommerce_application/main.dart';
 import 'package:ecommerce_application/pages/Address/addAddress.dart';
 import 'package:ecommerce_application/pages/Authentication/authenication.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
@@ -6,7 +7,6 @@ import 'package:ecommerce_application/pages/Store/cart.dart';
 import 'package:ecommerce_application/pages/Store/search.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -19,37 +19,63 @@ class MyDrawer extends StatelessWidget {
               top: 25.0,
               bottom: 10.0,
             ),
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.black26, Colors.white],
-                    begin: const FractionalOffset(0.0, 0.0),
-                    end: const FractionalOffset(1.0, 0.0),
-                    stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp)),
+            color: Colors.grey.shade500,
+            // decoration: BoxDecoration(
+            //     gradient: LinearGradient(
+            //         colors: [Colors.black26, Colors.white],
+            //         begin: const FractionalOffset(0.0, 0.0),
+            //         end: const FractionalOffset(1.0, 0.0),
+            //         stops: [0.0, 1.0],
+            //         tileMode: TileMode.clamp)),
             child: Column(
               children: [
-                Material(
-                  borderRadius: BorderRadius.all(Radius.circular(80.0)),
-                  elevation: 8.0,
-                  child: Container(
-                    height: 120.0,
-                    width: 120.0,
-                    child: CircleAvatar(
-                     
-                      backgroundImage: NetworkImage(EcommerceApp
-                          .sharedPreferences
-                          .getString(EcommerceApp.userAvatarUrl)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0,bottom: 5.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Material(
+                      borderRadius: BorderRadius.all(Radius.circular(80.0)),
+                      elevation: 8.0,
+                      child: Container(
+                        height: 70.0,
+                        width: 70.0,
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(EcommerceApp
+                              .sharedPreferences
+                              .getString(EcommerceApp.userAvatarUrl)),
+                        ),
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(height: 10.0),
-                Text(
-                  EcommerceApp.sharedPreferences
-                      .getString(EcommerceApp.userName),
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 35.0,
-                      fontFamily: "Signatra"),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0,bottom: 5.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      EcommerceApp.sharedPreferences
+                          .getString(EcommerceApp.userName),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12.0,
+                         ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, bottom: 10.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      EcommerceApp.sharedPreferences
+                          .getString(EcommerceApp.userEmail),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12.0,
+                        ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -58,14 +84,6 @@ class MyDrawer extends StatelessWidget {
             height: 12.0,
           ),
           Container(
-         /*    padding: EdgeInsets.only(top: 1.0),
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.black26, Colors.white],
-                    begin: const FractionalOffset(0.0, 0.0),
-                    end: const FractionalOffset(1.0, 0.0),
-                    stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp)), */
             child: Column(
               children: [
                 ListTile(
@@ -84,11 +102,11 @@ class MyDrawer extends StatelessWidget {
                     Navigator.pushReplacement(context, route);
                   },
                 ),
-                Divider(
-                  height: 1.0,
-                  color: Colors.black45,
-                  // thickness: 6.0,
-                ),
+                // Divider(
+                //   height: 1.0,
+                //   color: Colors.black45,
+                //   // thickness: 6.0,
+                // ),
 
                 ///////////////////////////////////////////////////////////////////////
                 ListTile(
@@ -106,11 +124,11 @@ class MyDrawer extends StatelessWidget {
                     Navigator.pushReplacement(context, route);
                   },
                 ),
-                Divider(
-                  height: 1.0,
-                  color: Colors.black45,
-                  // thickness: 6.0,
-                ),
+                // Divider(
+                //   height: 1.0,
+                //   color: Colors.black45,
+                //   // thickness: 6.0,
+                // ),
                 ListTile(
                   leading: Icon(
                     Icons.shopping_cart,
@@ -126,11 +144,11 @@ class MyDrawer extends StatelessWidget {
                     Navigator.pushReplacement(context, route);
                   },
                 ),
-                Divider(
-                  height: 1.0,
-                  color: Colors.black45,
-                  // thickness: 6.0,
-                ),
+                // Divider(
+                //   height: 1.0,
+                //   color: Colors.black45,
+                //   // thickness: 6.0,
+                // ),
                 ListTile(
                   leading: Icon(
                     Icons.search,
@@ -147,11 +165,11 @@ class MyDrawer extends StatelessWidget {
                     Navigator.pushReplacement(context, route);
                   },
                 ),
-                Divider(
-                  height: 1.0,
-                  color: Colors.black45,
-                  // thickness: 6.0,
-                ),
+                // Divider(
+                //   height: 1.0,
+                //   color: Colors.black45,
+                //   // thickness: 6.0,
+                // ),
                 ListTile(
                   leading: Icon(
                     Icons.add_location,
@@ -163,17 +181,17 @@ class MyDrawer extends StatelessWidget {
                   ),
                   onTap: () {
                     Route route =
-                        MaterialPageRoute(builder: (c) =>  AddAddress());
+                        MaterialPageRoute(builder: (c) => AddAddress());
 
                     Navigator.pushReplacement(context, route);
                   },
                 ),
-                 Divider(
-                  height: 1.0,
-                  color: Colors.black45,
-                  // thickness: 6.0,
-                ),
-            /*     ListTile(
+                //  Divider(
+                //   height: 1.0,
+                //   color: Colors.black45,
+                //   // thickness: 6.0,
+                // ),
+                /*     ListTile(
                   leading: Icon(
                     Icons.settings,
                     color: Colors.black45,
@@ -202,17 +220,17 @@ class MyDrawer extends StatelessWidget {
                   onTap: () {
                     EcommerceApp.auth.signOut().then((value) {
                       Route route =
-                          MaterialPageRoute(builder: (c) => AuthenticScreen());
+                          MaterialPageRoute(builder: (c) => SplashScreen());
 
                       Navigator.pushReplacement(context, route);
                     });
                   },
                 ),
-           /*      Divider(
-                  height: 10.0,
+                Divider(
+                  height: 1.0,
                   color: Colors.black45,
-                  thickness: 6.0,
-                ), */
+                  // thickness: 6.0,
+                ),
               ],
             ),
           )

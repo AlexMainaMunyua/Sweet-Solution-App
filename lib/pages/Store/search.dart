@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_application/pages/Model/item.dart';
+import 'package:ecommerce_application/pages/Store/productPage.dart';
 import 'package:ecommerce_application/pages/Widgets/customAppBar.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
@@ -41,12 +42,114 @@ class _SearchProductState extends State<SearchProduct> {
                         ItemModel model =
                             ItemModel.fromJson(snap.data.docs[index].data());
 
-                        return sourceInfo(model, context);
+                        return searchSourceInfo(model, context);
                       },
                       itemCount: snap.data.docs.length,
                     )
                   : Center(child: Text("Search items"));
             },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget searchSourceInfo(ItemModel model, BuildContext context,
+      {Color background, removeCartFunction}) {
+    return InkWell(
+      onTap: () {
+        Route route =
+            MaterialPageRoute(builder: (c) => ProductPage(itemModel: model));
+
+        Navigator.pushReplacement(context, route);
+      },
+      splashColor: Colors.black26,
+      child: Container(
+        height: 130.0,
+        child: Card(
+          child: Container(
+            child: Stack(
+              children: [
+                Row(
+                  children: [
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Image.network(
+                      model.thumbnailUrl,
+                      height: 80.0,
+                      width: 120.0,
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              model.title,
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 12.0),
+                            ),
+                          ),
+                            Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              model.shortInfo,
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 12.0),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Ksh.",
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Text(
+                                  (model.price).toString(),
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                    color: Colors.black,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                  ],
+                ),
+                Container(
+                  padding: EdgeInsets.only(right: 10.0, top: 10.0),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      width: 30,
+                      height: 20,
+                      color: Colors.black12,
+                      child: Center(
+                          child: Text(
+                        "5%",
+                        style: TextStyle(fontSize: 10, color: Colors.black38),
+                      )),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -76,10 +179,7 @@ class _SearchProductState extends State<SearchProduct> {
           children: [
             Padding(
               padding: EdgeInsets.only(left: 8.0),
-              child: Icon(
-                Icons.search,
-                color: Colors.blueGrey,
-              ),
+              child: Icon(Icons.search, color: Colors.black45),
             ),
             Flexible(
                 child: Padding(
@@ -88,8 +188,9 @@ class _SearchProductState extends State<SearchProduct> {
                 onChanged: (value) {
                   startSearching(value);
                 },
-                decoration:
-                    InputDecoration.collapsed(hintText: "Search here..."),
+                decoration: InputDecoration.collapsed(
+                    hintText: "Search here",
+                    hintStyle: TextStyle(color: Colors.black38)),
               ),
             ))
           ],

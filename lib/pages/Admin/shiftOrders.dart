@@ -5,7 +5,6 @@ import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
 import 'package:flutter/material.dart';
 
-
 class AdminShiftOrders extends StatefulWidget {
   @override
   _MyOrdersState createState() => _MyOrdersState();
@@ -37,10 +36,9 @@ class _MyOrdersState extends State<AdminShiftOrders> {
                       stops: [0.0, 1.0],
                       tileMode: TileMode.clamp)),
             ),
-            centerTitle: true,
             title: Text(
               "My Orders",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: 35.0, fontFamily: "Signatra"),
             ),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
