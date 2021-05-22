@@ -95,7 +95,7 @@ class _LoginState extends State<Login> {
                   ),
                   Container(
                     padding: EdgeInsets.only(top:10.0),
-                    height: 70,
+                    height: 50,
                     child: Center(
                       child: Text("LOGIN",
                           style: TextStyle(

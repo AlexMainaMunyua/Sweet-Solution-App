@@ -1,11 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecommerce_application/pages/Categories/chocolatepage.dart';
-import 'package:ecommerce_application/pages/Categories/flashsales.dart';
-import 'package:ecommerce_application/pages/Categories/gumpage.dart';
-import 'package:ecommerce_application/pages/Categories/lollipoppage.dart';
-import 'package:ecommerce_application/pages/Categories/toffeepage.dart';
-import 'package:ecommerce_application/pages/Categories/toypage.dart';
+import 'package:ecommerce_application/pages/Categories/chocolates/chocolatepage.dart';
+import 'package:ecommerce_application/pages/Categories/flashsales/flashsales.dart';
+import 'package:ecommerce_application/pages/Categories/bubblegums/gumpage.dart';
+import 'package:ecommerce_application/pages/Categories/fruitdrops/fruitdroppage.dart';
+import 'package:ecommerce_application/pages/Categories/lollipops/lollipoppage.dart';
+import 'package:ecommerce_application/pages/Categories/toffees/toffeepage.dart';
+import 'package:ecommerce_application/pages/Categories/toys/toypage.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
 import 'package:ecommerce_application/pages/Model/item.dart';
@@ -323,10 +324,11 @@ Widget _createCategories(BuildContext context) {
     color: Colors.white,
     height: 100.0,
     padding: EdgeInsets.only(top: 15),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+    child: ListView(
+      scrollDirection: Axis.horizontal,
       children: [
         Container(
+          width: 70,
           child: GestureDetector(
             onTap: () {
               Route route = MaterialPageRoute(builder: (context) => GumPage());
@@ -352,6 +354,7 @@ Widget _createCategories(BuildContext context) {
           ),
         ),
         Container(
+           width: 70,
           child: GestureDetector(
             onTap: () {
               Route route =
@@ -377,6 +380,7 @@ Widget _createCategories(BuildContext context) {
           ),
         ),
         Container(
+           width: 70,
           child: GestureDetector(
             onTap: () {
               Route route =
@@ -403,6 +407,7 @@ Widget _createCategories(BuildContext context) {
           ),
         ),
         Container(
+           width: 70,
           child: GestureDetector(
             onTap: () {
               Route route =
@@ -429,6 +434,7 @@ Widget _createCategories(BuildContext context) {
           ),
         ),
         Container(
+           width: 70,
           child: GestureDetector(
             onTap: () {
               Route route = MaterialPageRoute(builder: (context) => ToyPage());
@@ -453,6 +459,33 @@ Widget _createCategories(BuildContext context) {
             ),
           ),
         ),
+          Container(
+           width: 70,
+          child: GestureDetector(
+            onTap: () {
+              Route route = MaterialPageRoute(builder: (context) => FruitDropPage());
+
+              Navigator.pushReplacement(context, route);
+            },
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 20.0,
+                  backgroundImage: NetworkImage(
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Ffruitdrops.jpeg?alt=media&token=7f3bbfb6-12d0-4e90-afcd-f1874b05a187"),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  "Fruit Drops",
+                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+          ),
+        ),
+       
       ],
     ),
   );
@@ -529,16 +562,15 @@ Widget _createCarousel() {
           // ),
         ],
         options: CarouselOptions(
-            height: 150.0,
-            enlargeCenterPage: true,
-            autoPlay: true,
-            aspectRatio: 16 / 9,
-            autoPlayCurve: Curves.fastOutSlowIn,
-            enableInfiniteScroll: true,
-            autoPlayAnimationDuration: Duration(milliseconds: 800),
-            viewportFraction: 0.95,
-       
-            ),
+          height: 150.0,
+          enlargeCenterPage: true,
+          autoPlay: true,
+          aspectRatio: 16 / 9,
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enableInfiniteScroll: true,
+          autoPlayAnimationDuration: Duration(milliseconds: 800),
+          viewportFraction: 0.95,
+        ),
       )
     ],
   );

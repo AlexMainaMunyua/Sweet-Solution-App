@@ -52,7 +52,7 @@ class _RegisterState extends State<Register> {
   }
 
   _onWillPop(BuildContext context) {
-    Route route = MaterialPageRoute(builder: (c) => MyHomePage());
+    Route route = MaterialPageRoute(builder: (c) => Login());
 
     Navigator.pushReplacement(context, route);
   }
@@ -78,7 +78,7 @@ class _RegisterState extends State<Register> {
                   ),
                   Container(
                     padding: EdgeInsets.all(10.0),
-                    height: 70,
+                    height: 50,
                     child: Center(
                       child: Text("Register",
                           style: TextStyle(

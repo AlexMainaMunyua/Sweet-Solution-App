@@ -23,7 +23,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
                 stops: [0.0, 1.0],
                 tileMode: TileMode.clamp)),
       ),
-      centerTitle: true,
+  
       title: Text(
         "Cady",
         style: TextStyle(

@@ -12,7 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
-class GumPage extends StatelessWidget {
+class FlashSale extends StatefulWidget {
+  @override
+  _FlashSaleState createState() => _FlashSaleState();
+}
+
+class _FlashSaleState extends State<FlashSale> {
   _onWillPop(BuildContext context) {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
@@ -50,7 +55,7 @@ class GumPage extends StatelessWidget {
                 },
               ),
               title: Text(
-                "Bubble Gums",
+                "Flash Sales",
                 style: TextStyle(
                     fontSize: 35.0,
                     color: Colors.white,
@@ -105,21 +110,27 @@ class GumPage extends StatelessWidget {
                   ]),
                 )
               ],
-            ),
-            body: CustomScrollView(slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
+              bottom: PreferredSize(
+                preferredSize: Size.fromHeight(40),
+                child: Align(
+                  alignment: Alignment.centerLeft,
                   child: TabBar(
-                    indicatorWeight: 5,
+                    // indicatorWeight: 5,
                     isScrollable: true,
+                    indicator: UnderlineTabIndicator(
+                        borderSide:
+                            BorderSide(width: 4, color: Colors.grey.shade700),
+                        insets:
+                            EdgeInsets.only(left: 0, right: 4.0, bottom: 0.0)),
+                    // labelPadding:  EdgeInsets.only(left: 0, right: 0),
+
                     tabs: [
                       Tab(
                         child: Text(
                           "All",
                           style: TextStyle(
                               fontSize: 16,
-                              color: Colors.grey.shade700,
+                              color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -127,127 +138,149 @@ class GumPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: _createCarousel(),
-                ),
-              ),
-                      StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection("items")
-                      .where("shortInfo", isEqualTo: "Toys")
-                      .limit(4)
-                      // .orderBy("publishedDate", descending: true)
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    return !snapshot.hasData
-                        ? SliverToBoxAdapter(
-                            child: Center(child: circularProgress()),
-                          )
-                        : SliverStaggeredGrid.countBuilder(
-                            crossAxisCount: 2,
-                            staggeredTileBuilder: (c) => StaggeredTile.fit(1),
-                            itemBuilder: (context, index) {
-                              ItemModel model = ItemModel.fromJson(
-                                  snapshot.data.docs[index].data());
+            ),
+            // body: CustomScrollView(slivers: [
+            //   SliverToBoxAdapter(
+            //     child: Padding(
+            //       padding: const EdgeInsets.only(left: 10.0),
+            //       child: TabBar(
+            //         indicatorWeight: 5,
+            //         isScrollable: true,
+            //         tabs: [
+            //           Tab(
+            //             child: Text(
+            //               "All",
+            //               style: TextStyle(
+            //                   fontSize: 16,
+            //                   color: Colors.grey.shade700,
+            //                   fontWeight: FontWeight.bold),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            //   SliverToBoxAdapter(
+            //     child: Padding(
+            //       padding: const EdgeInsets.only(top: 8.0),
+            //       child: _createCarousel(),
+            //     ),
+            //   ),
+            //   StreamBuilder(
+            //       stream: FirebaseFirestore.instance
+            //           .collection("items")
+            //           .where("shortInfo", isEqualTo: "Flash Sales")
+            //           .limit(4)
+            //           // .orderBy("publishedDate", descending: true)
+            //           .snapshots(),
+            //       builder: (context, snapshot) {
+            //         return !snapshot.hasData
+            //             ? SliverToBoxAdapter(
+            //                 child: Center(child: circularProgress()),
+            //               )
+            //             : SliverStaggeredGrid.countBuilder(
+            //                 crossAxisCount: 2,
+            //                 staggeredTileBuilder: (c) => StaggeredTile.fit(1),
+            //                 itemBuilder: (context, index) {
+            //                   ItemModel model = ItemModel.fromJson(
+            //                       snapshot.data.docs[index].data());
 
-                              return categorySourceInfo(model, context);
-                            },
-                            itemCount: snapshot.data.docs.length);
-                  })
-            ]),
+            //                   return categorySourceInfo(model, context);
+            //                 },
+            //                 itemCount: snapshot.data.docs.length);
+            //       })
+            // ]),
           ),
         ));
   }
 
   Widget categorySourceInfo(ItemModel model, BuildContext context,
-    {Color background, removeCartFunction}) {
-  return InkWell(
-    onTap: () {
-      Route route =
-          MaterialPageRoute(builder: (c) => ProductPage(itemModel: model));
+      {Color background, removeCartFunction}) {
+    return InkWell(
+      onTap: () {
+        Route route =
+            MaterialPageRoute(builder: (c) => ProductPage(itemModel: model));
 
-      Navigator.pushReplacement(context, route);
-    },
-    splashColor: Colors.black26,
-    child: Container(
-      height: 200.0,
-      child: Card(
-        child: Container(
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Image.network(
-                    model.thumbnailUrl,
-                    height: 100.0,
-                    width: 120.0,
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Expanded(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                    model.shortInfo,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.grey, fontSize: 12.0),
-                  ),
+        Navigator.pushReplacement(context, route);
+      },
+      splashColor: Colors.black26,
+      child: Container(
+        height: 200.0,
+        child: Card(
+          child: Container(
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Image.network(
+                      model.thumbnailUrl,
+                      height: 100.0,
+                      width: 120.0,
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Expanded(
+                        child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        model.shortInfo,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.grey, fontSize: 12.0),
+                      ),
+                    )),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Ksh.",
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Text(
+                            (model.price).toString(),
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.black,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                  ],
+                ),
+                Container(
+                  padding: EdgeInsets.only(right: 10.0, top: 10.0),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      width: 30,
+                      height: 20,
+                      color: Colors.black12,
+                      child: Center(
+                          child: Text(
+                        "5%",
+                        style: TextStyle(fontSize: 10, color: Colors.black38),
                       )),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Ksh.",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Text(
-                          (model.price).toString(),
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: Colors.black,
-                          ),
-                        )
-                      ],
                     ),
                   ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                ],
-              ),
-              Container(
-                padding: EdgeInsets.only(right: 10.0, top: 10.0),
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Container(
-                    width: 30,
-                    height: 20,
-                    color: Colors.black12,
-                    child: Center(
-                        child: Text(
-                      "5%",
-                      style: TextStyle(fontSize: 10, color: Colors.black38),
-                    )),
-                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   Widget _createCarousel() {
     return Column(
@@ -261,7 +294,7 @@ class GumPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FGumJumboTron%2Fgumjumbo1.jpg?alt=media&token=db5bb208-d797-4de1-b7e4-e8d7e3dcc3f9"),
+                      "https://images.unsplash.com/photo-1517683551739-7f3f08efba84?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -274,7 +307,7 @@ class GumPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FGumJumboTron%2Fgumjumbo3.jpg?alt=media&token=73cd77a7-0802-4613-b8f7-b9f8d7194074"),
+                      "https://images.unsplash.com/photo-1611250503393-9424f314d265?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1266&q=80"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -287,7 +320,7 @@ class GumPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FGumJumboTron%2Fgumjumbo2.jpg?alt=media&token=296fc78c-e89e-4aec-83aa-2fc72d3eb6c6"),
+                      "https://images.unsplash.com/photo-1594243968753-6a0fc79e86dd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -300,7 +333,7 @@ class GumPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FGumJumboTron%2Fgumjumbo4.jpg?alt=media&token=1f0d9e47-ae1e-4661-b882-34a2be8776fc"),
+                      "https://images.unsplash.com/photo-1597892822997-309a4f7223d3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -313,7 +346,7 @@ class GumPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FGumJumboTron%2Fgumjumbo5.jpeg?alt=media&token=7d28b272-abf3-4493-8fce-06a4069cbba0"),
+                      "https://images.unsplash.com/photo-1511348398635-8efff213a280?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
                   fit: BoxFit.cover,
                 ),
               ),

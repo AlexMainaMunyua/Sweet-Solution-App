@@ -151,19 +151,19 @@ class _UploadPageState extends State<UploadPage>
                     onPressed: () {
                       takeImage(context);
                     },
-                    msg: "ADD NEW ITEMS")),
+                    msg: "Add New Items")),
                       Padding(
                 padding: EdgeInsets.only(
                   top: 20.0,
                 ),
                 child: WideButton(
                     onPressed: () {
-                      Route route =
-                  MaterialPageRoute(builder: (c) => AdminShiftOrders());
+              //         Route route =
+              //     MaterialPageRoute(builder: (c) => AdminShiftOrders());
 
-              Navigator.pushReplacement(context, route);
+              // Navigator.pushReplacement(context, route);
                     },
-                    msg: "VIEW REGISTERED USERS")),
+                    msg: "View Registered Users")),
             Padding(
                 padding: EdgeInsets.only(
                   top: 20.0,
@@ -175,7 +175,7 @@ class _UploadPageState extends State<UploadPage>
 
               Navigator.pushReplacement(context, route);
                     },
-                    msg: "VIEW AVAILABLE ORDERS")),
+                    msg: "View Available Orders")),
             Padding(
                 padding: EdgeInsets.only(
                   top: 20.0,
