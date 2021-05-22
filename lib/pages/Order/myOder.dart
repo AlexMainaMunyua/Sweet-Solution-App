@@ -37,10 +37,10 @@ class _MyOrdersState extends State<MyOrders> {
                       stops: [0.0, 1.0],
                       tileMode: TileMode.clamp)),
             ),
-            centerTitle: true,
             title: Text(
               "My Orders",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(
+                  color: Colors.white, fontSize: 35.0, fontFamily: "Signatra"),
             ),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
@@ -91,4 +91,6 @@ class _MyOrdersState extends State<MyOrders> {
       ),
     );
   }
+
+
 }

@@ -26,28 +26,23 @@ class AdminOrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Route route;
+        Route route = MaterialPageRoute(
+            builder: (c) => AdminOrderDetails(
+                orderBy: orderBy, orderID: orderID, addressID: addressID));
 
-        if (counter == 0) {
-          counter = counter + 1;
-          route = MaterialPageRoute(
-              builder: (c) => AdminOrderDetails(
-                  orderBy: orderBy, orderID: orderID, addressID: addressID));
-        }
+        // if (counter == 0) {
+        //   counter = counter + 1;
+        //   route =
+        // }
 
         Navigator.push(context, route);
       },
       child: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Colors.black26, Colors.white],
-                begin: const FractionalOffset(0.0, 0.0),
-                end: const FractionalOffset(1.0, 0.0),
-                stops: [0.0, 1.0],
-                tileMode: TileMode.clamp)),
-        padding: EdgeInsets.all(10.0),
-        margin: EdgeInsets.all(10.0),
-        height: itemCount * 190.0,
+        padding:
+            EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0, bottom: 20),
+        color: Colors.grey.shade200,
+        margin: EdgeInsets.only(top: 10.0, left: 30.0, right: 30.0, bottom: 20),
+        height: itemCount * 120.0,
         child: ListView.builder(
             itemCount: itemCount,
             itemBuilder: (c, index) {
@@ -58,5 +53,3 @@ class AdminOrderCard extends StatelessWidget {
     );
   }
 }
-
-

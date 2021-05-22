@@ -23,16 +23,16 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
                 stops: [0.0, 1.0],
                 tileMode: TileMode.clamp)),
       ),
-      centerTitle: true,
+  
       title: Text(
-        "Cady World",
+        "Cady",
         style: TextStyle(
             fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
       ),
       bottom: bottom,
       actions: [
         Container(
-          padding: EdgeInsets.only(right:10.0, top: 5.0),
+          padding: EdgeInsets.only(right:5.0, top: 5.0),
           child: Stack(children: [
             IconButton(
                 icon: Icon(
