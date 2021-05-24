@@ -1,6 +1,5 @@
 import 'package:ecommerce_application/main.dart';
 import 'package:ecommerce_application/pages/Address/addAddress.dart';
-import 'package:ecommerce_application/pages/Authentication/authenication.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Order/myOder.dart';
 import 'package:ecommerce_application/pages/Store/cart.dart';
@@ -20,7 +19,7 @@ class MyDrawer extends StatelessWidget {
               bottom: 10.0,
             ),
             color: Colors.grey.shade500,
-            // decoration: BoxDecoration(
+            // decorati on: BoxDecoration(
             //     gradient: LinearGradient(
             //         colors: [Colors.black26, Colors.white],
             //         begin: const FractionalOffset(0.0, 0.0),
@@ -29,54 +28,54 @@ class MyDrawer extends StatelessWidget {
             //         tileMode: TileMode.clamp)),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0,bottom: 5.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Material(
-                      borderRadius: BorderRadius.all(Radius.circular(80.0)),
-                      elevation: 8.0,
-                      child: Container(
-                        height: 70.0,
-                        width: 70.0,
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(EcommerceApp
-                              .sharedPreferences
-                              .getString(EcommerceApp.userAvatarUrl)),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 15.0,bottom: 5.0),
+                //   child: Align(
+                //     alignment: Alignment.centerLeft,
+                //     child: Material(
+                //       borderRadius: BorderRadius.all(Radius.circular(80.0)),
+                //       elevation: 8.0,
+                //       child: Container(
+                //         height: 70.0,
+                //         width: 70.0,
+                //         child: CircleAvatar(
+                //           backgroundImage: NetworkImage(EcommerceApp
+                //               .sharedPreferences
+                //               .getString(EcommerceApp.userAvatarUrl)),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 SizedBox(height: 10.0),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0,bottom: 5.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      EcommerceApp.sharedPreferences
-                          .getString(EcommerceApp.userName),
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12.0,
-                         ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, bottom: 10.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      EcommerceApp.sharedPreferences
-                          .getString(EcommerceApp.userEmail),
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12.0,
-                        ),
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 15.0,bottom: 5.0),
+                //   child: Align(
+                //     alignment: Alignment.centerLeft,
+                //     child: Text(
+                //       EcommerceApp.sharedPreferences
+                //           .getString(EcommerceApp.phoneNumber),
+                //       style: TextStyle(
+                //           color: Colors.white,
+                //           fontSize: 12.0,
+                //          ),
+                //     ),
+                //   ),
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 15.0, bottom: 10.0),
+                //   child: Align(
+                //     alignment: Alignment.centerLeft,
+                //     child: Text(
+                //       EcommerceApp.sharedPreferences
+                //           .getString(EcommerceApp.phoneNumber),
+                //       style: TextStyle(
+                //           color: Colors.white,
+                //           fontSize: 12.0,
+                //         ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
