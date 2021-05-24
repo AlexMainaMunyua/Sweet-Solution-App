@@ -65,7 +65,7 @@ class Chiclet extends StatelessWidget {
           options: CarouselOptions(
             height: 120.0,
             enlargeCenterPage: true,
-            autoPlay: true,
+            autoPlay: false,
             aspectRatio: 16 / 9,
             autoPlayCurve: Curves.fastOutSlowIn,
             enableInfiniteScroll: true,

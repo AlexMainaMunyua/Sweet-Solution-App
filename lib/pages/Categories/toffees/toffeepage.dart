@@ -118,9 +118,9 @@ class ToffeePage extends StatelessWidget {
                         child: Text(
                           "All Toffees",
                           style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],
@@ -128,14 +128,13 @@ class ToffeePage extends StatelessWidget {
                 ),
               ),
             ),
-             body: TabBarView(
-            children: <Widget>[
-              Center(
-                child: AllToffee(),
-              ),
-            ],
-          ),
-
+            body: TabBarView(
+              children: <Widget>[
+                Center(
+                  child: AllToffee(),
+                ),
+              ],
+            ),
           ),
         ));
   }
