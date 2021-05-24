@@ -6,7 +6,7 @@ import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class AllChocolates extends StatelessWidget {
+class AllFlashSale extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -20,7 +20,7 @@ class AllChocolates extends StatelessWidget {
         StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("items")
-                .where("shortInfo", isEqualTo: "Chocolates")
+                .where("shortInfo", isEqualTo: "Flash Sale")
                 .snapshots(),
             builder: (context, snapshot) {
               return !snapshot.hasData
