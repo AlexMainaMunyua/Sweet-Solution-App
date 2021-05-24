@@ -10,6 +10,8 @@ import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'registerwithphone.dart';
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -94,7 +96,7 @@ class _LoginState extends State<Login> {
                     height: 10,
                   ),
                   Container(
-                    padding: EdgeInsets.only(top:10.0),
+                    padding: EdgeInsets.only(top: 10.0),
                     height: 50,
                     child: Center(
                       child: Text("LOGIN",
@@ -211,13 +213,27 @@ class _LoginState extends State<Login> {
                   SizedBox(
                     height: 20.0,
                   ),
-                  TextButton(
-                      onPressed: () {
-                           Route route =
-                              MaterialPageRoute(builder: (c) => ForgotPassword());
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            Route route = MaterialPageRoute(
+                                builder: (c) => ForgotPassword());
 
-                          Navigator.pushReplacement(context, route);
-                      }, child: Text("Forgot Password ?")),
+                            Navigator.pushReplacement(context, route);
+                          },
+                          child: Text("Forgot Password ?")),
+                      TextButton(
+                          onPressed: () {
+                            Route route = MaterialPageRoute(
+                                builder: (c) => LoginScreen());
+
+                            Navigator.pushReplacement(context, route);
+                          },
+                          child: Text("Phone number")),
+                    ],
+                  ),
                   SizedBox(
                     height: 5.0,
                   ),
@@ -271,6 +287,7 @@ class _LoginState extends State<Login> {
             password: _passwordTextEditingController.text.trim())
         .then((authUser) {
       firebaseUser = authUser.user;
+    // });
     }).catchError((error) {
       Navigator.pop(context);
       showDialog(
