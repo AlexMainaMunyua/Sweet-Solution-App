@@ -18,7 +18,7 @@ class EcommerceApp {
 
   static final String userName = 'name';
   static final String userEmail = 'email';
-  static final String phoneNumber = "phone";
+  static final String phoneNumber = "Phone";
   static final String userPhotoUrl = 'photoUrl';
   static final String userUID = 'uid';
   static final String userAvatarUrl = 'url';

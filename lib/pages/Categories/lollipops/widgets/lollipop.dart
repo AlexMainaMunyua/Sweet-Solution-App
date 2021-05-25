@@ -54,7 +54,7 @@ class Lollipop extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FGumJumboTron%2Fgumjumbo1.jpg?alt=media&token=db5bb208-d797-4de1-b7e4-e8d7e3dcc3f9"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2FLollipopJumbo.jpeg?alt=media&token=d6d09288-90d6-410b-bf2c-f4fb56abe707"),
                   fit: BoxFit.cover,
                 ),
               ),
