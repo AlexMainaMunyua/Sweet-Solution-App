@@ -56,7 +56,7 @@ class BubbleGum extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FGumJumboTron%2Fgumjumbo1.jpg?alt=media&token=db5bb208-d797-4de1-b7e4-e8d7e3dcc3f9"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2Fbubblegum.jpeg?alt=media&token=0a9b5342-1857-4c18-8059-f5b212c553ee"),
                   fit: BoxFit.cover,
                 ),
               ),

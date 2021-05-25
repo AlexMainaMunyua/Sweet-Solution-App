@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_application/main.dart';
 import 'package:ecommerce_application/pages/Admin/uploadItems.dart';
 import 'package:ecommerce_application/pages/Authentication/authenication.dart';
+import 'package:ecommerce_application/pages/Authentication/loginwithphone.dart';
 import 'package:ecommerce_application/pages/DialogBox/errorDialog.dart';
 import 'package:ecommerce_application/pages/Widgets/CustomTextField.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +94,6 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
                         fontFamily: "Signatra")),
               ),
             ),
-          
             Container(
               alignment: Alignment.center,
               child: Image.asset("images/admin.png"),
@@ -197,18 +198,22 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
               height: 5.0,
             ),
             TextButton.icon(
-              icon: (Icon(
-                Icons.nature_people,
-                color: Colors.black26,
-              )),
-              label: Text(
-                'User',
-                style: TextStyle(
-                    color: Colors.black26, fontWeight: FontWeight.bold),
-              ),
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AuthenticScreen())),
-            )
+                icon: (Icon(
+                  Icons.nature_people,
+                  color: Colors.black26,
+                )),
+                label: Text(
+                  'User',
+                  style: TextStyle(
+                      color: Colors.black26, fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Route route =
+                      MaterialPageRoute(builder: (c) => LoginScreen());
+
+                  Navigator.pushReplacement(context, route);
+                })
           ],
         ),
       ),

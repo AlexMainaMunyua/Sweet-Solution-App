@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecommerce_application/pages/Authentication/login.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ecommerce_application/pages/Authentication/loginwithphone.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/addressChanger.dart';
 import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
@@ -73,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
         Navigator.pushReplacement(context, route);
       } else {
-        Route route = MaterialPageRoute(builder: (_) => Login());
+        Route route = MaterialPageRoute(builder: (_) => LoginScreen());
 
         Navigator.pushReplacement(context, route);
       }
@@ -84,23 +85,23 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Material(
       child: Container(
-       
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-            
+              // Image.asset("images/welcome.png"),
+              Align(
+                  alignment: Alignment.center,
+                  child: const SpinKitRipple(color: Colors.red,size: 100,)),
               SizedBox(
-                height: 40.0,
-              ),
-              Image.asset("images/welcome.png"),
-              SizedBox(
-                height: 40.0,
+                height: 30,
               ),
               Center(
                 child: Text("Fast Delivery, Low Prices, Vast Selection",
-                    style:
-                        TextStyle(fontFamily: "Signatra", fontSize: 24, color: Colors.black45)),
+                    style: TextStyle(
+                        fontFamily: "Signatra",
+                        fontSize: 24,
+                        color: Colors.black45)),
               )
             ],
           ),
