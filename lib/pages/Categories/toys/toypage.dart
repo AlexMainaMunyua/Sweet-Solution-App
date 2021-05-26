@@ -122,9 +122,9 @@ class ToyPage extends StatelessWidget {
                         child: Text(
                           "All Toys",
                           style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],
@@ -132,13 +132,13 @@ class ToyPage extends StatelessWidget {
                 ),
               ),
             ),
-             body: TabBarView(
-            children: <Widget>[
-              Center(
-                child: AllToys(),
-              ),
-            ],
-          ),
+            body: TabBarView(
+              children: <Widget>[
+                Center(
+                  child: AllToys(),
+                ),
+              ],
+            ),
           ),
         ));
   }

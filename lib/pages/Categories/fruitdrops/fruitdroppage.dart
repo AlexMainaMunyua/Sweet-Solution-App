@@ -1,4 +1,3 @@
-import 'package:ecommerce_application/pages/Categories/chocolates/widgets/allchocolates.dart';
 import 'package:ecommerce_application/pages/Categories/fruitdrops/widgets/allfruitdrops.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
@@ -117,9 +116,9 @@ class FruitDropPage extends StatelessWidget {
                       child: Text(
                         "All Fruit Drops",
                         style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ],

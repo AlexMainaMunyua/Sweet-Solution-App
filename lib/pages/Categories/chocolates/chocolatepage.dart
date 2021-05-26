@@ -118,7 +118,7 @@ class ChocolatePage extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 16,
                             color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                            ),
                       ),
                     ),
                   ],

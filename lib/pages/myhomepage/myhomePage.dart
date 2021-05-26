@@ -18,7 +18,6 @@ import 'package:ecommerce_application/pages/Widgets/searchBox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -174,8 +173,6 @@ class _MyHomePageState extends State<MyHomePage> {
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection("items")
-                  // .where("ShortInfo", isEqualTo: "Flash Sales")
-                  // .limit(4)
                   .orderBy("publishedDate", descending: true)
                   .snapshots(),
               builder: (context, dataSnapshot) {
@@ -215,35 +212,6 @@ Widget _createBanner() {
     ),
   );
 }
-
-// Widget _createOfficialBrands() {
-//   return Container(
-//     padding: EdgeInsets.only(right:15.0, left: 15.0, bottom: 15.0),
-//     child: Column(
-//       children: [
-//         Container(
-//           height: 40.0,
-//           padding: EdgeInsets.all(8.0),
-//           decoration: BoxDecoration(
-//               gradient: LinearGradient(
-//                   colors: [Colors.black26, Colors.white],
-//                   begin: const FractionalOffset(0.0, 0.0),
-//                   end: const FractionalOffset(1.0, 0.0),
-//                   stops: [0.0, 1.0],
-//                   tileMode: TileMode.clamp)),
-//           child: Center(
-//             child: Align(alignment: Alignment.centerLeft,
-//                           child: Text(
-//                 "OFFICIAL BRANDS",
-//                 style: TextStyle(color: Colors.black54),
-//               ),
-//             ),
-//           ),
-//         )
-//       ],
-//     ),
-//   );
-// }
 
 Widget _createFlashSalesHeader(context) {
   return Container(
@@ -303,16 +271,7 @@ Widget _createStreamBuilderHeader() {
         Text("Recently Added Items",
             style: TextStyle(fontWeight: FontWeight.w700)),
         Row(
-          children: [
-            // Text(
-            //   "See All",
-            //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            // ),
-            // Icon(
-            //   Icons.arrow_forward_ios,
-            //   size: 12,
-            // )
-          ],
+          children: [],
         )
       ],
     ),
@@ -354,7 +313,7 @@ Widget _createCategories(BuildContext context) {
           ),
         ),
         Container(
-           width: 70,
+          width: 70,
           child: GestureDetector(
             onTap: () {
               Route route =
@@ -380,7 +339,7 @@ Widget _createCategories(BuildContext context) {
           ),
         ),
         Container(
-           width: 70,
+          width: 70,
           child: GestureDetector(
             onTap: () {
               Route route =
@@ -407,7 +366,7 @@ Widget _createCategories(BuildContext context) {
           ),
         ),
         Container(
-           width: 70,
+          width: 70,
           child: GestureDetector(
             onTap: () {
               Route route =
@@ -434,7 +393,34 @@ Widget _createCategories(BuildContext context) {
           ),
         ),
         Container(
-           width: 70,
+          width: 70,
+          child: GestureDetector(
+            onTap: () {
+              Route route =
+                  MaterialPageRoute(builder: (context) => FruitDropPage());
+
+              Navigator.pushReplacement(context, route);
+            },
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 20.0,
+                  backgroundImage: NetworkImage(
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Ffruitdrops.jpeg?alt=media&token=7f3bbfb6-12d0-4e90-afcd-f1874b05a187"),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  "Fruit Drops",
+                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+          ),
+        ),
+        Container(
+          width: 70,
           child: GestureDetector(
             onTap: () {
               Route route = MaterialPageRoute(builder: (context) => ToyPage());
@@ -459,33 +445,6 @@ Widget _createCategories(BuildContext context) {
             ),
           ),
         ),
-          Container(
-           width: 70,
-          child: GestureDetector(
-            onTap: () {
-              Route route = MaterialPageRoute(builder: (context) => FruitDropPage());
-
-              Navigator.pushReplacement(context, route);
-            },
-            child: Column(
-              children: [
-                CircleAvatar(
-                  radius: 20.0,
-                  backgroundImage: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Ffruitdrops.jpeg?alt=media&token=7f3bbfb6-12d0-4e90-afcd-f1874b05a187"),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Text(
-                  "Fruit Drops",
-                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-          ),
-        ),
-       
       ],
     ),
   );
@@ -509,18 +468,7 @@ Widget _createCarousel() {
             ),
           ),
 
-          // 2nd Image of Slider
-          Container(
-            margin: EdgeInsets.only(top: 6.0, bottom: 6.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              image: DecorationImage(
-                image: NetworkImage(
-                    "https://images.unsplash.com/photo-1611250503393-9424f314d265?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1266&q=80"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+     
 
           //3rd Image of Slider
           Container(
@@ -547,19 +495,6 @@ Widget _createCarousel() {
               ),
             ),
           ),
-
-          //5th Image of Slider
-          // Container(
-          //   margin: EdgeInsets.only(top: 6.0, bottom: 6.0),
-          //   decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.circular(8.0),
-          //     image: DecorationImage(
-          //       image: NetworkImage(
-          //           "https://images.unsplash.com/photo-1511348398635-8efff213a280?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"),
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
         ],
         options: CarouselOptions(
           height: 150.0,

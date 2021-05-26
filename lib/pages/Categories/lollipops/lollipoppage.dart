@@ -118,27 +118,27 @@ class LollipopPage extends StatelessWidget {
                       child: Text(
                         "Big Daddy",
                         style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                     Tab(
+                    Tab(
                       child: Text(
                         "Lollipop",
                         style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                     Tab(
+                    Tab(
                       child: Text(
                         "Vimto",
                         style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ],
@@ -146,19 +146,19 @@ class LollipopPage extends StatelessWidget {
               ),
             ),
           ),
-                body: TabBarView(
-              children: <Widget>[
-                Center(
-                  child: BigDaddy(),
-                ),
-                Center(
-                  child: Lollipop(),
-                ),
-                 Center(
-                  child: Vimto(),
-                ),
-              ],
-            ),
+          body: TabBarView(
+            children: <Widget>[
+              Center(
+                child: BigDaddy(),
+              ),
+              Center(
+                child: Lollipop(),
+              ),
+              Center(
+                child: Vimto(),
+              ),
+            ],
+          ),
         ),
       ),
     );

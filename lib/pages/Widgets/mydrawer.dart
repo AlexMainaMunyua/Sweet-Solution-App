@@ -1,6 +1,5 @@
 import 'package:ecommerce_application/main.dart';
 import 'package:ecommerce_application/pages/Address/addAddress.dart';
-import 'package:ecommerce_application/pages/Authentication/authenication.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Order/myOder.dart';
 import 'package:ecommerce_application/pages/Store/cart.dart';
@@ -19,18 +18,18 @@ class MyDrawer extends StatelessWidget {
               top: 25.0,
               bottom: 10.0,
             ),
-            color: Colors.grey.shade500,
-            // decoration: BoxDecoration(
-            //     gradient: LinearGradient(
-            //         colors: [Colors.black26, Colors.white],
-            //         begin: const FractionalOffset(0.0, 0.0),
-            //         end: const FractionalOffset(1.0, 0.0),
-            //         stops: [0.0, 1.0],
-            //         tileMode: TileMode.clamp)),
+            // color: Colors.grey.shade500,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Colors.black26, Colors.white],
+                    begin: const FractionalOffset(0.0, 0.0),
+                    end: const FractionalOffset(1.0, 0.0),
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.clamp)),
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 15.0,bottom: 5.0),
+                  padding: const EdgeInsets.only(bottom: 5.0, left: 20),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Material(
@@ -39,44 +38,40 @@ class MyDrawer extends StatelessWidget {
                       child: Container(
                         height: 70.0,
                         width: 70.0,
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(EcommerceApp
-                              .sharedPreferences
-                              .getString(EcommerceApp.userAvatarUrl)),
-                        ),
+                        child: CircleAvatar(),
                       ),
                     ),
                   ),
                 ),
                 SizedBox(height: 10.0),
                 Padding(
-                  padding: const EdgeInsets.only(left: 15.0,bottom: 5.0),
+                  padding: const EdgeInsets.only(bottom: 5.0, left: 20),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       EcommerceApp.sharedPreferences
-                          .getString(EcommerceApp.userName),
+                          .getString(EcommerceApp.phoneNumber),
                       style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12.0,
-                         ),
+                        color: Colors.white,
+                        fontSize: 15.0,
+                      ),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, bottom: 10.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      EcommerceApp.sharedPreferences
-                          .getString(EcommerceApp.userEmail),
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12.0,
-                        ),
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 15.0, bottom: 10.0),
+                //   child: Align(
+                //     alignment: Alignment.centerLeft,
+                //     child: Text(
+                //       EcommerceApp.sharedPreferences
+                //           .getString(EcommerceApp.phoneNumber),
+                //       style: TextStyle(
+                //           color: Colors.white,
+                //           fontSize: 12.0,
+                //         ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -102,11 +97,11 @@ class MyDrawer extends StatelessWidget {
                     Navigator.pushReplacement(context, route);
                   },
                 ),
-                // Divider(
-                //   height: 1.0,
-                //   color: Colors.black45,
-                //   // thickness: 6.0,
-                // ),
+                Divider(
+                  height: 0.1,
+                  color: Colors.black45,
+                  // thickness: 6.0,
+                ),
 
                 ///////////////////////////////////////////////////////////////////////
                 ListTile(
@@ -124,11 +119,11 @@ class MyDrawer extends StatelessWidget {
                     Navigator.pushReplacement(context, route);
                   },
                 ),
-                // Divider(
-                //   height: 1.0,
-                //   color: Colors.black45,
-                //   // thickness: 6.0,
-                // ),
+                Divider(
+                  height: 0.1,
+                  color: Colors.black45,
+                  // thickness: 6.0,
+                ),
                 ListTile(
                   leading: Icon(
                     Icons.shopping_cart,
@@ -144,11 +139,11 @@ class MyDrawer extends StatelessWidget {
                     Navigator.pushReplacement(context, route);
                   },
                 ),
-                // Divider(
-                //   height: 1.0,
-                //   color: Colors.black45,
-                //   // thickness: 6.0,
-                // ),
+                Divider(
+                  height: 0.1,
+                  color: Colors.black45,
+                  // thickness: 6.0,
+                ),
                 ListTile(
                   leading: Icon(
                     Icons.search,
@@ -165,11 +160,11 @@ class MyDrawer extends StatelessWidget {
                     Navigator.pushReplacement(context, route);
                   },
                 ),
-                // Divider(
-                //   height: 1.0,
-                //   color: Colors.black45,
-                //   // thickness: 6.0,
-                // ),
+                Divider(
+                  height: 0.1,
+                  color: Colors.black45,
+                  // thickness: 6.0,
+                ),
                 ListTile(
                   leading: Icon(
                     Icons.add_location,
@@ -186,11 +181,11 @@ class MyDrawer extends StatelessWidget {
                     Navigator.pushReplacement(context, route);
                   },
                 ),
-                //  Divider(
-                //   height: 1.0,
-                //   color: Colors.black45,
-                //   // thickness: 6.0,
-                // ),
+                 Divider(
+                  height: 0.1,
+                  color: Colors.black45,
+                  // thickness: 6.0,
+                ),
                 /*     ListTile(
                   leading: Icon(
                     Icons.settings,
@@ -227,7 +222,7 @@ class MyDrawer extends StatelessWidget {
                   },
                 ),
                 Divider(
-                  height: 1.0,
+                  height: 0.1,
                   color: Colors.black45,
                   // thickness: 6.0,
                 ),

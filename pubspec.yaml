@@ -53,6 +53,8 @@ dependencies:
   observable: ^0.23.0
   async: ^2.5.0
   wc_form_validators: ^0.1.1
+  flutter_spinkit: ^5.0.0
+  pin_code_fields: ^7.1.0
 
 dev_dependencies:
   flutter_test:

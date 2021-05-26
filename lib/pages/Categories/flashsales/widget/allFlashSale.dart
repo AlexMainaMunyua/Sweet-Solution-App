@@ -6,7 +6,7 @@ import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class Lollipop extends StatelessWidget {
+class AllFlashSale extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -20,7 +20,7 @@ class Lollipop extends StatelessWidget {
         StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("items")
-                .where("shortInfo", isEqualTo: "Lollipops")
+                .where("shortInfo", isEqualTo: "Flash Sale")
                 .snapshots(),
             builder: (context, snapshot) {
               return !snapshot.hasData
@@ -48,13 +48,14 @@ class Lollipop extends StatelessWidget {
         CarouselSlider(
           items: [
             //1st Image of Slider
+      
             Container(
               margin: EdgeInsets.only(top: 6.0, bottom: 6.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2FLollipopJumbo.jpeg?alt=media&token=d6d09288-90d6-410b-bf2c-f4fb56abe707"),
+                      "https://images.unsplash.com/photo-1611250503393-9424f314d265?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1266&q=80"),
                   fit: BoxFit.cover,
                 ),
               ),
