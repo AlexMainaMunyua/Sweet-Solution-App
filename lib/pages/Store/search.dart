@@ -142,7 +142,7 @@ class _SearchProductState extends State<SearchProduct> {
                       color: Colors.black12,
                       child: Center(
                           child: Text(
-                        "5%",
+                        model.discount.toString(),
                         style: TextStyle(fontSize: 10, color: Colors.black38),
                       )),
                     ),
@@ -190,7 +190,7 @@ class _SearchProductState extends State<SearchProduct> {
                 },
                 decoration: InputDecoration.collapsed(
                     hintText: "Search here",
-                    hintStyle: TextStyle(color: Colors.black38)),
+                    hintStyle: TextStyle(fontSize: 14,color: Colors.black38)),
               ),
             ))
           ],

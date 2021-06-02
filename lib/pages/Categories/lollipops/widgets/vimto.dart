@@ -149,7 +149,7 @@ class Vimto extends StatelessWidget {
                       color: Colors.black12,
                       child: Center(
                           child: Text(
-                        "5%",
+                         model.discount.toString()+"%",
                         style: TextStyle(fontSize: 10, color: Colors.black38),
                       )),
                     ),

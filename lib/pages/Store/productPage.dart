@@ -169,7 +169,7 @@ class _ProductPageState extends State<ProductPage> {
                         child: WideButton(
                           onPressed: () {
                             checkItemInCart(
-                                widget.itemModel.shortInfo, context);
+                                widget.itemModel.productId, context);
                           },
                           msg: "ADD TO CART",
                         ),

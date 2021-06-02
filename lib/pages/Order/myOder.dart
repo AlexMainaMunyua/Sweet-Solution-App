@@ -4,7 +4,7 @@ import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
 import 'package:ecommerce_application/pages/Widgets/orderCard.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 
 class MyOrders extends StatefulWidget {
   @override
@@ -66,7 +66,7 @@ class _MyOrdersState extends State<MyOrders> {
                         return FutureBuilder<QuerySnapshot>(
                             future: FirebaseFirestore.instance
                                 .collection("items")
-                                .where("shortInfo",
+                                .where("productId",
                                     whereIn: snapshot.data.docs[index]
                                         .data()[EcommerceApp.productID])
                                 .get(),

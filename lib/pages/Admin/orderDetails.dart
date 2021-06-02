@@ -100,8 +100,7 @@ class AdminOrderDetails extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.all(4.0),
                               child: Text("Order ID:" + getOrderId,
-                               style: TextStyle(fontSize: 8.0)
-                              ),
+                                  style: TextStyle(fontSize: 8.0)),
                             ),
                             Padding(
                               padding: EdgeInsets.all(4.0),
@@ -120,7 +119,7 @@ class AdminOrderDetails extends StatelessWidget {
                             FutureBuilder<QuerySnapshot>(
                                 future: EcommerceApp.firestore
                                     .collection("items")
-                                    .where("shortInfo",
+                                    .where("productId",
                                         whereIn:
                                             dataMap[EcommerceApp.productID])
                                     .get(),
@@ -186,29 +185,11 @@ class AdminStatusBanner extends StatelessWidget {
     status ? msg = "Succeful" : msg = "Unsuccessful";
 
     return Container(
-      // decoration: BoxDecoration(
-      //     gradient: LinearGradient(
-      //         colors: [Colors.black26, Colors.white],
-      //         begin: const FractionalOffset(0.0, 0.0),
-      //         end: const FractionalOffset(1.0, 0.0),
-      //         stops: [0.0, 1.0],
-      //         tileMode: TileMode.clamp)),
       color: Colors.grey.shade300,
       height: 40.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // GestureDetector(
-          //   onTap: () {
-          //     SystemNavigator.pop();
-          //   },
-          //   child: Container(
-          //     child: Icon(
-          //       Icons.arrow_drop_down_circle,
-          //       color: Colors.white,
-          //     ),
-          //   ),
-          // ),
           SizedBox(
             width: 20.0,
           ),
@@ -219,17 +200,6 @@ class AdminStatusBanner extends StatelessWidget {
           SizedBox(
             width: 5.0,
           ),
-          // CircleAvatar(
-          //   radius: 8.0,
-          //   backgroundColor: Colors.grey,
-          //   child: Center(
-          //     child: Icon(
-          //       iconData,
-          //       color: Colors.white,
-          //       size: 14.0,
-          //     ),
-          //   ),
-          // )
         ],
       ),
     );
@@ -300,7 +270,7 @@ class AdminShippingDetails extends StatelessWidget {
                 ),
                 Text(model.city, style: TextStyle(color: Colors.black45)),
               ]),
-                TableRow(children: [
+              TableRow(children: [
                 KeyText(
                   msg: "Next to",
                 ),
@@ -309,7 +279,7 @@ class AdminShippingDetails extends StatelessWidget {
                   style: TextStyle(color: Colors.black45),
                 ),
               ]),
-                TableRow(children: [
+              TableRow(children: [
                 KeyText(
                   msg: "County",
                 ),
@@ -318,7 +288,6 @@ class AdminShippingDetails extends StatelessWidget {
                   style: TextStyle(color: Colors.black45),
                 ),
               ]),
-             
             ],
           ),
         ),
@@ -331,31 +300,6 @@ class AdminShippingDetails extends StatelessWidget {
             },
           ),
         ),
-        // Padding(
-        //   padding: EdgeInsets.all(10.0),
-        //   child: InkWell(
-        //     onTap: () {
-        //       confirmedOrderShifted(context, getOrderId);
-        //     },
-        //     child: Container(
-        //       width: MediaQuery.of(context).size.width - 40.0,
-        //       height: 50.0,
-        //       decoration: BoxDecoration(
-        //           gradient: LinearGradient(
-        //               colors: [Colors.black26, Colors.white],
-        //               begin: const FractionalOffset(0.0, 0.0),
-        //               end: const FractionalOffset(1.0, 0.0),
-        //               stops: [0.0, 1.0],
-        //               tileMode: TileMode.clamp)),
-        //       child: Center(
-        //         child: Text(
-        //           "Confirmed Order shifted ",
-        //           style: TextStyle(color: Colors.white, fontSize: 15.0),
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // )
       ],
     );
   }

@@ -22,6 +22,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+
   MobileVerificationState currentState =
       MobileVerificationState.SHOW_MOBILE_FORM_STATE;
 
@@ -54,8 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  User firebaseUser;
-
   void signInWithPhoneAuthCredential(
       PhoneAuthCredential phoneAuthCredential) async {
     setState(() {
@@ -63,29 +63,37 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      final authCredential =
-          await _auth.signInWithCredential(phoneAuthCredential);
+      User firebaseUser;
 
+      await _auth
+          .signInWithCredential(phoneAuthCredential)
+          .then((value) => firebaseUser = value.user);
       setState(() {
         showLoading = false;
       });
 
-      firebaseUser = authCredential.user;
+      final QuerySnapshot result =
+          await FirebaseFirestore.instance.collection("userPhone").get();
 
-      if (authCredential?.user != null) {
-        if (authCredential.user.uid != null) {
-          readData(authCredential.user).then((value) {
+      final List<DocumentSnapshot> documents = result.docs;
+
+      if ((documents.singleWhere(
+              (element) => element.id.toString() == firebaseUser.uid,
+              orElse: () => null)) !=
+          null) {
+        readData(firebaseUser).then((value) {
+          Navigator.pop(context);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => MyHomePage()));
+        });
+      } else {
+        saveUserInfoToFirestore(firebaseUser).then((value) {
+          readData(firebaseUser).then((value) {
             Navigator.pop(context);
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => MyHomePage()));
           });
-        } else {
-          saveUserInfoToFirestore(authCredential.user).then((value) {
-            Navigator.pop(context);
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MyHomePage()));
-          });
-        }
+        });
       }
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -93,6 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
       });
 
       _scaffoldKey.currentState
+          // ignore: deprecated_member_use
           .showSnackBar(SnackBar(content: Text(e.message)));
     }
   }
@@ -152,6 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: EdgeInsets.all(8.0),
           margin: EdgeInsets.all(8.0),
           child: TextField(
+       
             controller: phoneController,
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -236,7 +246,8 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.all(10.0),
           child: Center(
               child: Text(
-            "We have texted OTP(One Time Pin) to your registed cell phone number. Please check and enter OTP below to verify your Cady account.",
+            "We have texted OTP(One Time Pin) to your registed cell phone number." 
+          "  Please check and enter OTP below to verify your Cady account.",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 16),
           )),
@@ -348,7 +359,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(
-            Icons.add,
+            Icons.dashboard,
             color: Colors.white,
           ),
           onPressed: () => Navigator.push(context,

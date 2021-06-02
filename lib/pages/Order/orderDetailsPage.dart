@@ -121,7 +121,7 @@ class OrderDetails extends StatelessWidget {
                             FutureBuilder<QuerySnapshot>(
                                 future: EcommerceApp.firestore
                                     .collection("items")
-                                    .where("shortInfo",
+                                    .where("productId",
                                         whereIn:
                                             dataMap[EcommerceApp.productID])
                                     .get(),

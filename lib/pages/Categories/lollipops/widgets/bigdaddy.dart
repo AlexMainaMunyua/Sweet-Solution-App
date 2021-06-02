@@ -54,7 +54,7 @@ class BigDaddy extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2FbigbaddyJumbo.jpeg?alt=media&token=0647ef2e-70e0-4e97-9d3b-783a0b7f06c2"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2Fbig%20Daddy%20Jumbotron%20.png?alt=media&token=62031bd6-bf7e-4654-b510-717782809eb3"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -149,7 +149,7 @@ class BigDaddy extends StatelessWidget {
                       color: Colors.black12,
                       child: Center(
                           child: Text(
-                        "5%",
+                         model.discount.toString()+"%",
                         style: TextStyle(fontSize: 10, color: Colors.black38),
                       )),
                     ),

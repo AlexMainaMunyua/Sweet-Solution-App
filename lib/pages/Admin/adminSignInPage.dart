@@ -70,13 +70,6 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
 
     return SingleChildScrollView(
       child: Container(
-        // decoration: BoxDecoration(
-        //     gradient: LinearGradient(
-        //         colors: [Colors.black26, Colors.white],
-        //         begin: const FractionalOffset(0.0, 0.0),
-        //         end: const FractionalOffset(1.0, 0.0),
-        //         stops: [0.0, 1.0],
-        //         tileMode: TileMode.clamp)),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -159,12 +152,6 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
                       ],
                     ),
                   )
-                  // CustomTextField(
-                  //   controller: _passwordTextEditingController,
-                  //   data: Icons.lock,
-                  //   hintText: "password",
-                  //   isObsecure: true,
-                  // ),
                 ],
               ),
             ),

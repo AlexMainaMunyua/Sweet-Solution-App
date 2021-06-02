@@ -59,7 +59,7 @@ class _MyOrdersState extends State<AdminShiftOrders> {
                         return FutureBuilder<QuerySnapshot>(
                             future: FirebaseFirestore.instance
                                 .collection("items")
-                                .where("shortInfo",
+                                .where("productId",
                                     whereIn: snapshot.data.docs[index]
                                         .data()[EcommerceApp.productID])
                                 .get(),

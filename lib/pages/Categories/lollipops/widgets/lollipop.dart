@@ -20,7 +20,7 @@ class Lollipop extends StatelessWidget {
         StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("items")
-                .where("shortInfo", isEqualTo: "Lollipops")
+                .where("shortInfo", isEqualTo: "Lollipop")
                 .snapshots(),
             builder: (context, snapshot) {
               return !snapshot.hasData
@@ -149,7 +149,7 @@ class Lollipop extends StatelessWidget {
                       color: Colors.black12,
                       child: Center(
                           child: Text(
-                        "5%",
+                         model.discount.toString()+"%",
                         style: TextStyle(fontSize: 10, color: Colors.black38),
                       )),
                     ),

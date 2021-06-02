@@ -1,6 +1,7 @@
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
 import 'package:ecommerce_application/pages/Store/cart.dart';
+import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,14 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
                 stops: [0.0, 1.0],
                 tileMode: TileMode.clamp)),
       ),
-  
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () {
+          Route route = MaterialPageRoute(builder: (c) => MyHomePage());
+
+          Navigator.pushReplacement(context, route);
+        },
+      ),
       title: Text(
         "Cady",
         style: TextStyle(
@@ -32,7 +40,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
       bottom: bottom,
       actions: [
         Container(
-          padding: EdgeInsets.only(right:5.0, top: 5.0),
+          padding: EdgeInsets.only(right: 5.0, top: 5.0),
           child: Stack(children: [
             IconButton(
                 icon: Icon(

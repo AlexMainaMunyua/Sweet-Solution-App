@@ -107,7 +107,7 @@ class _AddressState extends State<Address> {
                             child: Text(
                               "Add new Address",
                               style: TextStyle(
-                                  color: Colors.black45,
+                                  color: Colors.blue,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 13.0),
                             ),
@@ -350,19 +350,34 @@ class _AddressState extends State<Address> {
     return Container(
       margin: EdgeInsets.only(left: 5.0, right: 5.0),
       child: Card(
-        color: Colors.black26.withOpacity(0.5),
+        color: Colors.grey.shade300,
         child: Container(
-          height: 100.0,
+          height: 130.0,
           alignment: Alignment.center,
           child: Column(
             children: [
+              SizedBox(
+                height: 5,
+              ),
               Icon(
                 Icons.add_location,
                 color: Colors.white,
               ),
-              Text("No shipment address has been saved"),
-              Text(
-                  "Please add your shipment address so that we can deliver products")
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                  child: Text("No shipment address has been saved.",
+                      textAlign: TextAlign.center)),
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Text(
+                  "Please add your shipment address so that we can deliver products.",
+                  textAlign: TextAlign.center,
+                ),
+              )
             ],
           ),
         ),

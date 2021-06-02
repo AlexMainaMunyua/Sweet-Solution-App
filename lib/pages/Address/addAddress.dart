@@ -135,7 +135,7 @@ class AddAddress extends StatelessWidget {
                           Text(
                             "All fields required*",
                             style: TextStyle(
-                                color: Colors.black45,
+                                color: Colors.red,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 10.0),
                           ),
@@ -160,7 +160,7 @@ class AddAddress extends StatelessWidget {
                           textEditingController: cPhoneNumber,
                         ),
                         MyTextField(
-                          hint: "Business name",
+                          hint: "Business/shop name",
                           textEditingController: cFlatHomeNumber,
                         ),
                         MyTextField(
