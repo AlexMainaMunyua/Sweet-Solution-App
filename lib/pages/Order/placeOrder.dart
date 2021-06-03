@@ -38,7 +38,6 @@ class _PaymentPageState extends State<PaymentPage> {
                   stops: [0.0, 1.0],
                   tileMode: TileMode.clamp)),
         ),
-        
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -138,6 +137,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         children: [
                           Row(
                             children: [
+                              // ignore: missing_required_param
                               Radio(
                                 activeColor: Colors.grey.shade300,
                                 onChanged: (val) {},
@@ -156,9 +156,9 @@ class _PaymentPageState extends State<PaymentPage> {
                               padding: EdgeInsets.only(
                                   right: 20.0, left: 40.0, top: 10.0),
                               child: Text(
-                                "Unavailable",
+                                "Comming soon",
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w500,
                                 ),
                               )),
@@ -206,6 +206,8 @@ class _PaymentPageState extends State<PaymentPage> {
                     msg: "COMPLETE ORDER",
                     onPressed: () {
                       addOrderDetails();
+
+                   
                     },
                   )
                 ],
@@ -249,7 +251,7 @@ class _PaymentPageState extends State<PaymentPage> {
         EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
 
     FirebaseFirestore.instance
-        .collection("users")
+        .collection("userPhone")
         .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
         .update({
       EcommerceApp.userCartList: tempList,
@@ -259,12 +261,13 @@ class _PaymentPageState extends State<PaymentPage> {
 
       Provider.of<CartItemCounter>(context, listen: false).displayResult();
     });
-    Fluttertoast.showToast(
-        msg: "Congratulations, Your order has been placed succefully");
 
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
+
+    Fluttertoast.showToast(
+        msg: "Congratulations, Your order has been placed succefully");
   }
 
   Future writeOrderDetailsForUsers(Map<String, dynamic> data) async {

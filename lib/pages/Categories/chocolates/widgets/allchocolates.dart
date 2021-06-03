@@ -20,7 +20,7 @@ class AllChocolates extends StatelessWidget {
         StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("items")
-                .where("shortInfo", isEqualTo: "Chocolates")
+                .where("shortInfo", isEqualTo: "Chocolate")
                 .snapshots(),
             builder: (context, snapshot) {
               return !snapshot.hasData

@@ -58,20 +58,6 @@ class MyDrawer extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(left: 15.0, bottom: 10.0),
-                //   child: Align(
-                //     alignment: Alignment.centerLeft,
-                //     child: Text(
-                //       EcommerceApp.sharedPreferences
-                //           .getString(EcommerceApp.phoneNumber),
-                //       style: TextStyle(
-                //           color: Colors.white,
-                //           fontSize: 12.0,
-                //         ),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -181,7 +167,7 @@ class MyDrawer extends StatelessWidget {
                     Navigator.pushReplacement(context, route);
                   },
                 ),
-                 Divider(
+                Divider(
                   height: 0.1,
                   color: Colors.black45,
                   // thickness: 6.0,

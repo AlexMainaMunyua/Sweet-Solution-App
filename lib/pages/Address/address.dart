@@ -104,12 +104,16 @@ class _AddressState extends State<Address> {
 
                               Navigator.pushReplacement(context, route);
                             },
-                            child: Text(
-                              "Add new Address",
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Add new Address",
+                                  style: TextStyle(
+                                      color: Colors.blue,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13.0),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -120,7 +124,7 @@ class _AddressState extends State<Address> {
               ),
               SliverToBoxAdapter(
                 child: Consumer<AddressChanger>(builder: (context, address, c) {
-                  return Flexible(
+                  return Container(
                     child: StreamBuilder<QuerySnapshot>(
                       stream: EcommerceApp.firestore
                           .collection(EcommerceApp.collectionUser)
@@ -181,7 +185,7 @@ class _AddressState extends State<Address> {
                               child: Text(
                                 "Ksh.${amountProvider.totalAmount.toString()}",
                                 style: TextStyle(
-                                    color: Colors.black45,
+                                    color: Colors.red,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12.0),
                               ),
@@ -196,7 +200,7 @@ class _AddressState extends State<Address> {
               StreamBuilder<QuerySnapshot>(
                   stream: EcommerceApp.firestore
                       .collection("items")
-                      .where("shortInfo",
+                      .where("productId",
                           whereIn: EcommerceApp.sharedPreferences
                               .getStringList(EcommerceApp.userCartList))
                       .snapshots(),
@@ -269,45 +273,20 @@ class _AddressState extends State<Address> {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: Align(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    model.shortInfo,
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 12.0),
-                                  )),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Container(
-                                    child: Text(
-                                  model.title,
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 12.0),
-                                )),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Container(
-                        child: Row(
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.70,
+                    alignment: Alignment.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Text(
+                              model.title,
+                              style: TextStyle(
+                                  color: Colors.grey.shade700, fontSize: 14.0),
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -329,9 +308,19 @@ class _AddressState extends State<Address> {
                             ),
                           ],
                         ),
-                      ),
+                        SizedBox(height: 2.0),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                              child: Text(
+                            model.longDescription,
+                            style:
+                                TextStyle(color: Colors.grey, fontSize: 12.0),
+                          )),
+                        ),
+                      ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

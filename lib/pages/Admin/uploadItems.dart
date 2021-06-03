@@ -166,7 +166,6 @@ class _UploadPageState extends State<UploadPage>
                     Text(
                       "Capture with Camera",
                       style: TextStyle(
-                          // color: Colors.green,
                           ),
                     ),
                   ],
@@ -185,7 +184,6 @@ class _UploadPageState extends State<UploadPage>
                     Text(
                       "Select from Gallery",
                       style: TextStyle(
-                          // color: Colors.green,
                           ),
                     ),
                   ],

@@ -1,3 +1,4 @@
+import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:flutter/foundation.dart';
 
 class ItemQuantity with ChangeNotifier {
@@ -6,7 +7,8 @@ class ItemQuantity with ChangeNotifier {
   int get numberOfItems => _numberOfItems;
 
   display(int no) async {
-    _numberOfItems = no;
+    // _numberOfItems = no;
+   
 
     notifyListeners();
   }
@@ -17,7 +19,7 @@ class ItemQuantity with ChangeNotifier {
     notifyListeners();
   }
 
-   void decrement() {
+  void decrement() {
     _numberOfItems--;
 
     notifyListeners();

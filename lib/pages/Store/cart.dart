@@ -8,7 +8,6 @@ import 'package:ecommerce_application/pages/Counter/totalMoney.dart';
 import 'package:ecommerce_application/pages/Model/item.dart';
 import 'package:ecommerce_application/pages/Store/productPage.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
-import 'package:async/async.dart';
 import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
@@ -34,12 +33,6 @@ class _CartPageState extends State<CartPage> {
           whereIn: EcommerceApp.sharedPreferences
               .getStringList(EcommerceApp.userCartList))
       .snapshots();
-  // Stream streamB = EcommerceApp.firestore
-  //     .collection("flash")
-  //     .where("shortInfo",
-  //         whereIn: EcommerceApp.sharedPreferences
-  //             .getStringList(EcommerceApp.userCartList))
-  //     .snapshots();
 
   List<QuerySnapshot> getList(QuerySnapshot list1) {
     List<QuerySnapshot> result = [];
@@ -72,23 +65,6 @@ class _CartPageState extends State<CartPage> {
 
     Provider.of<TotalAmount>(context, listen: false).displayAmount(0);
   }
-
-  // Stream<List<QuerySnapshot>> getData() {
-  //   Stream stream1 = EcommerceApp.firestore
-  //       .collection("items")
-  //       .where("shortInfo",
-  //           whereIn: EcommerceApp.sharedPreferences
-  //               .getStringList(EcommerceApp.userCartList))
-  //       .snapshots();
-  //   Stream stream2 = EcommerceApp.firestore
-  //       .collection("flash")
-  //       .where("shortInfo",
-  //           whereIn: EcommerceApp.sharedPreferences
-  //               .getStringList(EcommerceApp.userCartList))
-  //       .snapshots();
-
-  //   return StreamZip([stream1, stream2]);
-  // }
 
   _onWillPop(BuildContext context) {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
@@ -297,40 +273,42 @@ class _CartPageState extends State<CartPage> {
                         },
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(top: 20.0),
-                      child: WideButton(
-                        onPressed: () {
-                          if (EcommerceApp.sharedPreferences
-                                  .getStringList(EcommerceApp.userCartList)
-                                  .length ==
-                              1) {
-                            Fluttertoast.showToast(msg: "Your cart is empty");
-                          } else {
-                            Route route = MaterialPageRoute(
-                                builder: (c) =>
-                                    Address(totalAmount: totalAmount));
-
-                            Navigator.pushReplacement(context, route);
-                          }
-                        },
-                        msg: "CHECK OUT",
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 20.0),
-                      child: WideButton(
-                        onPressed: () async {
-                          await FlutterPhoneDirectCaller.callNumber(
-                              _numberCtrl.text);
-                        },
-                        msg: "CALL TO ORDER",
-                      ),
-                    ),
                   ],
                 ),
               ),
             ),
+            SliverToBoxAdapter(
+              child: Container(
+                padding: EdgeInsets.only(top: 20.0),
+                child: WideButton(
+                  onPressed: () {
+                    if (EcommerceApp.sharedPreferences
+                            .getStringList(EcommerceApp.userCartList)
+                            .length ==
+                        1) {
+                      Fluttertoast.showToast(msg: "Your cart is empty");
+                    } else {
+                      Route route = MaterialPageRoute(
+                          builder: (c) => Address(totalAmount: totalAmount));
+
+                      Navigator.pushReplacement(context, route);
+                    }
+                  },
+                  msg: "CHECK OUT",
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Container(
+                padding: EdgeInsets.only(top: 20.0),
+                child: WideButton(
+                  onPressed: () async {
+                    await FlutterPhoneDirectCaller.callNumber(_numberCtrl.text);
+                  },
+                  msg: "CALL TO ORDER",
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -352,7 +330,7 @@ class _CartPageState extends State<CartPage> {
       },
       splashColor: Colors.black26,
       child: Container(
-        height: 130.0,
+        height: 140.0,
         child: Card(
           child: Container(
             child: Stack(
@@ -373,13 +351,16 @@ class _CartPageState extends State<CartPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          SizedBox(height: 10.0,),
+                          SizedBox(
+                            height: 10.0,
+                          ),
                           Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 model.title,
                                 style: TextStyle(
-                                    color: Colors.grey.shade700, fontSize: 12.0),
+                                    color: Colors.grey.shade700,
+                                    fontSize: 12.0),
                               )),
                           Align(
                             alignment: Alignment.centerLeft,
@@ -390,7 +371,7 @@ class _CartPageState extends State<CartPage> {
                                   TextStyle(color: Colors.grey, fontSize: 12.0),
                             )),
                           ),
-                            Align(
+                          Align(
                             alignment: Alignment.centerLeft,
                             child: Container(
                                 child: Text(

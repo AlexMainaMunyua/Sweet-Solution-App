@@ -115,7 +115,6 @@ class ToyPage extends StatelessWidget {
                             BorderSide(width: 4, color: Colors.grey.shade700),
                         insets:
                             EdgeInsets.only(left: 0, right: 4.0, bottom: 0.0)),
-                    // labelPadding:  EdgeInsets.only(left: 0, right: 0),
 
                     tabs: [
                       Tab(

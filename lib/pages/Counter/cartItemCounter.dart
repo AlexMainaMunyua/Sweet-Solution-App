@@ -15,6 +15,8 @@ class CartItemCounter extends ChangeNotifier {
             .length -
         1;
 
+        
+
     await Future.delayed(const Duration(milliseconds: 100), () {
       notifyListeners();
     });
