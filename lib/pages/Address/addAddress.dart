@@ -19,7 +19,7 @@ class AddAddress extends StatelessWidget {
   final cState = TextEditingController();
   final cPinCode = TextEditingController();
 
-   _onWillPop(BuildContext context) {
+  _onWillPop(BuildContext context) {
     Route route = MaterialPageRoute(builder: (c) => Address());
 
     Navigator.pushReplacement(context, route);
@@ -154,26 +154,32 @@ class AddAddress extends StatelessWidget {
                         MyTextField(
                           hint: "Full name",
                           textEditingController: cName,
+                          textCapitalization: TextCapitalization.words,
                         ),
                         MyTextField(
                           hint: "Phone number",
                           textEditingController: cPhoneNumber,
+                          keyboardType: TextInputType.phone,
                         ),
                         MyTextField(
                           hint: "Business/shop name",
                           textEditingController: cFlatHomeNumber,
+                          textCapitalization: TextCapitalization.words,
                         ),
                         MyTextField(
                           hint: "Area",
                           textEditingController: cCity,
+                          textCapitalization: TextCapitalization.words,
                         ),
                         MyTextField(
                           hint: "Next to",
                           textEditingController: cState,
+                          textCapitalization: TextCapitalization.words,
                         ),
                         MyTextField(
                           hint: "County",
                           textEditingController: cPinCode,
+                          textCapitalization: TextCapitalization.words,
                         ),
                       ],
                     )),
@@ -202,6 +208,7 @@ class AddAddress extends StatelessWidget {
                         final snack = SnackBar(
                           content: Text("New Address added successfully."),
                         );
+                        // ignore: deprecated_member_use
                         scaffoldKey.currentState.showSnackBar(snack);
                         FocusScope.of(context).requestFocus(FocusNode());
 
@@ -227,8 +234,11 @@ class AddAddress extends StatelessWidget {
 class MyTextField extends StatelessWidget {
   final String hint;
   final TextEditingController textEditingController;
+  final TextCapitalization textCapitalization;
+  final TextInputType keyboardType;
 
-  const MyTextField({Key key, this.hint, this.textEditingController})
+  const MyTextField(
+      {Key key, this.hint, this.textEditingController, this.textCapitalization, this.keyboardType})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -237,6 +247,8 @@ class MyTextField extends StatelessWidget {
           EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0, bottom: 20.0),
       child: TextFormField(
         controller: textEditingController,
+        textCapitalization: textCapitalization,
+        keyboardType: keyboardType,
         decoration: InputDecoration.collapsed(
             border: UnderlineInputBorder(),
             hintText: hint,

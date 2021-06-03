@@ -196,12 +196,7 @@ class _RegisterState extends State<Register> {
                             ],
                           ),
                         ),
-                        // CustomTextField(
-                        //   controller: _passwordTextEditingController,
-                        //   data: Icons.lock,
-                        //   hintText: "Password",
-                        //   isObsecure: true,
-                        // ),
+                 
                         Container(
                           decoration: BoxDecoration(
                               color: Colors.white,
@@ -239,12 +234,7 @@ class _RegisterState extends State<Register> {
                             ],
                           ),
                         )
-                        // CustomTextField(
-                        //   controller: _cPasswordTextEditingController,
-                        //   data: Icons.lock,
-                        //   hintText: "Confirm password",
-                        //   isObsecure: true,
-                        // )
+              
                       ],
                     ),
                   ),

@@ -20,9 +20,7 @@ class Chiclet extends StatelessWidget {
         StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("items")
-                .where("shortInfo", isEqualTo: "Chiclets")
-                // .limit(4)
-                // .orderBy("publishedDate", descending: true)
+                .where("shortInfo", isEqualTo: "Chiclet")
                 .snapshots(),
             builder: (context, snapshot) {
               return !snapshot.hasData
@@ -151,7 +149,7 @@ class Chiclet extends StatelessWidget {
                       color: Colors.black12,
                       child: Center(
                           child: Text(
-                         model.discount.toString()+"%",
+                        model.discount.toString() + "%",
                         style: TextStyle(fontSize: 10, color: Colors.black38),
                       )),
                     ),

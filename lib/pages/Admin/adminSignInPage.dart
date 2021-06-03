@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecommerce_application/main.dart';
 import 'package:ecommerce_application/pages/Admin/uploadItems.dart';
-import 'package:ecommerce_application/pages/Authentication/authenication.dart';
 import 'package:ecommerce_application/pages/Authentication/loginwithphone.dart';
 import 'package:ecommerce_application/pages/DialogBox/errorDialog.dart';
 import 'package:ecommerce_application/pages/Widgets/CustomTextField.dart';
@@ -11,33 +9,6 @@ class AdminSignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   flexibleSpace: Container(
-      //     decoration: BoxDecoration(
-      //         gradient: LinearGradient(
-      //             colors: [Colors.black26, Colors.white],
-      //             begin: const FractionalOffset(0.0, 0.0),
-      //             end: const FractionalOffset(1.0, 0.0),
-      //             stops: [0.0, 1.0],
-      //             tileMode: TileMode.clamp)),
-      //   ),
-      //   leading: IconButton(
-      //     icon: Icon(
-      //       Icons.arrow_back,
-      //       color: Colors.white,
-      //     ),
-      //     onPressed: () {
-      //       Route route = MaterialPageRoute(builder: (c) => AuthenticScreen());
-
-      //       Navigator.pushReplacement(context, route);
-      //     },
-      //   ),
-      //   title: Text(
-      //     "Cady administrator",
-      //     style: TextStyle(
-      //         fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
-      //   ),
-      // ),
       body: SafeArea(child: AdminSignInScreen()),
     );
   }

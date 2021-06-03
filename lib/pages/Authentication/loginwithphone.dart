@@ -171,6 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               focusColor: Theme.of(context).primaryColor,
               hintText: "+2547XXXXXXXX",
+              hintStyle: TextStyle(color: Colors.grey.shade500)
             ),
           ),
         ),
@@ -198,8 +199,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 setState(() {
                   showLoading = false;
                 });
-
-                //signInWithPhoneAuthCredential(phoneAuthCredential);
               },
               verificationFailed: (verificationFailed) async {
                 setState(() {

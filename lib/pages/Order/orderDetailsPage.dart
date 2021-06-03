@@ -4,7 +4,7 @@ import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Model/address.dart';
 import 'package:ecommerce_application/pages/Order/myOder.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
-import 'package:ecommerce_application/pages/Widgets/orderCard.dart';
+import 'package:ecommerce_application/pages/Widgets/orderCardDetails.dart';
 import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -127,7 +127,7 @@ class OrderDetails extends StatelessWidget {
                                     .get(),
                                 builder: (c, dataSnapshot) {
                                   return dataSnapshot.hasData
-                                      ? OrderCard(
+                                      ? OrderCardDetails(
                                           itemCount:
                                               dataSnapshot.data.docs.length,
                                           data: dataSnapshot.data.docs,

@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_application/pages/Admin/orderCard.dart';
 import 'package:ecommerce_application/pages/Admin/shiftOrders.dart';
 import 'package:ecommerce_application/pages/Admin/uploadItems.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Model/address.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
-import 'package:ecommerce_application/pages/Widgets/orderCard.dart';
 import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -125,7 +125,7 @@ class AdminOrderDetails extends StatelessWidget {
                                     .get(),
                                 builder: (c, dataSnapshot) {
                                   return dataSnapshot.hasData
-                                      ? OrderCard(
+                                      ? AdminOrderCard(
                                           itemCount:
                                               dataSnapshot.data.docs.length,
                                           data: dataSnapshot.data.docs,

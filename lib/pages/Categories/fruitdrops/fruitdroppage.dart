@@ -55,7 +55,6 @@ class FruitDropPage extends StatelessWidget {
                   IconButton(
                       icon: Icon(
                         Icons.shopping_cart,
-                        // size: 30.0,
                         color: Colors.black26,
                       ),
                       onPressed: () {
@@ -102,15 +101,12 @@ class FruitDropPage extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: TabBar(
-                  // indicatorWeight: 5,
                   isScrollable: true,
                   indicator: UnderlineTabIndicator(
                       borderSide:
                           BorderSide(width: 4, color: Colors.grey.shade700),
                       insets:
                           EdgeInsets.only(left: 0, right: 4.0, bottom: 0.0)),
-                  // labelPadding:  EdgeInsets.only(left: 0, right: 0),
-
                   tabs: [
                     Tab(
                       child: Text(

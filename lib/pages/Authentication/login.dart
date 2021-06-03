@@ -69,23 +69,6 @@ class _LoginState extends State<Login> {
         _onBackPressed();
       },
       child: Scaffold(
-        // appBar: AppBar(
-        //   flexibleSpace: Container(
-        //     decoration: BoxDecoration(
-        //         gradient: LinearGradient(
-        //             colors: [Colors.black26, Colors.white],
-        //             begin: const FractionalOffset(0.0, 0.0),
-        //             end: const FractionalOffset(1.0, 0.0),
-        //             stops: [0.0, 1.0],
-        //             tileMode: TileMode.clamp)),
-        //   ),
-        //   title: Text(
-        //     "Login",
-        //     style: TextStyle(
-        //         fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
-        //   ),
-        //   centerTitle: true,
-        // ),
         body: SingleChildScrollView(
           child: SafeArea(
             child: Container(
@@ -287,7 +270,7 @@ class _LoginState extends State<Login> {
             password: _passwordTextEditingController.text.trim())
         .then((authUser) {
       firebaseUser = authUser.user;
-    // });
+      // });
     }).catchError((error) {
       Navigator.pop(context);
       showDialog(
