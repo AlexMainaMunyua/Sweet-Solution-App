@@ -115,7 +115,8 @@ class ChocolatePage extends StatelessWidget {
                       child: Text(
                         "All Chocolates",
                         style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 20,
+                            fontFamily: "Signatra",
                             color: Colors.white,
                             ),
                       ),

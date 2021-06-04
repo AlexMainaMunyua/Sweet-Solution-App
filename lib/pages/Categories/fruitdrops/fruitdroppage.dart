@@ -113,8 +113,9 @@ class FruitDropPage extends StatelessWidget {
                       child: Text(
                         "All Fruit Drops",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 20,
                           color: Colors.white,
+                          fontFamily: "Signatra"
                         ),
                       ),
                     ),

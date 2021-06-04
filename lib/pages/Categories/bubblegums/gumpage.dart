@@ -121,8 +121,9 @@ class GumPage extends StatelessWidget {
                         child: Text(
                           "Bubble gums",
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 20,
                               color: Colors.white,
+                              fontFamily: "Signatra"
                              ),
                         ),
                       ),
@@ -130,8 +131,9 @@ class GumPage extends StatelessWidget {
                         child: Text(
                           "Chiclets",
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 20,
                               color: Colors.white,
+                              fontFamily: "Signatra"
                              ),
                         ),
                       ),

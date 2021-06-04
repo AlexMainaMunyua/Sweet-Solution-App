@@ -286,7 +286,7 @@ class _AddressState extends State<Address> {
                             Text(
                               model.title,
                               style: TextStyle(
-                                  color: Colors.grey.shade700, fontSize: 14.0),
+                                  color: Colors.grey.shade900, fontSize: 12.0),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,

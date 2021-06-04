@@ -122,8 +122,9 @@ class _FlashSaleState extends State<FlashSale> {
                         child: Text(
                           "Deals of the week",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 20,
                             color: Colors.white,
+                            fontFamily: "Signatra"
                           ),
                         ),
                       ),

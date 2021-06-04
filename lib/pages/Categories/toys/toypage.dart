@@ -118,8 +118,9 @@ class ToyPage extends StatelessWidget {
                         child: Text(
                           "All Toys",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 20,
                             color: Colors.white,
+                            fontFamily: "Signatra"
                           ),
                         ),
                       ),

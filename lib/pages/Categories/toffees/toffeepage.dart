@@ -119,8 +119,9 @@ class ToffeePage extends StatelessWidget {
                         child: Text(
                           "All Toffees",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 20,
                             color: Colors.white,
+                            fontFamily: "Signatra"
                           ),
                         ),
                       ),

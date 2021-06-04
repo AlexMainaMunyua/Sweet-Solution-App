@@ -119,8 +119,9 @@ class LollipopPage extends StatelessWidget {
                       child: Text(
                         "Big Daddy",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 20,
                           color: Colors.white,
+                          fontFamily: "Signatra"
                         ),
                       ),
                     ),
@@ -128,8 +129,9 @@ class LollipopPage extends StatelessWidget {
                       child: Text(
                         "Lollipop",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 20,
                           color: Colors.white,
+                          fontFamily: "Signatra"
                         ),
                       ),
                     ),
@@ -137,8 +139,9 @@ class LollipopPage extends StatelessWidget {
                       child: Text(
                         "Vimto",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 20,
                           color: Colors.white,
+                          fontFamily: "Signatra"
                         ),
                       ),
                     ),

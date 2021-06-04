@@ -158,9 +158,10 @@ class AddAddress extends StatelessWidget {
                           textCapitalization: TextCapitalization.words,
                         ),
                         MyTextField(
-                          hint: "Phone number",
+                          hint: "Phone Number",
                           textEditingController: cPhoneNumber,
-                          keyboardType: TextInputType.phone,
+                          textCapitalization: TextCapitalization.words,
+                          keyboardType: TextInputType.number,
                         ),
                         MyTextField(
                           hint: "Business/shop name",
@@ -239,7 +240,11 @@ class MyTextField extends StatelessWidget {
   final TextInputType keyboardType;
 
   const MyTextField(
-      {Key key, this.hint, this.textEditingController, this.textCapitalization, this.keyboardType})
+      {Key key,
+      this.hint,
+      this.textEditingController,
+      this.textCapitalization,
+      this.keyboardType})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
