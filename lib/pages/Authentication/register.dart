@@ -63,6 +63,7 @@ class _RegisterState extends State<Register> {
         _screenHeight = MediaQuery.of(context).size.height;
 
     return WillPopScope(
+      // ignore: missing_return
       onWillPop: () {
         _onWillPop(context);
       },

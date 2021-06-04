@@ -10,6 +10,7 @@ class CartItemCounter extends ChangeNotifier {
   int get count => _counter?? "";
 
   Future<void> displayResult() async {
+    // ignore: unused_local_variable
     int _counter = EcommerceApp.sharedPreferences
             .getStringList(EcommerceApp.userCartList)
             .length -

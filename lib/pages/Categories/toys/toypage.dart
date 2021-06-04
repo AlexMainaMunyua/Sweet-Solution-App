@@ -1,11 +1,7 @@
-import 'package:carousel_slider/carousel_options.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_application/pages/Categories/toys/widgets/alltoys.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
-import 'package:ecommerce_application/pages/Model/item.dart';
 import 'package:ecommerce_application/pages/Store/cart.dart';
-import 'package:ecommerce_application/pages/Store/productPage.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +16,7 @@ class ToyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
+        // ignore: missing_return
         onWillPop: () {
           _onWillPop(context);
         },

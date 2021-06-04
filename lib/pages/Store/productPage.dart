@@ -25,8 +25,10 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     Size screenSize = MediaQuery.of(context).size;
     return WillPopScope(
+      // ignore: missing_return
       onWillPop: () {
         _onWillPop(context);
       },

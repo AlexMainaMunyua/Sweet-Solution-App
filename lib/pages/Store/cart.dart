@@ -75,6 +75,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
+      // ignore: missing_return
       onWillPop: () {
         _onWillPop(context);
       },
@@ -474,7 +475,7 @@ class _CartPageState extends State<CartPage> {
         ),
       ),
     );
-    ;
+    
   }
 
   beginBuildingCart() {

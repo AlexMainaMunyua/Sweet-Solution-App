@@ -33,6 +33,7 @@ class _UploadPageState extends State<UploadPage>
   bool uploading = false;
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     return file == null
         ? displayAdminHomeScreen()
@@ -436,6 +437,7 @@ class _UploadPageState extends State<UploadPage>
             children: [
               WideButton(
                 onPressed: () {
+                  // ignore: unnecessary_statements
                   uploading ? null : uploadImageAndSaveItemInfo();
                 },
                 msg: "Add Item",

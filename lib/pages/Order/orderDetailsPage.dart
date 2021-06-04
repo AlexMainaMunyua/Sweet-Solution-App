@@ -27,6 +27,7 @@ class OrderDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     getOrderId = orderID;
     return WillPopScope(
+      // ignore: missing_return
       onWillPop: () {
         _onWillPop(context);
       },
