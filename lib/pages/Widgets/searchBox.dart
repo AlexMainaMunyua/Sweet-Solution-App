@@ -36,12 +36,12 @@ class SearchBoxDelegate extends SliverPersistentHeaderDelegate {
                     padding: EdgeInsets.only(left: 8.0),
                     child: Icon(
                       Icons.search,
-                      color: Colors.blueGrey,
+                      color: Colors.black45,
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 8.0),
-                    child: Text("Search here"),
+                    child: Text("Search here", style: TextStyle(color: Colors.black38),),
                   )
                 ],
               ),

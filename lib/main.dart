@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ecommerce_application/pages/Authentication/loginwithphone.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/addressChanger.dart';
 import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
@@ -13,7 +15,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import 'pages/Authentication/authenication.dart';
 import 'pages/myhomepage/myhomePage.dart';
 
 Future<void> main() async {
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Pros Enterise',
+        title: 'Cady',
         theme: ThemeData(
           primarySwatch: Colors.grey,
         ),
@@ -73,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
         Navigator.pushReplacement(context, route);
       } else {
-        Route route = MaterialPageRoute(builder: (_) => AuthenticScreen());
+        Route route = MaterialPageRoute(builder: (_) => LoginScreen());
 
         Navigator.pushReplacement(context, route);
       }
@@ -84,23 +85,24 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Material(
       child: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Colors.black26, Colors.white],
-                begin: const FractionalOffset(0.0, 0.0),
-                end: const FractionalOffset(1.0, 0.0),
-                stops: [0.0, 1.0],
-                tileMode: TileMode.clamp)),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("images/welcome.png"),
+              // Image.asset("images/welcome.png"),
+              Align(
+                  alignment: Alignment.center,
+                  child: const SpinKitRipple(color: Colors.red,size: 100,)),
               SizedBox(
-                height: 20.0,
+                height: 30,
               ),
-              Text("Kenya's largest fast moving good online store",
-                  style: TextStyle(color: Colors.white))
+              Center(
+                child: Text("Fast Delivery, Low Prices, Vast Selection",
+                    style: TextStyle(
+                        fontFamily: "Signatra",
+                        fontSize: 24,
+                        color: Colors.black45)),
+              )
             ],
           ),
         ),
