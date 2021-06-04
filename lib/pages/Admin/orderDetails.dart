@@ -30,6 +30,7 @@ class AdminOrderDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     getOrderId = orderID;
     return WillPopScope(
+      // ignore: missing_return
       onWillPop: () {
         _onWillPop(context);
       },
@@ -178,6 +179,7 @@ class AdminStatusBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String msg;
+    // ignore: unused_local_variable
     IconData iconData;
 
     status ? iconData = Icons.done : iconData = Icons.cancel;

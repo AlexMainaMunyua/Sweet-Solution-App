@@ -65,6 +65,7 @@ class _LoginState extends State<Login> {
     double _screenWidth = MediaQuery.of(context).size.width;
 
     return WillPopScope(
+      // ignore: missing_return
       onWillPop: () {
         _onBackPressed();
       },

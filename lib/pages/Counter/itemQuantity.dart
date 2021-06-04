@@ -1,4 +1,3 @@
-import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:flutter/foundation.dart';
 
 class ItemQuantity with ChangeNotifier {
