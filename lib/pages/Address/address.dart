@@ -34,19 +34,18 @@ class _AddressState extends State<Address> {
     Provider.of<TotalAmount>(context, listen: false).displayAmount(0);
   }
 
-  _onWillPop(BuildContext context) {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => CartPage());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      // ignore: missing_return
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      onWillPop: () => _onWillPop(),
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(

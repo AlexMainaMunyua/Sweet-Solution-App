@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 
 int counter = 0;
 
-class AdminOrderCard extends StatelessWidget {
+class AdminOrderDetailCard extends StatelessWidget {
   final int itemCount;
   final List<DocumentSnapshot> data;
   final String orderID;
   final String addressID;
   final String orderBy;
 
-  const AdminOrderCard(
+  const AdminOrderDetailCard(
       {Key key,
       this.itemCount,
       this.data,
@@ -37,3 +37,5 @@ class AdminOrderCard extends StatelessWidget {
     );
   }
 }
+
+

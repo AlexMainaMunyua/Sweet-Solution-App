@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecommerce_application/pages/Admin/orderCard.dart';
+import 'package:ecommerce_application/pages/Admin/adminOrderCard.dart';
 import 'package:ecommerce_application/pages/Admin/uploadItems.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
@@ -11,19 +11,20 @@ class AdminShiftOrders extends StatefulWidget {
 }
 
 class _MyOrdersState extends State<AdminShiftOrders> {
-  _onWillPop(BuildContext context) {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => UploadPage());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      // ignore: missing_return
-      onWillPop: () {
-        _onWillPop(context);
-      },
+  
+      onWillPop: () => _onWillPop(),
+
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -39,7 +40,8 @@ class _MyOrdersState extends State<AdminShiftOrders> {
             ),
             title: Text(
               "My Orders",
-              style: TextStyle(color: Colors.white, fontSize: 35.0, fontFamily: "Signatra"),
+              style: TextStyle(
+                  color: Colors.white, fontSize: 35.0, fontFamily: "Signatra"),
             ),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),

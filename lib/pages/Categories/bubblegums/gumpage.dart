@@ -8,20 +8,24 @@ import 'package:provider/provider.dart';
 
 import 'widgets/bubblegum.dart';
 
-class GumPage extends StatelessWidget {
-  _onWillPop(BuildContext context) {
+class GumPage extends StatefulWidget {
+  @override
+  _GumPageState createState() => _GumPageState();
+}
+
+class _GumPageState extends State<GumPage> {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        // ignore: missing_return
-        onWillPop: () {
-          _onWillPop(context);
-        },
+        onWillPop: () => _onWillPop(),
         child: DefaultTabController(
           length: 2,
           child: Scaffold(
@@ -123,8 +127,7 @@ class GumPage extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
-                              fontFamily: "Signatra"
-                             ),
+                              fontFamily: "Signatra"),
                         ),
                       ),
                       Tab(
@@ -133,8 +136,7 @@ class GumPage extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
-                              fontFamily: "Signatra"
-                             ),
+                              fontFamily: "Signatra"),
                         ),
                       ),
                     ],

@@ -6,20 +6,25 @@ import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ToyPage extends StatelessWidget {
-  _onWillPop(BuildContext context) {
+class ToyPage extends StatefulWidget {
+  @override
+  _ToyPageState createState() => _ToyPageState();
+}
+
+class _ToyPageState extends State<ToyPage> {
+   Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        // ignore: missing_return
-        onWillPop: () {
-          _onWillPop(context);
-        },
+     
+        onWillPop: () => _onWillPop(),
         child: DefaultTabController(
           length: 1,
           child: Scaffold(

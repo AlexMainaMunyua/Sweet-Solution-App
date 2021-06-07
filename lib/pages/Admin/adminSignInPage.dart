@@ -51,7 +51,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
               padding: EdgeInsets.all(10.0),
               height: 70,
               child: Center(
-                child: Text("Cady administrator",
+                child: Text("Candy administrator",
                     style: TextStyle(
                         fontSize: 45.0,
                         color: Colors.grey.shade500,
@@ -140,7 +140,6 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
                           return ErrorAlertDialog(
                               message: "Please write email and password.");
                         });
-                // uploadAndSaveImage();
               },
               child: Text("Log in", style: TextStyle(color: Colors.white)),
             ),

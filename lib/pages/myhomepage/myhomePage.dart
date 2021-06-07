@@ -26,40 +26,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // ignore: unused_field
-  int _current = 0;
-  Future<bool> _onBackPressed() {
-    return showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text("Are you sure?"),
-              content: Text("Do you want to exit the application."),
-              actions: <Widget>[
-                GestureDetector(
-                  onTap: () => Navigator.of(context).pop(false),
-                  child: Text(
-                    "No",
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                ),
-                SizedBox(width: 30.0, height: 30),
-                GestureDetector(
-                  onTap: () => Navigator.of(context).pop(true),
-                  child: Text(
-                    "Yes",
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                ),
-                SizedBox(width: 10.0),
-              ],
-            ));
-  }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onBackPressed,
-      child: SafeArea(
+    return SafeArea(
           child: Scaffold(
         appBar: AppBar(
           flexibleSpace: Container(
@@ -72,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     tileMode: TileMode.clamp)),
           ),
           title: Text(
-            "Cady",
+            "Candy",
             style: TextStyle(
                 fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
           ),
@@ -197,7 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-      )),
+      )
     );
   }
 }

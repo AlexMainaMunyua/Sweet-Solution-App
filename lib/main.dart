@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Cady',
+        title: 'Candy',
         theme: ThemeData(
           primarySwatch: Colors.grey,
         ),
@@ -89,7 +89,6 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Image.asset("images/welcome.png"),
               Align(
                   alignment: Alignment.center,
                   child: const SpinKitRipple(color: Colors.red,size: 100,)),
