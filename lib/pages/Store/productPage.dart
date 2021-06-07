@@ -2,7 +2,6 @@ import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
 import 'package:ecommerce_application/pages/Model/item.dart';
 import 'package:ecommerce_application/pages/Store/cart.dart';
-
 import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +16,12 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  _onWillPop(BuildContext context) {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
@@ -28,10 +29,7 @@ class _ProductPageState extends State<ProductPage> {
     // ignore: unused_local_variable
     Size screenSize = MediaQuery.of(context).size;
     return WillPopScope(
-      // ignore: missing_return
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      onWillPop: () => _onWillPop(),
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -160,7 +158,6 @@ class _ProductPageState extends State<ProductPage> {
                               "Ksh. " + widget.itemModel.price.toString(),
                               style: boldTextStyle,
                             ),
-                       
                           ],
                         ),
                       ),

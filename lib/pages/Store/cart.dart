@@ -66,19 +66,18 @@ class _CartPageState extends State<CartPage> {
     Provider.of<TotalAmount>(context, listen: false).displayAmount(0);
   }
 
-  _onWillPop(BuildContext context) {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      // ignore: missing_return
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      onWillPop: () => _onWillPop(),
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
@@ -133,7 +132,7 @@ class _CartPageState extends State<CartPage> {
                     Positioned(
                       top: 3.0,
                       bottom: 4.0,
-                      left: 6.0,
+                      left: 7.0,
                       child: Consumer<CartItemCounter>(
                         builder: (context, counter, _) {
                           return Text(
@@ -460,11 +459,6 @@ class _CartPageState extends State<CartPage> {
                       icon: Icon(Icons.remove_shopping_cart),
                       onPressed: () async {
                         removeCartFunction();
-
-                        Route route =
-                            MaterialPageRoute(builder: (c) => MyHomePage());
-
-                        Navigator.pushReplacement(context, route);
                       },
                     ),
                   ),
@@ -475,7 +469,6 @@ class _CartPageState extends State<CartPage> {
         ),
       ),
     );
-    
   }
 
   beginBuildingCart() {
@@ -525,6 +518,10 @@ class _CartPageState extends State<CartPage> {
       Provider.of<CartItemCounter>(context, listen: false).displayResult();
 
       totalAmount = 0;
+
+      Route route = MaterialPageRoute(builder: (c) => MyHomePage());
+
+      Navigator.pushReplacement(context, route);
     });
   }
 }

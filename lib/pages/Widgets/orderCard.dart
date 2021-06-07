@@ -46,14 +46,9 @@ class OrderCard extends StatelessWidget {
 }
 
 Widget sourceInfo(ItemModel model, BuildContext context, {Color background}) {
-  // ignore: unused_local_variable
-  var width = MediaQuery.of(context).size.width;
-
   return Container(
     height: 100.0,
-    // width: width,
     color: Colors.grey.shade200,
-
     child: Row(
       children: [
         Image.network(
@@ -61,9 +56,6 @@ Widget sourceInfo(ItemModel model, BuildContext context, {Color background}) {
           width: 100.0,
           height: 60,
         ),
-        // SizedBox(
-        //   width: 10.0,
-        // ),
         Expanded(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

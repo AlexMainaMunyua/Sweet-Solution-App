@@ -13,19 +13,18 @@ class SearchProduct extends StatefulWidget {
 class _SearchProductState extends State<SearchProduct> {
   Future<QuerySnapshot> docList;
 
-  _onWillPop(BuildContext context) {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      // ignore: missing_return
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      onWillPop: () => _onWillPop(),
       child: SafeArea(
         child: Scaffold(
           appBar: MyAppBar(
@@ -94,10 +93,13 @@ class _SearchProductState extends State<SearchProduct> {
                                 child: Text(
                                   model.title,
                                   style: TextStyle(
-                                      color: Colors.grey.shade700, fontSize: 14.0),
+                                      color: Colors.grey.shade700,
+                                      fontSize: 14.0),
                                 ),
                               ),
-                              SizedBox(height: 5,),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
@@ -108,13 +110,15 @@ class _SearchProductState extends State<SearchProduct> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "Ksh." + model.price.toString(),
-                              style:
-                                  TextStyle(color: Colors.grey.shade700, fontSize: 14.0),
+                              style: TextStyle(
+                                  color: Colors.grey.shade700, fontSize: 14.0),
                             ),
                           ),
                         ],

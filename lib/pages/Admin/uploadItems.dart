@@ -412,6 +412,7 @@ class _UploadPageState extends State<UploadPage>
             title: Container(
                 width: 250.0,
                 child: TextField(
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintStyle: TextStyle(color: Colors.black26),

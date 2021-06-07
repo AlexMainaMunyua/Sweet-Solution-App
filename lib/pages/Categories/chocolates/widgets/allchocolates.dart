@@ -55,7 +55,7 @@ class AllChocolates extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2FchocolateJumbo.jpeg?alt=media&token=28faa9f0-1f61-49fc-af39-e705b4db9870"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2FchocolateJumbo.png?alt=media&token=4c27eda4-a459-4feb-9cd8-6b72af379a45"),
                   fit: BoxFit.cover,
                 ),
               ),

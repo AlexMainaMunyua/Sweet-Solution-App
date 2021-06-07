@@ -8,30 +8,40 @@ import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddAddress extends StatelessWidget {
+class AddAddress extends StatefulWidget {
+  @override
+  _AddAddressState createState() => _AddAddressState();
+}
+
+class _AddAddressState extends State<AddAddress> {
   final formKey = GlobalKey<FormState>();
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final cName = TextEditingController();
+
   final cPhoneNumber = TextEditingController();
+
   final cFlatHomeNumber = TextEditingController();
+
   final cCity = TextEditingController();
+
   final cState = TextEditingController();
+
   final cPinCode = TextEditingController();
 
-  _onWillPop(BuildContext context) {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => Address());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      // ignore: missing_return
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      onWillPop: () => _onWillPop(),
       child: SafeArea(
         child: Scaffold(
           key: scaffoldKey,
@@ -158,9 +168,10 @@ class AddAddress extends StatelessWidget {
                           textCapitalization: TextCapitalization.words,
                         ),
                         MyTextField(
-                          hint: "Phone number",
+                          hint: "Phone Number",
                           textEditingController: cPhoneNumber,
-                          keyboardType: TextInputType.phone,
+                          textCapitalization: TextCapitalization.words,
+                          keyboardType: TextInputType.number,
                         ),
                         MyTextField(
                           hint: "Business/shop name",
@@ -239,7 +250,11 @@ class MyTextField extends StatelessWidget {
   final TextInputType keyboardType;
 
   const MyTextField(
-      {Key key, this.hint, this.textEditingController, this.textCapitalization, this.keyboardType})
+      {Key key,
+      this.hint,
+      this.textEditingController,
+      this.textCapitalization,
+      this.keyboardType})
       : super(key: key);
   @override
   Widget build(BuildContext context) {

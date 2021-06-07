@@ -12,25 +12,29 @@ import 'package:intl/intl.dart';
 
 String getOrderId = "";
 
-class OrderDetails extends StatelessWidget {
+class OrderDetails extends StatefulWidget {
   final String orderID;
 
   const OrderDetails({Key key, this.orderID}) : super(key: key);
 
-  _onWillPop(BuildContext context) {
+  @override
+  _OrderDetailsState createState() => _OrderDetailsState();
+}
+
+class _OrderDetailsState extends State<OrderDetails> {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyOrders());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    getOrderId = orderID;
+    getOrderId = widget.orderID;
     return WillPopScope(
-      // ignore: missing_return
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      onWillPop: () => _onWillPop(),
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -67,7 +71,7 @@ class OrderDetails extends StatelessWidget {
                   .doc(EcommerceApp.sharedPreferences
                       .getString(EcommerceApp.userUID))
                   .collection(EcommerceApp.collectionOrders)
-                  .doc(orderID)
+                  .doc(widget.orderID)
                   .get(),
               builder: (c, snapshot) {
                 Map dataMap;

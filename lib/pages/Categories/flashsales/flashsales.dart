@@ -12,19 +12,19 @@ class FlashSale extends StatefulWidget {
 }
 
 class _FlashSaleState extends State<FlashSale> {
-  _onWillPop(BuildContext context) {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        // ignore: missing_return
-        onWillPop: () {
-          _onWillPop(context);
-        },
+     
+        onWillPop: () => _onWillPop(),
         child: DefaultTabController(
           length: 1,
           child: Scaffold(
@@ -122,8 +122,9 @@ class _FlashSaleState extends State<FlashSale> {
                         child: Text(
                           "Deals of the week",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 20,
                             color: Colors.white,
+                            fontFamily: "Signatra"
                           ),
                         ),
                       ),
