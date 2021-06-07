@@ -3,16 +3,16 @@ import 'package:flutter/foundation.dart';
 
 class CartItemCounter extends ChangeNotifier {
   int _counter = EcommerceApp.sharedPreferences
-          .getStringList(EcommerceApp.userCartList)
+          .getStringList(EcommerceApp.userCartList)!
           .length -
       1;
 
-  int get count => _counter?? "";
+  int get count => _counter?? "" as int;
 
   Future<void> displayResult() async {
     // ignore: unused_local_variable
     int _counter = EcommerceApp.sharedPreferences
-            .getStringList(EcommerceApp.userCartList)
+            .getStringList(EcommerceApp.userCartList)!
             .length -
         1;
 

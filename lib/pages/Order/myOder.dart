@@ -60,21 +60,21 @@ class _MyOrdersState extends State<MyOrders> {
             builder: (c, snapshot) {
               return snapshot.hasData
                   ? ListView.builder(
-                      itemCount: snapshot.data.docs.length,
+                      itemCount: snapshot.data!.docs.length,
                       itemBuilder: (c, index) {
                         return FutureBuilder<QuerySnapshot>(
                             future: FirebaseFirestore.instance
                                 .collection("items")
                                 .where("productId",
-                                    whereIn: snapshot.data.docs[index]
-                                        .data()[EcommerceApp.productID])
+                                    whereIn: snapshot.data!.docs[index]
+                                        .data()![EcommerceApp.productID])
                                 .get(),
                             builder: (c, snap) {
                               return snap.hasData
                                   ? OrderCard(
-                                      itemCount: snap.data.docs.length,
-                                      data: snap.data.docs,
-                                      orderID: snapshot.data.docs[index].id,
+                                      itemCount: snap.data!.docs.length,
+                                      data: snap.data!.docs,
+                                      orderID: snapshot.data!.docs[index].id,
                                     )
                                   : Center(
                                       child: circularProgress(),

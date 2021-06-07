@@ -10,7 +10,7 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-  String _email;
+  late String _email;
 
   final _auth = FirebaseAuth.instance;
 
@@ -26,7 +26,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       // ignore: missing_return
       onWillPop: () {
         _onWillPop(context);
-      },
+      } as Future<bool> Function()?,
       child: Scaffold(
         body: SingleChildScrollView(
           child: SafeArea(

@@ -90,7 +90,7 @@ class _AddAddressState extends State<AddAddress> {
                             return Text(
                                 (EcommerceApp.sharedPreferences
                                             .getStringList(
-                                                EcommerceApp.userCartList)
+                                                EcommerceApp.userCartList)!
                                             .length -
                                         1)
                                     .toString(),
@@ -199,7 +199,7 @@ class _AddAddressState extends State<AddAddress> {
                   msg: "SAVE DETAILS",
                   // key: formKey,
                   onPressed: () {
-                    if (formKey.currentState.validate()) {
+                    if (formKey.currentState!.validate()) {
                       final model = AddressModel(
                         name: cName.text.trim(),
                         state: cState.text.trim(),
@@ -221,10 +221,10 @@ class _AddAddressState extends State<AddAddress> {
                           content: Text("New Address added successfully."),
                         );
                         // ignore: deprecated_member_use
-                        scaffoldKey.currentState.showSnackBar(snack);
+                        scaffoldKey.currentState!.showSnackBar(snack);
                         FocusScope.of(context).requestFocus(FocusNode());
 
-                        formKey.currentState.reset();
+                        formKey.currentState!.reset();
                       });
 
                       Route route =
@@ -244,13 +244,13 @@ class _AddAddressState extends State<AddAddress> {
 }
 
 class MyTextField extends StatelessWidget {
-  final String hint;
-  final TextEditingController textEditingController;
-  final TextCapitalization textCapitalization;
-  final TextInputType keyboardType;
+  final String? hint;
+  final TextEditingController? textEditingController;
+  final TextCapitalization? textCapitalization;
+  final TextInputType? keyboardType;
 
   const MyTextField(
-      {Key key,
+      {Key? key,
       this.hint,
       this.textEditingController,
       this.textCapitalization,
@@ -263,13 +263,13 @@ class MyTextField extends StatelessWidget {
           EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0, bottom: 20.0),
       child: TextFormField(
         controller: textEditingController,
-        textCapitalization: textCapitalization,
+        textCapitalization: textCapitalization!,
         keyboardType: keyboardType,
         decoration: InputDecoration.collapsed(
             border: UnderlineInputBorder(),
             hintText: hint,
             hintStyle: TextStyle(color: Colors.black38)),
-        validator: (val) => val.isEmpty ? "Field cannot be empty." : null,
+        validator: (val) => val!.isEmpty ? "Field cannot be empty." : null,
       ),
     );
   }

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class ErrorAlertDialog extends StatelessWidget
 {
-  final String message;
-  const ErrorAlertDialog({Key key, this.message}) : super(key: key);
+  final String? message;
+  const ErrorAlertDialog({Key? key, this.message}) : super(key: key);
 
 
   @override
@@ -12,7 +12,7 @@ class ErrorAlertDialog extends StatelessWidget
   {
     return AlertDialog(
       key: key,
-      content: Text(message),
+      content: Text(message!),
       actions: <Widget>[
         ElevatedButton(onPressed: ()
         {

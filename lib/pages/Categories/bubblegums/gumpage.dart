@@ -90,7 +90,7 @@ class _GumPageState extends State<GumPage> {
                               return Text(
                                   (EcommerceApp.sharedPreferences
                                               .getStringList(
-                                                  EcommerceApp.userCartList)
+                                                  EcommerceApp.userCartList)!
                                               .length -
                                           1)
                                       .toString(),

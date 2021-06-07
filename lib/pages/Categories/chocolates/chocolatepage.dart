@@ -86,7 +86,7 @@ class _ChocolatePageState extends State<ChocolatePage> {
                             return Text(
                                 (EcommerceApp.sharedPreferences
                                             .getStringList(
-                                                EcommerceApp.userCartList)
+                                                EcommerceApp.userCartList)!
                                             .length -
                                         1)
                                     .toString(),

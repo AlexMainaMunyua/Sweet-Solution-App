@@ -22,10 +22,10 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  double totalAmount;
+  double? totalAmount;
   TextEditingController _numberCtrl = new TextEditingController();
 
-  int quantity;
+  int? quantity;
 
   Stream streamA = EcommerceApp.firestore
       .collection("items")
@@ -138,7 +138,7 @@ class _CartPageState extends State<CartPage> {
                           return Text(
                               (EcommerceApp.sharedPreferences
                                           .getStringList(
-                                              EcommerceApp.userCartList)
+                                              EcommerceApp.userCartList)!
                                           .length -
                                       1)
                                   .toString(),
@@ -164,7 +164,7 @@ class _CartPageState extends State<CartPage> {
             ),
             StreamBuilder(
               stream: streamA,
-              builder: (context, snapshot) {
+              builder: (context, AsyncSnapshot snapshot) {
                 return !snapshot.hasData
                     ? SliverToBoxAdapter(
                         child: Center(
@@ -181,12 +181,12 @@ class _CartPageState extends State<CartPage> {
 
                                 if (index == 0) {
                                   totalAmount = 0;
-                                  totalAmount = model.price + totalAmount;
+                                  totalAmount = model.price! + totalAmount!;
                                 } else {
-                                  totalAmount = model.price + totalAmount;
+                                  totalAmount = model.price! + totalAmount!;
                                 }
                                 if (snapshot.data.docs.length - 1 == index) {
-                                  WidgetsBinding.instance
+                                  WidgetsBinding.instance!
                                       .addPostFrameCallback((t) {
                                     Provider.of<TotalAmount>(context,
                                             listen: false)
@@ -283,7 +283,7 @@ class _CartPageState extends State<CartPage> {
                 child: WideButton(
                   onPressed: () {
                     if (EcommerceApp.sharedPreferences
-                            .getStringList(EcommerceApp.userCartList)
+                            .getStringList(EcommerceApp.userCartList)!
                             .length ==
                         1) {
                       Fluttertoast.showToast(msg: "Your cart is empty");
@@ -318,7 +318,7 @@ class _CartPageState extends State<CartPage> {
   Widget cartSourceInfo(
     ItemModel model,
     BuildContext context, {
-    Color backgroud,
+    Color? backgroud,
     removeCartFunction,
   }) {
     return InkWell(
@@ -340,7 +340,7 @@ class _CartPageState extends State<CartPage> {
                     Container(
                       child: Center(
                         child: Image.network(
-                          model.thumbnailUrl,
+                          model.thumbnailUrl!,
                           height: 120.0,
                           width: 120.0,
                         ),
@@ -357,7 +357,7 @@ class _CartPageState extends State<CartPage> {
                           Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                model.title,
+                                model.title!,
                                 style: TextStyle(
                                     color: Colors.grey.shade700,
                                     fontSize: 12.0),
@@ -366,7 +366,7 @@ class _CartPageState extends State<CartPage> {
                             alignment: Alignment.centerLeft,
                             child: Container(
                                 child: Text(
-                              model.shortInfo,
+                              model.shortInfo!,
                               style:
                                   TextStyle(color: Colors.grey, fontSize: 12.0),
                             )),
@@ -375,7 +375,7 @@ class _CartPageState extends State<CartPage> {
                             alignment: Alignment.centerLeft,
                             child: Container(
                                 child: Text(
-                              model.longDescription,
+                              model.longDescription!,
                               style:
                                   TextStyle(color: Colors.grey, fontSize: 12.0),
                             )),
@@ -498,9 +498,9 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  removeItemFromUserCart(String productId) {
+  removeItemFromUserCart(String? productId) {
     List tempCartList =
-        EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
+        EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList)!;
 
     tempCartList.remove(productId);
 
@@ -513,7 +513,7 @@ class _CartPageState extends State<CartPage> {
       Fluttertoast.showToast(msg: "Item Removed Successfully");
 
       EcommerceApp.sharedPreferences
-          .setStringList(EcommerceApp.userCartList, tempCartList);
+          .setStringList(EcommerceApp.userCartList, tempCartList as List<String>);
 
       Provider.of<CartItemCounter>(context, listen: false).displayResult();
 

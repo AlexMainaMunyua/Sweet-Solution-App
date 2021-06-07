@@ -14,16 +14,16 @@ import 'package:provider/provider.dart';
 import 'addAddress.dart';
 
 class Address extends StatefulWidget {
-  final double totalAmount;
+  final double? totalAmount;
 
-  const Address({Key key, this.totalAmount}) : super(key: key);
+  const Address({Key? key, this.totalAmount}) : super(key: key);
 
   @override
   _AddressState createState() => _AddressState();
 }
 
 class _AddressState extends State<Address> {
-  double totalAmount;
+  double? totalAmount;
 
   @override
   void initState() {
@@ -137,19 +137,19 @@ class _AddressState extends State<Address> {
                             ? Center(
                                 child: circularProgress(),
                               )
-                            : snapshot.data.docs.length == 0
+                            : snapshot.data!.docs.length == 0
                                 ? noAddressCard()
                                 : ListView.builder(
-                                    itemCount: snapshot.data.docs.length,
+                                    itemCount: snapshot.data!.docs.length,
                                     shrinkWrap: true,
                                     itemBuilder: (context, index) {
                                       return AddressCard(
                                         currentIndex: address.count,
                                         value: index,
-                                        addressId: snapshot.data.docs[index].id,
+                                        addressId: snapshot.data!.docs[index].id,
                                         totalAmount: widget.totalAmount,
                                         model: AddressModel.fromJson(
-                                            snapshot.data.docs[index].data()),
+                                            snapshot.data!.docs[index].data()!),
                                       );
                                     },
                                   );
@@ -211,23 +211,23 @@ class _AddressState extends State<Address> {
                               child: circularProgress(),
                             ),
                           )
-                        : snapshot.data.docs.length == 0
+                        : snapshot.data!.docs.length == 0
                             ? Container()
                             : SliverList(
                                 delegate: SliverChildBuilderDelegate(
                                   (context, index) {
                                     ItemModel model = ItemModel.fromJson(
-                                        snapshot.data.docs[index].data());
+                                        snapshot.data!.docs[index].data()!);
 
                                     if (index == 0) {
                                       totalAmount = 0;
-                                      totalAmount = model.price + totalAmount;
+                                      totalAmount = model.price! + totalAmount!;
                                     } else {
-                                      totalAmount = model.price + totalAmount;
+                                      totalAmount = model.price! + totalAmount!;
                                     }
-                                    if (snapshot.data.docs.length - 1 ==
+                                    if (snapshot.data!.docs.length - 1 ==
                                         index) {
-                                      WidgetsBinding.instance
+                                      WidgetsBinding.instance!
                                           .addPostFrameCallback((t) {
                                         Provider.of<TotalAmount>(context,
                                                 listen: false)
@@ -238,7 +238,7 @@ class _AddressState extends State<Address> {
                                     return cartSourceInfo(model, context);
                                   },
                                   childCount: snapshot.hasData
-                                      ? snapshot.data.docs.length
+                                      ? snapshot.data!.docs.length
                                       : 0,
                                 ),
                               );
@@ -251,7 +251,7 @@ class _AddressState extends State<Address> {
   }
 
   Widget cartSourceInfo(ItemModel model, BuildContext context,
-      {Color backgroud,
+      {Color? backgroud,
       removeCartFunction,
       increseItemQuantityFunction,
       decreaseItemQuantityFunction}) {
@@ -267,7 +267,7 @@ class _AddressState extends State<Address> {
                   Container(
                     child: Center(
                       child: Image.network(
-                        model.thumbnailUrl,
+                        model.thumbnailUrl!,
                         height: 50.0,
                         width: 80.0,
                       ),
@@ -283,7 +283,7 @@ class _AddressState extends State<Address> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              model.title,
+                              model.title!,
                               style: TextStyle(
                                   color: Colors.grey.shade900, fontSize: 12.0),
                             ),
@@ -313,7 +313,7 @@ class _AddressState extends State<Address> {
                           alignment: Alignment.centerLeft,
                           child: Container(
                               child: Text(
-                            model.longDescription,
+                            model.longDescription!,
                             style:
                                 TextStyle(color: Colors.grey, fontSize: 12.0),
                           )),
@@ -376,14 +376,14 @@ class _AddressState extends State<Address> {
 }
 
 class AddressCard extends StatefulWidget {
-  final AddressModel model;
-  final int currentIndex;
-  final int value;
-  final String addressId;
-  final double totalAmount;
+  final AddressModel? model;
+  final int? currentIndex;
+  final int? value;
+  final String? addressId;
+  final double? totalAmount;
 
   const AddressCard(
-      {Key key,
+      {Key? key,
       this.model,
       this.currentIndex,
       this.value,
@@ -416,7 +416,7 @@ class _AddressCardState extends State<AddressCard> {
                     groupValue: widget.currentIndex,
                     value: widget.value,
                     activeColor: Colors.white,
-                    onChanged: (val) {
+                    onChanged: (dynamic val) {
                       Provider.of<AddressChanger>(context, listen: false)
                           .displayResults(val);
                     },
@@ -434,7 +434,7 @@ class _AddressCardState extends State<AddressCard> {
                                 msg: "Name",
                               ),
                               Text(
-                                widget.model.name,
+                                widget.model!.name!,
                                 style: TextStyle(color: Colors.black45),
                               ),
                             ]),
@@ -443,7 +443,7 @@ class _AddressCardState extends State<AddressCard> {
                                 msg: "Phone Number",
                               ),
                               Text(
-                                widget.model.phoneNumber,
+                                widget.model!.phoneNumber!,
                                 style: TextStyle(color: Colors.black45),
                               ),
                             ]),
@@ -452,7 +452,7 @@ class _AddressCardState extends State<AddressCard> {
                                 msg: "Business Name",
                               ),
                               Text(
-                                widget.model.flatNumber,
+                                widget.model!.flatNumber!,
                                 style: TextStyle(color: Colors.black45),
                               ),
                             ]),
@@ -461,7 +461,7 @@ class _AddressCardState extends State<AddressCard> {
                                 msg: "Area",
                               ),
                               Text(
-                                widget.model.city,
+                                widget.model!.city!,
                                 style: TextStyle(color: Colors.black45),
                               ),
                             ]),
@@ -470,7 +470,7 @@ class _AddressCardState extends State<AddressCard> {
                                 msg: "Next to",
                               ),
                               Text(
-                                widget.model.state,
+                                widget.model!.state!,
                                 style: TextStyle(color: Colors.black45),
                               ),
                             ]),
@@ -479,7 +479,7 @@ class _AddressCardState extends State<AddressCard> {
                                 msg: "County",
                               ),
                               Text(
-                                widget.model.pincode,
+                                widget.model!.pincode!,
                                 style: TextStyle(color: Colors.black45),
                               ),
                             ])
@@ -515,16 +515,16 @@ class _AddressCardState extends State<AddressCard> {
 }
 
 class KeyText extends StatelessWidget {
-  final String msg;
+  final String? msg;
 
-  const KeyText({Key key, this.msg}) : super(key: key);
+  const KeyText({Key? key, this.msg}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: Text(
-        msg,
+        msg!,
         style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
       ),
     );

@@ -22,7 +22,7 @@ class Lollipop extends StatelessWidget {
                 .collection("items")
                 .where("shortInfo", isEqualTo: "Lollipop")
                 .snapshots(),
-            builder: (context, snapshot) {
+            builder: (context,AsyncSnapshot snapshot) {
               return !snapshot.hasData
                   ? SliverToBoxAdapter(
                       child: Center(child: circularProgress()),
@@ -76,7 +76,7 @@ class Lollipop extends StatelessWidget {
   }
 
   Widget categorySourceInfo(ItemModel model, BuildContext context,
-      {Color background, removeCartFunction}) {
+      {Color? background, removeCartFunction}) {
     return InkWell(
       onTap: () {
         Route route =
@@ -97,7 +97,7 @@ class Lollipop extends StatelessWidget {
                       height: 30,
                     ),
                     Image.network(
-                      model.thumbnailUrl,
+                      model.thumbnailUrl!,
                       height: 100.0,
                       width: 120.0,
                     ),
@@ -108,7 +108,7 @@ class Lollipop extends StatelessWidget {
                         child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        model.title,
+                        model.title!,
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.grey, fontSize: 12.0),
                       ),
