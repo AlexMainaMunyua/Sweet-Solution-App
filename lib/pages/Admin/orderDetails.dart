@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecommerce_application/pages/Admin/orderCard.dart';
+import 'package:ecommerce_application/pages/Admin/adminOrderDetailCard.dart';
 import 'package:ecommerce_application/pages/Admin/shiftOrders.dart';
 import 'package:ecommerce_application/pages/Admin/uploadItems.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
@@ -12,7 +12,7 @@ import 'package:intl/intl.dart';
 
 String getOrderId = "";
 
-class AdminOrderDetails extends StatelessWidget {
+class AdminOrderDetails extends StatefulWidget {
   final String orderID;
   final String orderBy;
   final String addressID;
@@ -20,20 +20,24 @@ class AdminOrderDetails extends StatelessWidget {
   const AdminOrderDetails({Key key, this.orderID, this.orderBy, this.addressID})
       : super(key: key);
 
-  _onWillPop(BuildContext context) {
+  @override
+  _AdminOrderDetailsState createState() => _AdminOrderDetailsState();
+}
+
+class _AdminOrderDetailsState extends State<AdminOrderDetails> {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => AdminShiftOrders());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    getOrderId = orderID;
+    getOrderId = widget.orderID;
     return WillPopScope(
-      // ignore: missing_return
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      onWillPop: () => _onWillPop(),
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -126,7 +130,7 @@ class AdminOrderDetails extends StatelessWidget {
                                     .get(),
                                 builder: (c, dataSnapshot) {
                                   return dataSnapshot.hasData
-                                      ? AdminOrderCard(
+                                      ? AdminOrderDetailCard(
                                           itemCount:
                                               dataSnapshot.data.docs.length,
                                           data: dataSnapshot.data.docs,
@@ -141,10 +145,10 @@ class AdminOrderDetails extends StatelessWidget {
                             FutureBuilder<DocumentSnapshot>(
                                 future: EcommerceApp.firestore
                                     .collection(EcommerceApp.collectionUser)
-                                    .doc(orderBy)
+                                    .doc(widget.orderBy)
                                     .collection(
                                         EcommerceApp.subCollectionAddress)
-                                    .doc(addressID)
+                                    .doc(widget.addressID)
                                     .get(),
                                 builder: (c, snap) {
                                   return snap.hasData

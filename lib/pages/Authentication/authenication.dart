@@ -25,7 +25,7 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
                       tileMode: TileMode.clamp)),
             ),
             title: Text(
-              "Cady",
+              "Candy",
               style: TextStyle(
                   fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
             ),

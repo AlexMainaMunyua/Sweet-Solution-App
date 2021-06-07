@@ -172,23 +172,7 @@ class MyDrawer extends StatelessWidget {
                   color: Colors.black45,
                   // thickness: 6.0,
                 ),
-                /*     ListTile(
-                  leading: Icon(
-                    Icons.settings,
-                    color: Colors.black45,
-                  ),
-                  title: Text(
-                    "Account Settings",
-                    style: TextStyle(color: Colors.black45),
-                  ),
-                  onTap: () {
-                  },
-                ),
-                Divider(
-                  height: 1.0,
-                  color: Colors.black45,
-               
-                ), */
+
                 ListTile(
                   leading: Icon(
                     Icons.logout,

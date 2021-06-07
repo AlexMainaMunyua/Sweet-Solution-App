@@ -51,10 +51,12 @@ class _RegisterState extends State<Register> {
     });
   }
 
-  _onWillPop(BuildContext context) {
+  Future<bool> _onWillPop()async {
     Route route = MaterialPageRoute(builder: (c) => Login());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
@@ -64,9 +66,9 @@ class _RegisterState extends State<Register> {
 
     return WillPopScope(
       // ignore: missing_return
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      onWillPop: () =>
+        _onWillPop(),
+      
       child: Scaffold(
         body: SingleChildScrollView(
           child: SafeArea(
@@ -74,7 +76,7 @@ class _RegisterState extends State<Register> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                   SizedBox(
+                  SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -197,7 +199,7 @@ class _RegisterState extends State<Register> {
                             ],
                           ),
                         ),
-                 
+
                         Container(
                           decoration: BoxDecoration(
                               color: Colors.white,
@@ -235,7 +237,6 @@ class _RegisterState extends State<Register> {
                             ],
                           ),
                         )
-              
                       ],
                     ),
                   ),
