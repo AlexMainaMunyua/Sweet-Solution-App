@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:ecommerce_application/pages/Admin/adminSignInPage.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
@@ -30,11 +31,11 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController otpController = TextEditingController();
 
-  StreamController<ErrorAnimationType> errorController;
+  late StreamController<ErrorAnimationType> errorController;
 
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  String verificationId;
+  late String verificationId;
 
   String currentText = "";
 
@@ -63,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      User firebaseUser;
+      User? firebaseUser;
 
       await _auth
           .signInWithCredential(phoneAuthCredential)
@@ -77,18 +78,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
       final List<DocumentSnapshot> documents = result.docs;
 
-      if ((documents.singleWhere(
-              (element) => element.id.toString() == firebaseUser.uid,
-              orElse: () => null)) !=
+      if ((documents.singleWhereOrNull(
+              (element) => element.id.toString() == firebaseUser!.uid)) !=
           null) {
-        readData(firebaseUser).then((value) {
+        readData(firebaseUser!).then((value) {
           Navigator.pop(context);
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => MyHomePage()));
         });
       } else {
-        saveUserInfoToFirestore(firebaseUser).then((value) {
-          readData(firebaseUser).then((value) {
+        saveUserInfoToFirestore(firebaseUser!).then((value) {
+          readData(firebaseUser!).then((value) {
             Navigator.pop(context);
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => MyHomePage()));
@@ -100,9 +100,9 @@ class _LoginScreenState extends State<LoginScreen> {
         showLoading = false;
       });
 
-      _scaffoldKey.currentState
+      _scaffoldKey.currentState!
           // ignore: deprecated_member_use
-          .showSnackBar(SnackBar(content: Text(e.message)));
+          .showSnackBar(SnackBar(content: Text(e.message!)));
     }
   }
 
@@ -113,12 +113,12 @@ class _LoginScreenState extends State<LoginScreen> {
         .get()
         .then((dataSnapshot) async {
       await EcommerceApp.sharedPreferences.setString(
-          EcommerceApp.userUID, dataSnapshot.data()[EcommerceApp.userUID]);
+          EcommerceApp.userUID, dataSnapshot.data()![EcommerceApp.userUID]);
       await EcommerceApp.sharedPreferences.setString(EcommerceApp.phoneNumber,
-          dataSnapshot.data()[EcommerceApp.phoneNumber]);
+          dataSnapshot.data()![EcommerceApp.phoneNumber]);
 
       List<String> cartList =
-          dataSnapshot.data()[EcommerceApp.userCartList].cast<String>();
+          dataSnapshot.data()![EcommerceApp.userCartList].cast<String>();
       await EcommerceApp.sharedPreferences
           .setStringList(EcommerceApp.userCartList, cartList);
     });
@@ -133,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
     await EcommerceApp.sharedPreferences
         .setString(EcommerceApp.userUID, user.uid);
     await EcommerceApp.sharedPreferences
-        .setString(EcommerceApp.userUID, user.phoneNumber);
+        .setString(EcommerceApp.userUID, user.phoneNumber!);
     await EcommerceApp.sharedPreferences
         .setStringList(EcommerceApp.userCartList, ["garbageValue"]);
   }
@@ -205,8 +205,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   showLoading = false;
                 });
                 // ignore: deprecated_member_use
-                _scaffoldKey.currentState.showSnackBar(
-                    SnackBar(content: Text(verificationFailed.message)));
+                _scaffoldKey.currentState!.showSnackBar(
+                    SnackBar(content: Text(verificationFailed.message!)));
               },
               codeSent: (verificationId, resendingToken) async {
                 setState(() {
@@ -300,7 +300,7 @@ class _LoginScreenState extends State<LoginScreen> {
             PhoneAuthCredential phoneAuthCredential =
                 PhoneAuthProvider.credential(
                     verificationId: verificationId,
-                    smsCode: otpController.text);
+                    smsCode: otpController.text) as PhoneAuthCredential;
 
             signInWithPhoneAuthCredential(phoneAuthCredential);
           },
@@ -325,6 +325,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           flexibleSpace: Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -335,7 +336,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     tileMode: TileMode.clamp)),
           ),
           title: Text(
-            "Candy",
+            "Candy user",
             style: TextStyle(
                 fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
           ),

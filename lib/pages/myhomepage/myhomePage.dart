@@ -80,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           return Text(
                               (EcommerceApp.sharedPreferences
                                           .getStringList(
-                                              EcommerceApp.userCartList)
+                                              EcommerceApp.userCartList)!
                                           .length -
                                       1)
                                   .toString(),
@@ -128,10 +128,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         staggeredTileBuilder: (c) => StaggeredTile.fit(1),
                         itemBuilder: (context, index) {
                           ItemModel model = ItemModel.fromJson(
-                              dataSnapshot.data.docs[index].data());
+                              dataSnapshot.data!.docs[index].data()!);
                           return sourceInfo(model, context);
                         },
-                        itemCount: dataSnapshot.data.docs.length,
+                        itemCount: dataSnapshot.data!.docs.length,
                       );
               },
             ),
@@ -144,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection("items")
-                  .orderBy("publishedDate", descending: true)
+                  .orderBy("publishedDate", descending: false)
                   .snapshots(),
               builder: (context, dataSnapshot) {
                 return !dataSnapshot.hasData
@@ -158,10 +158,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         staggeredTileBuilder: (c) => StaggeredTile.fit(1),
                         itemBuilder: (context, index) {
                           ItemModel model = ItemModel.fromJson(
-                              dataSnapshot.data.docs[index].data());
+                              dataSnapshot.data!.docs[index].data()!);
                           return sourceInfo(model, context);
                         },
-                        itemCount: dataSnapshot.data.docs.length,
+                        itemCount: dataSnapshot.data!.docs.length,
                       );
               },
             ),
@@ -481,7 +481,7 @@ Widget _createCarousel() {
 }
 
 Widget sourceInfo(ItemModel model, BuildContext context,
-    {Color background, removeCartFunction}) {
+    {Color? background, removeCartFunction}) {
   return InkWell(
     onTap: () {
       Route route =
@@ -502,7 +502,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                     height: 30,
                   ),
                   Image.network(
-                    model.thumbnailUrl,
+                    model.thumbnailUrl!,
                     height: 100.0,
                     width: 120.0,
                   ),
@@ -513,7 +513,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                       child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      model.title,
+                      model.title!,
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.grey, fontSize: 12.0),
                     ),
@@ -568,7 +568,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
   );
 }
 
-Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
+Widget card({Color primaryColor = Colors.redAccent, required String imgPath}) {
   return Container(
     height: 150.0,
     // width:  width * .34,
@@ -578,7 +578,7 @@ Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
         borderRadius: BorderRadius.all(Radius.circular(20.0)),
         boxShadow: <BoxShadow>[
           BoxShadow(
-              offset: Offset(0, 5), blurRadius: 10.0, color: Colors.grey[200])
+              offset: Offset(0, 5), blurRadius: 10.0, color: Colors.grey[200]!)
         ]),
     child: ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -591,17 +591,17 @@ Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
   );
 }
 
-void checkItemInCart(String productID, BuildContext context) {
+void checkItemInCart(String? productID, BuildContext context) {
   EcommerceApp.sharedPreferences
-          .getStringList(EcommerceApp.userCartList)
+          .getStringList(EcommerceApp.userCartList)!
           .contains(productID)
       ? Fluttertoast.showToast(msg: "Item already in Cart")
       : addItemToCart(productID, context);
 }
 
-addItemToCart(String productID, BuildContext context) {
+addItemToCart(String? productID, BuildContext context) {
   List tempCartList =
-      EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
+      EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList)!;
 
   tempCartList.add(productID);
 
@@ -617,7 +617,7 @@ addItemToCart(String productID, BuildContext context) {
     Fluttertoast.showToast(msg: "Item Added to Cart Successfully");
 
     EcommerceApp.sharedPreferences
-        .setStringList(EcommerceApp.userCartList, tempCartList);
+        .setStringList(EcommerceApp.userCartList, tempCartList as List<String>);
 
     Provider.of<CartItemCounter>(context, listen: false).displayResult();
   });

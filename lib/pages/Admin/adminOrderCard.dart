@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 int counter = 0;
 
 class AdminOrderCard extends StatelessWidget {
-  final int itemCount;
-  final List<DocumentSnapshot> data;
-  final String orderID;
-  final String addressID;
-  final String orderBy;
+  final int? itemCount;
+  final List<DocumentSnapshot>? data;
+  final String? orderID;
+  final String? addressID;
+  final String? orderBy;
 
   const AdminOrderCard(
-      {Key key,
+      {Key? key,
       this.itemCount,
       this.data,
       this.orderID,
@@ -38,11 +38,11 @@ class AdminOrderCard extends StatelessWidget {
             EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0, bottom: 20),
         color: Colors.grey.shade200,
         margin: EdgeInsets.only(top: 10.0, left: 30.0, right: 30.0, bottom: 20),
-        height: itemCount * 120.0,
+        height: itemCount! * 120.0,
         child: ListView.builder(
             itemCount: itemCount,
             itemBuilder: (c, index) {
-              ItemModel model = ItemModel.fromJson(data[index].data());
+              ItemModel model = ItemModel.fromJson(data![index].data()!);
               return sourceInfo(model, context);
             }),
       ),

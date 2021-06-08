@@ -6,10 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class EcommerceApp {
   static const String appName = 'Candy';
 
-  static SharedPreferences sharedPreferences;
-  static User user;
-  static FirebaseAuth auth;
-  static FirebaseFirestore firestore;
+  static late SharedPreferences sharedPreferences;
+  static User? user;
+  static FirebaseAuth? auth;
+  static late FirebaseFirestore firestore;
 
   static String collectionUser = "userPhone";
   static String collectionOrders = "orders";

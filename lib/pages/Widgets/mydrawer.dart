@@ -50,7 +50,7 @@ class MyDrawer extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       EcommerceApp.sharedPreferences
-                          .getString(EcommerceApp.phoneNumber),
+                          .getString(EcommerceApp.phoneNumber)!,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 15.0,
@@ -183,7 +183,7 @@ class MyDrawer extends StatelessWidget {
                     style: TextStyle(color: Colors.black45),
                   ),
                   onTap: () {
-                    EcommerceApp.auth.signOut().then((value) {
+                    EcommerceApp.auth!.signOut().then((value) {
                       Route route =
                           MaterialPageRoute(builder: (c) => SplashScreen());
 

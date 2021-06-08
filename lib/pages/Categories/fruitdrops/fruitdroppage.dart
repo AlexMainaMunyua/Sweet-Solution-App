@@ -85,7 +85,7 @@ class _FruitDropPageState extends State<FruitDropPage> {
                             return Text(
                                 (EcommerceApp.sharedPreferences
                                             .getStringList(
-                                                EcommerceApp.userCartList)
+                                                EcommerceApp.userCartList)!
                                             .length -
                                         1)
                                     .toString(),

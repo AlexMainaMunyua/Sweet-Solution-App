@@ -33,7 +33,7 @@ class _LoginState extends State<Login> {
     });
   }
 
-  Future<bool> _onBackPressed() {
+  Future<bool?> _onBackPressed() {
     return showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -68,7 +68,7 @@ class _LoginState extends State<Login> {
       // ignore: missing_return
       onWillPop: () {
         _onBackPressed();
-      },
+      } as Future<bool> Function()?,
       child: Scaffold(
         body: SingleChildScrollView(
           child: SafeArea(
@@ -264,7 +264,7 @@ class _LoginState extends State<Login> {
           );
         });
 
-    User firebaseUser;
+    User? firebaseUser;
     await _auth
         .signInWithEmailAndPassword(
             email: _emailTextEditingController.text.trim(),
@@ -283,7 +283,7 @@ class _LoginState extends State<Login> {
           });
     });
     if (User != null) {
-      readData(firebaseUser).then((s) {
+      readData(firebaseUser!).then((s) {
         Navigator.pop(context);
         Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
@@ -299,16 +299,16 @@ class _LoginState extends State<Login> {
         .get()
         .then((dataSnapshot) async {
       await EcommerceApp.sharedPreferences.setString(
-          EcommerceApp.userUID, dataSnapshot.data()[EcommerceApp.userUID]);
+          EcommerceApp.userUID, dataSnapshot.data()![EcommerceApp.userUID]);
       await EcommerceApp.sharedPreferences.setString(
-          EcommerceApp.userEmail, dataSnapshot.data()[EcommerceApp.userEmail]);
+          EcommerceApp.userEmail, dataSnapshot.data()![EcommerceApp.userEmail]);
       await EcommerceApp.sharedPreferences.setString(
-          EcommerceApp.userName, dataSnapshot.data()[EcommerceApp.userName]);
+          EcommerceApp.userName, dataSnapshot.data()![EcommerceApp.userName]);
       await EcommerceApp.sharedPreferences.setString(EcommerceApp.userAvatarUrl,
-          dataSnapshot.data()[EcommerceApp.userAvatarUrl]);
+          dataSnapshot.data()![EcommerceApp.userAvatarUrl]);
 
       List<String> cartList =
-          dataSnapshot.data()[EcommerceApp.userCartList].cast<String>();
+          dataSnapshot.data()![EcommerceApp.userCartList].cast<String>();
       await EcommerceApp.sharedPreferences
           .setStringList(EcommerceApp.userCartList, cartList);
     });

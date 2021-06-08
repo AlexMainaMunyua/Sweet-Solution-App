@@ -88,7 +88,7 @@ class _LollipopPageState extends State<LollipopPage> {
                             return Text(
                                 (EcommerceApp.sharedPreferences
                                             .getStringList(
-                                                EcommerceApp.userCartList)
+                                                EcommerceApp.userCartList)!
                                             .length -
                                         1)
                                     .toString(),
