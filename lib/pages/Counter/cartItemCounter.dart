@@ -7,7 +7,7 @@ class CartItemCounter extends ChangeNotifier {
           .length -
       1;
 
-  int get count => _counter?? "" as int;
+  int get count => _counter;
 
   Future<void> displayResult() async {
     // ignore: unused_local_variable
@@ -15,8 +15,6 @@ class CartItemCounter extends ChangeNotifier {
             .getStringList(EcommerceApp.userCartList)!
             .length -
         1;
-
-        
 
     await Future.delayed(const Duration(milliseconds: 100), () {
       notifyListeners();
