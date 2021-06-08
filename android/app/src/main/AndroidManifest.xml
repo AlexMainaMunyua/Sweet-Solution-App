@@ -4,7 +4,7 @@
    <uses-permission android:name="android.permission.INTERNET" /> 
    
    <application
-        android:label="Candy"
+        android:label="Sweet Solutions"
          android:icon="@mipmap/ic_launcher"
          android:requestLegacyExternalStorage="true">
         <activity

@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     tileMode: TileMode.clamp)),
           ),
           title: Text(
-            "Candy",
+            "Sweet Solutions",
             style: TextStyle(
                 fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
           ),

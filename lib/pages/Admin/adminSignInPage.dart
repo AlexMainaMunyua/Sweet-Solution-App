@@ -61,7 +61,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
             Navigator.pushReplacement(context, route);
           },
         ),
-        title: Text("Candy administrator",
+        title: Text("Sweet solutions admin",
             style: TextStyle(
                 fontSize: 30.0, color: Colors.white, fontFamily: "Signatra")),
       ),

@@ -33,7 +33,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
         },
       ),
       title: Text(
-        "Candy",
+        "Sweet Solutions",
         style: TextStyle(
             fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
       ),

@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               focusColor: Theme.of(context).primaryColor,
               hintText: "+2547XXXXXXXX",
-              hintStyle: TextStyle(color: Colors.grey.shade500)
+              hintStyle: TextStyle(color: Colors.grey.shade300)
             ),
           ),
         ),
@@ -246,7 +246,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Center(
               child: Text(
             "We have texted OTP(One Time Pin) to your registed cell phone number." 
-          "  Please check and enter OTP below to verify your Candy account.",
+          "  Please check and enter OTP below to verify your Sweet Solutions account.",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 16),
           )),
@@ -336,7 +336,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     tileMode: TileMode.clamp)),
           ),
           title: Text(
-            "Candy user",
+            "Sweet Solutions",
             style: TextStyle(
                 fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
           ),

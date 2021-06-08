@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Candy',
+        title: 'Sweet solutions',
         theme: ThemeData(
           primarySwatch: Colors.grey,
         ),
