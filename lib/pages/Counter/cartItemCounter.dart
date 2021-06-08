@@ -7,7 +7,7 @@ class CartItemCounter extends ChangeNotifier {
           .length -
       1;
 
-  int get count => _counter;
+  int get count => _counter ?? "" as int;
 
   Future<void> displayResult() async {
     // ignore: unused_local_variable

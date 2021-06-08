@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:ecommerce_application/main.dart';
 import 'package:ecommerce_application/pages/Admin/adminSignInPage.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
@@ -84,14 +85,14 @@ class _LoginScreenState extends State<LoginScreen> {
         readData(firebaseUser!).then((value) {
           Navigator.pop(context);
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => MyHomePage()));
+              context, MaterialPageRoute(builder: (context) => SplashScreen()));
         });
       } else {
         saveUserInfoToFirestore(firebaseUser!).then((value) {
           readData(firebaseUser!).then((value) {
             Navigator.pop(context);
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MyHomePage()));
+                context, MaterialPageRoute(builder: (context) => SplashScreen()));
           });
         });
       }
