@@ -57,25 +57,25 @@ class _MyOrdersState extends State<AdminShiftOrders> {
             builder: (c, snapshot) {
               return snapshot.hasData
                   ? ListView.builder(
-                      itemCount: snapshot.data.docs.length,
+                      itemCount: snapshot.data!.docs.length,
                       itemBuilder: (c, index) {
                         return FutureBuilder<QuerySnapshot>(
                             future: FirebaseFirestore.instance
                                 .collection("items")
                                 .where("productId",
-                                    whereIn: snapshot.data.docs[index]
-                                        .data()[EcommerceApp.productID])
+                                    whereIn: snapshot.data!.docs[index]
+                                        .data()![EcommerceApp.productID])
                                 .get(),
                             builder: (c, snap) {
                               return snap.hasData
                                   ? AdminOrderCard(
-                                      itemCount: snap.data.docs.length,
-                                      data: snap.data.docs,
-                                      orderID: snapshot.data.docs[index].id,
-                                      orderBy: snapshot.data.docs[index]
-                                          .data()["orderBy"],
-                                      addressID: snapshot.data.docs[index]
-                                          .data()["addressID"])
+                                      itemCount: snap.data!.docs.length,
+                                      data: snap.data!.docs,
+                                      orderID: snapshot.data!.docs[index].id,
+                                      orderBy: snapshot.data!.docs[index]
+                                          .data()!["orderBy"],
+                                      addressID: snapshot.data!.docs[index]
+                                          .data()!["addressID"])
                                   : Center(
                                       child: circularProgress(),
                                     );

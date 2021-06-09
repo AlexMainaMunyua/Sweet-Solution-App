@@ -10,14 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
-String getOrderId = "";
+String? getOrderId = "";
 
 class AdminOrderDetails extends StatefulWidget {
-  final String orderID;
-  final String orderBy;
-  final String addressID;
+  final String? orderID;
+  final String? orderBy;
+  final String? addressID;
 
-  const AdminOrderDetails({Key key, this.orderID, this.orderBy, this.addressID})
+  const AdminOrderDetails({Key? key, this.orderID, this.orderBy, this.addressID})
       : super(key: key);
 
   @override
@@ -74,16 +74,16 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                   .doc(getOrderId)
                   .get(),
               builder: (c, snapshot) {
-                Map dataMap;
+                Map? dataMap;
                 if (snapshot.hasData) {
-                  dataMap = snapshot.data.data();
+                  dataMap = snapshot.data!.data();
                 }
                 return snapshot.hasData
                     ? Container(
                         child: Column(
                           children: [
                             AdminStatusBanner(
-                              status: dataMap[EcommerceApp.isSuccess],
+                              status: dataMap![EcommerceApp.isSuccess],
                             ),
                             SizedBox(
                               height: 10.0,
@@ -104,7 +104,7 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                             ),
                             Padding(
                               padding: EdgeInsets.all(4.0),
-                              child: Text("Order ID:" + getOrderId,
+                              child: Text("Order ID:" + getOrderId!,
                                   style: TextStyle(fontSize: 8.0)),
                             ),
                             Padding(
@@ -132,8 +132,8 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                                   return dataSnapshot.hasData
                                       ? AdminOrderDetailCard(
                                           itemCount:
-                                              dataSnapshot.data.docs.length,
-                                          data: dataSnapshot.data.docs,
+                                              dataSnapshot.data!.docs.length,
+                                          data: dataSnapshot.data!.docs,
                                         )
                                       : Center(
                                           child: circularProgress(),
@@ -154,7 +154,7 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                                   return snap.hasData
                                       ? AdminShippingDetails(
                                           model: AddressModel.fromJson(
-                                              snap.data.data()),
+                                              snap.data!.data()!),
                                         )
                                       : Center(
                                           child: circularProgress(),
@@ -176,9 +176,9 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
 }
 
 class AdminStatusBanner extends StatelessWidget {
-  final bool status;
+  final bool? status;
 
-  const AdminStatusBanner({Key key, this.status}) : super(key: key);
+  const AdminStatusBanner({Key? key, this.status}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -186,9 +186,9 @@ class AdminStatusBanner extends StatelessWidget {
     // ignore: unused_local_variable
     IconData iconData;
 
-    status ? iconData = Icons.done : iconData = Icons.cancel;
+    status! ? iconData = Icons.done : iconData = Icons.cancel;
 
-    status ? msg = "Succeful" : msg = "Unsuccessful";
+    status! ? msg = "Succeful" : msg = "Unsuccessful";
 
     return Container(
       color: Colors.grey.shade300,
@@ -220,9 +220,9 @@ class PaymentDetailsCard extends StatelessWidget {
 }
 
 class AdminShippingDetails extends StatelessWidget {
-  final AddressModel model;
+  final AddressModel? model;
 
-  const AdminShippingDetails({Key key, this.model}) : super(key: key);
+  const AdminShippingDetails({Key? key, this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -255,33 +255,33 @@ class AdminShippingDetails extends StatelessWidget {
                 KeyText(
                   msg: "Name",
                 ),
-                Text(model.name, style: TextStyle(color: Colors.black45)),
+                Text(model!.name!, style: TextStyle(color: Colors.black45)),
               ]),
               TableRow(children: [
                 KeyText(
                   msg: "Phone Number",
                 ),
-                Text(model.phoneNumber,
+                Text(model!.phoneNumber!,
                     style: TextStyle(color: Colors.black45)),
               ]),
               TableRow(children: [
                 KeyText(
                   msg: "Business Name",
                 ),
-                Text(model.flatNumber, style: TextStyle(color: Colors.black45)),
+                Text(model!.flatNumber!, style: TextStyle(color: Colors.black45)),
               ]),
               TableRow(children: [
                 KeyText(
                   msg: "Area",
                 ),
-                Text(model.city, style: TextStyle(color: Colors.black45)),
+                Text(model!.city!, style: TextStyle(color: Colors.black45)),
               ]),
               TableRow(children: [
                 KeyText(
                   msg: "Next to",
                 ),
                 Text(
-                  model.state,
+                  model!.state!,
                   style: TextStyle(color: Colors.black45),
                 ),
               ]),
@@ -290,7 +290,7 @@ class AdminShippingDetails extends StatelessWidget {
                   msg: "County",
                 ),
                 Text(
-                  model.pincode,
+                  model!.pincode!,
                   style: TextStyle(color: Colors.black45),
                 ),
               ]),
@@ -310,7 +310,7 @@ class AdminShippingDetails extends StatelessWidget {
     );
   }
 
-  confirmedOrderShifted(BuildContext context, String myOrderID) {
+  confirmedOrderShifted(BuildContext context, String? myOrderID) {
     EcommerceApp.firestore
         .collection(EcommerceApp.collectionOrders)
         .doc(myOrderID)
@@ -327,16 +327,16 @@ class AdminShippingDetails extends StatelessWidget {
 }
 
 class KeyText extends StatelessWidget {
-  final String msg;
+  final String? msg;
 
-  const KeyText({Key key, this.msg}) : super(key: key);
+  const KeyText({Key? key, this.msg}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Text(
-        msg,
+        msg!,
         style: TextStyle(
             color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
       ),

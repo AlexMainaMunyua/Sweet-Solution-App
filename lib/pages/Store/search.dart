@@ -11,7 +11,7 @@ class SearchProduct extends StatefulWidget {
 }
 
 class _SearchProductState extends State<SearchProduct> {
-  Future<QuerySnapshot> docList;
+  Future<QuerySnapshot>? docList;
 
   Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
@@ -40,11 +40,11 @@ class _SearchProductState extends State<SearchProduct> {
                   ? ListView.builder(
                       itemBuilder: (context, index) {
                         ItemModel model =
-                            ItemModel.fromJson(snap.data.docs[index].data());
+                            ItemModel.fromJson(snap.data!.docs[index].data()!);
 
                         return searchSourceInfo(model, context);
                       },
-                      itemCount: snap.data.docs.length,
+                      itemCount: snap.data!.docs.length,
                     )
                   : Center(child: Text("Search items"));
             },
@@ -55,7 +55,7 @@ class _SearchProductState extends State<SearchProduct> {
   }
 
   Widget searchSourceInfo(ItemModel model, BuildContext context,
-      {Color background, removeCartFunction}) {
+      {Color? background, removeCartFunction}) {
     return InkWell(
       onTap: () {
         Route route =
@@ -75,7 +75,7 @@ class _SearchProductState extends State<SearchProduct> {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.30,
                       child: Image.network(
-                        model.thumbnailUrl,
+                        model.thumbnailUrl!,
                         height: 80.0,
                         width: 120.0,
                       ),
@@ -91,7 +91,7 @@ class _SearchProductState extends State<SearchProduct> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  model.title,
+                                  model.title!,
                                   style: TextStyle(
                                       color: Colors.grey.shade700,
                                       fontSize: 14.0),
@@ -103,7 +103,7 @@ class _SearchProductState extends State<SearchProduct> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  model.longDescription,
+                                  model.longDescription!,
                                   style: TextStyle(
                                       color: Colors.grey, fontSize: 12.0),
                                 ),

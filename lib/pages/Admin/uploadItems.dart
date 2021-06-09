@@ -18,7 +18,7 @@ class _UploadPageState extends State<UploadPage>
     with AutomaticKeepAliveClientMixin<UploadPage> {
   bool get wantKeepAlive => true;
 
-  File file;
+  File? file;
 
   TextEditingController _descriptionTextEditingController =
       TextEditingController();
@@ -40,39 +40,11 @@ class _UploadPageState extends State<UploadPage>
         : displayAdminUploadFormScreen();
   }
 
-  Future<bool> _onBackPressed() {
-    return showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text("Are you sure?"),
-              content: Text("Do you want to exit the application."),
-              actions: <Widget>[
-                GestureDetector(
-                  onTap: () => Navigator.of(context).pop(false),
-                  child: Text(
-                    "No",
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                ),
-                SizedBox(width: 30.0, height: 30),
-                GestureDetector(
-                  onTap: () => Navigator.of(context).pop(true),
-                  child: Text(
-                    "Yes",
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                ),
-                SizedBox(width: 10.0),
-              ],
-            ));
-  }
+
 
   displayAdminHomeScreen() {
-    return WillPopScope(
-      onWillPop: _onBackPressed,
-      child: Scaffold(
-        body: getAdminHomeScreenBody(),
-      ),
+    return Scaffold(
+      body: getAdminHomeScreenBody(),
     );
   }
 
@@ -166,8 +138,7 @@ class _UploadPageState extends State<UploadPage>
                     ),
                     Text(
                       "Capture with Camera",
-                      style: TextStyle(
-                          ),
+                      style: TextStyle(),
                     ),
                   ],
                 ),
@@ -184,8 +155,7 @@ class _UploadPageState extends State<UploadPage>
                     ),
                     Text(
                       "Select from Gallery",
-                      style: TextStyle(
-                          ),
+                      style: TextStyle(),
                     ),
                   ],
                 ),
@@ -292,7 +262,7 @@ class _UploadPageState extends State<UploadPage>
                 child: Container(
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: FileImage(file), fit: BoxFit.cover)),
+                          image: FileImage(file!), fit: BoxFit.cover)),
                 ),
               ),
             ),

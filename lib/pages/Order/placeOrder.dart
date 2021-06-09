@@ -11,10 +11,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class PaymentPage extends StatefulWidget {
-  final String addressId;
-  final double totalAmount;
+  final String? addressId;
+  final double? totalAmount;
 
-  const PaymentPage({Key key, this.addressId, this.totalAmount})
+  const PaymentPage({Key? key, this.addressId, this.totalAmount})
       : super(key: key);
 
   @override
@@ -91,7 +91,7 @@ class _PaymentPageState extends State<PaymentPage> {
                               Radio(
                                   value: true,
                                   groupValue: true,
-                                  onChanged: (val) {}),
+                                  onChanged: (dynamic val) {}),
                               Text(
                                 "Pay on Delivery",
                                 style: TextStyle(
@@ -137,10 +137,9 @@ class _PaymentPageState extends State<PaymentPage> {
                         children: [
                           Row(
                             children: [
-                              // ignore: missing_required_param
                               Radio(
                                 activeColor: Colors.grey.shade300,
-                                onChanged: (val) {},
+                                onChanged: (dynamic val) {}, groupValue: null, value: null,
                               ),
                               Text(
                                 "Lipa na mpesa",
@@ -247,7 +246,7 @@ class _PaymentPageState extends State<PaymentPage> {
     EcommerceApp.sharedPreferences
         .setStringList(EcommerceApp.userCartList, ["garbageValue"]);
 
-    List tempList =
+    List? tempList =
         EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
 
     FirebaseFirestore.instance
@@ -257,7 +256,7 @@ class _PaymentPageState extends State<PaymentPage> {
       EcommerceApp.userCartList: tempList,
     }).then((value) {
       EcommerceApp.sharedPreferences
-          .setStringList(EcommerceApp.userCartList, tempList);
+          .setStringList(EcommerceApp.userCartList, tempList as List<String>);
 
       Provider.of<CartItemCounter>(context, listen: false).displayResult();
     });
@@ -275,7 +274,7 @@ class _PaymentPageState extends State<PaymentPage> {
         .collection(EcommerceApp.collectionUser)
         .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
         .collection(EcommerceApp.collectionOrders)
-        .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID) +
+        .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID)! +
             data['orderTime'])
         .set(data);
   }
@@ -283,7 +282,7 @@ class _PaymentPageState extends State<PaymentPage> {
   Future writeOrderDetailsForAdmin(Map<String, dynamic> data) async {
     await EcommerceApp.firestore
         .collection(EcommerceApp.collectionOrders)
-        .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID) +
+        .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID)! +
             data['orderTime'])
         .set(data);
   }

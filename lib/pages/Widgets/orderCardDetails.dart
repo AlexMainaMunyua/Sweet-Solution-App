@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 int counter = 0;
 
 class OrderCardDetails extends StatelessWidget {
-  final int itemCount;
-  final List<DocumentSnapshot> data;
-  final String orderID;
+  final int? itemCount;
+  final List<DocumentSnapshot>? data;
+  final String? orderID;
 
-  const OrderCardDetails({Key key, this.itemCount, this.data, this.orderID})
+  const OrderCardDetails({Key? key, this.itemCount, this.data, this.orderID})
       : super(key: key);
 
   @override
@@ -18,11 +18,11 @@ class OrderCardDetails extends StatelessWidget {
       padding: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0, bottom: 20),
       color: Colors.grey.shade200,
       margin: EdgeInsets.only(top: 10.0, left: 30.0, right: 30.0, bottom: 20),
-      height: itemCount * 120.0,
+      height: itemCount! * 120.0,
       child: ListView.builder(
           itemCount: itemCount,
           itemBuilder: (c, index) {
-            ItemModel model = ItemModel.fromJson(data[index].data());
+            ItemModel model = ItemModel.fromJson(data![index].data()!);
             return Column(
               children: [
                 sourceInfo(model, context),
@@ -33,14 +33,14 @@ class OrderCardDetails extends StatelessWidget {
   }
 }
 
-Widget sourceInfo(ItemModel model, BuildContext context, {Color background}) {
+Widget sourceInfo(ItemModel model, BuildContext context, {Color? background}) {
   return Container(
     height: 100.0,
     color: Colors.grey.shade200,
     child: Row(
       children: [
         Image.network(
-          model.thumbnailUrl,
+          model.thumbnailUrl!,
           width: 100.0,
           height: 60,
         ),
@@ -55,7 +55,7 @@ Widget sourceInfo(ItemModel model, BuildContext context, {Color background}) {
                 children: [
                   Expanded(
                       child: Text(
-                    model.title,
+                    model.title!,
                     style: TextStyle(color: Colors.black45, fontSize: 14.0),
                   ))
                 ],
@@ -70,7 +70,7 @@ Widget sourceInfo(ItemModel model, BuildContext context, {Color background}) {
                 children: [
                   Expanded(
                       child: Text(
-                    model.shortInfo,
+                    model.shortInfo!,
                     style: TextStyle(color: Colors.black38, fontSize: 12.0),
                   ))
                 ],
