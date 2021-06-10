@@ -21,10 +21,8 @@ class BubbleGum extends StatelessWidget {
             stream: FirebaseFirestore.instance
                 .collection("items")
                 .where("shortInfo", isEqualTo: "Bubble Gum")
-                // .limit(4)
-                // .orderBy("publishedDate", descending: true)
                 .snapshots(),
-            builder: (context, snapshot) {
+            builder: (context, AsyncSnapshot  snapshot) {
               return !snapshot.hasData
                   ? SliverToBoxAdapter(
                       child: Center(child: circularProgress()),
@@ -56,7 +54,7 @@ class BubbleGum extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2Fbubblegum.jpeg?alt=media&token=0a9b5342-1857-4c18-8059-f5b212c553ee"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2Fbubble%20gum%20jumbotron%20.png?alt=media&token=802801ff-0183-4010-b6ff-d8acc2f14fc1"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -78,7 +76,7 @@ class BubbleGum extends StatelessWidget {
   }
 
   Widget categorySourceInfo(ItemModel model, BuildContext context,
-      {Color background, removeCartFunction}) {
+      {Color? background, removeCartFunction}) {
     return InkWell(
       onTap: () {
         Route route =
@@ -99,7 +97,7 @@ class BubbleGum extends StatelessWidget {
                       height: 30,
                     ),
                     Image.network(
-                      model.thumbnailUrl,
+                      model.thumbnailUrl!,
                       height: 100.0,
                       width: 120.0,
                     ),
@@ -110,7 +108,7 @@ class BubbleGum extends StatelessWidget {
                         child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        model.title,
+                        model.title!,
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.grey, fontSize: 12.0),
                       ),
@@ -151,7 +149,7 @@ class BubbleGum extends StatelessWidget {
                       color: Colors.black12,
                       child: Center(
                           child: Text(
-                        "5%",
+                        model.discount.toString() + "%",
                         style: TextStyle(fontSize: 10, color: Colors.black38),
                       )),
                     ),

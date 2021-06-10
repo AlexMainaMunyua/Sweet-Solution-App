@@ -2,34 +2,34 @@ import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
 import 'package:ecommerce_application/pages/Model/item.dart';
 import 'package:ecommerce_application/pages/Store/cart.dart';
-
 import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductPage extends StatefulWidget {
-  final ItemModel itemModel;
+  final ItemModel? itemModel;
 
-  const ProductPage({Key key, this.itemModel}) : super(key: key);
+  const ProductPage({Key? key, this.itemModel}) : super(key: key);
   @override
   _ProductPageState createState() => _ProductPageState();
 }
 
 class _ProductPageState extends State<ProductPage> {
-  _onWillPop(BuildContext context) {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     Size screenSize = MediaQuery.of(context).size;
     return WillPopScope(
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      onWillPop: () => _onWillPop(),
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -91,7 +91,7 @@ class _ProductPageState extends State<ProductPage> {
                             return Text(
                                 (EcommerceApp.sharedPreferences
                                             .getStringList(
-                                                EcommerceApp.userCartList)
+                                                EcommerceApp.userCartList)!
                                             .length -
                                         1)
                                     .toString(),
@@ -123,7 +123,7 @@ class _ProductPageState extends State<ProductPage> {
                         Container(
                           height: 300.0,
                           child: Center(
-                            child: Image.network(widget.itemModel.thumbnailUrl),
+                            child: Image.network(widget.itemModel!.thumbnailUrl!),
                           ),
                         ),
                         Container(
@@ -142,23 +142,22 @@ class _ProductPageState extends State<ProductPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.itemModel.title,
+                              widget.itemModel!.title!,
                               style: boldTextStyle,
                             ),
                             SizedBox(
                               height: 10.0,
                             ),
                             Text(
-                              widget.itemModel.longDescription,
+                              widget.itemModel!.longDescription!,
                             ),
                             SizedBox(
                               height: 10.0,
                             ),
                             Text(
-                              "Ksh. " + widget.itemModel.price.toString(),
+                              "Ksh. " + widget.itemModel!.price.toString(),
                               style: boldTextStyle,
                             ),
-                       
                           ],
                         ),
                       ),
@@ -169,7 +168,7 @@ class _ProductPageState extends State<ProductPage> {
                         child: WideButton(
                           onPressed: () {
                             checkItemInCart(
-                                widget.itemModel.shortInfo, context);
+                                widget.itemModel!.productId, context);
                           },
                           msg: "ADD TO CART",
                         ),

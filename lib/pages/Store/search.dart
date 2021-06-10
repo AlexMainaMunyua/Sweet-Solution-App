@@ -11,20 +11,20 @@ class SearchProduct extends StatefulWidget {
 }
 
 class _SearchProductState extends State<SearchProduct> {
-  Future<QuerySnapshot> docList;
+  Future<QuerySnapshot>? docList;
 
-  _onWillPop(BuildContext context) {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      onWillPop: () => _onWillPop(),
       child: SafeArea(
         child: Scaffold(
           appBar: MyAppBar(
@@ -40,11 +40,11 @@ class _SearchProductState extends State<SearchProduct> {
                   ? ListView.builder(
                       itemBuilder: (context, index) {
                         ItemModel model =
-                            ItemModel.fromJson(snap.data.docs[index].data());
+                            ItemModel.fromJson(snap.data!.docs[index].data()!);
 
                         return searchSourceInfo(model, context);
                       },
-                      itemCount: snap.data.docs.length,
+                      itemCount: snap.data!.docs.length,
                     )
                   : Center(child: Text("Search items"));
             },
@@ -55,7 +55,7 @@ class _SearchProductState extends State<SearchProduct> {
   }
 
   Widget searchSourceInfo(ItemModel model, BuildContext context,
-      {Color background, removeCartFunction}) {
+      {Color? background, removeCartFunction}) {
     return InkWell(
       onTap: () {
         Route route =
@@ -72,56 +72,53 @@ class _SearchProductState extends State<SearchProduct> {
               children: [
                 Row(
                   children: [
-                    SizedBox(
-                      height: 30,
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.30,
+                      child: Image.network(
+                        model.thumbnailUrl!,
+                        height: 80.0,
+                        width: 120.0,
+                      ),
                     ),
-                    Image.network(
-                      model.thumbnailUrl,
-                      height: 80.0,
-                      width: 120.0,
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Expanded(
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.60,
+                      alignment: Alignment.centerLeft,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              model.title,
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12.0),
-                            ),
-                          ),
-                            Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              model.shortInfo,
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12.0),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Ksh.",
+                          Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  model.title!,
                                   style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.black,
-                                  ),
+                                      color: Colors.grey.shade700,
+                                      fontSize: 14.0),
                                 ),
-                                Text(
-                                  (model.price).toString(),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  model.longDescription!,
                                   style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.black,
-                                  ),
-                                )
-                              ],
+                                      color: Colors.grey, fontSize: 12.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Ksh." + model.price.toString(),
+                              style: TextStyle(
+                                  color: Colors.grey.shade700, fontSize: 14.0),
                             ),
                           ),
                         ],
@@ -142,7 +139,7 @@ class _SearchProductState extends State<SearchProduct> {
                       color: Colors.black12,
                       child: Center(
                           child: Text(
-                        "5%",
+                        model.discount.toString() + "%",
                         style: TextStyle(fontSize: 10, color: Colors.black38),
                       )),
                     ),
@@ -188,9 +185,10 @@ class _SearchProductState extends State<SearchProduct> {
                 onChanged: (value) {
                   startSearching(value);
                 },
+                textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration.collapsed(
                     hintText: "Search here",
-                    hintStyle: TextStyle(color: Colors.black38)),
+                    hintStyle: TextStyle(fontSize: 14, color: Colors.black38)),
               ),
             ))
           ],
@@ -202,7 +200,7 @@ class _SearchProductState extends State<SearchProduct> {
   Future startSearching(String query) async {
     docList = FirebaseFirestore.instance
         .collection("items")
-        .where("shortInfo", isGreaterThanOrEqualTo: query)
+        .where("title", isGreaterThanOrEqualTo: query)
         .get();
   }
 }

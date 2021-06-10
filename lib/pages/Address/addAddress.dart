@@ -8,29 +8,40 @@ import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddAddress extends StatelessWidget {
+class AddAddress extends StatefulWidget {
+  @override
+  _AddAddressState createState() => _AddAddressState();
+}
+
+class _AddAddressState extends State<AddAddress> {
   final formKey = GlobalKey<FormState>();
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final cName = TextEditingController();
+
   final cPhoneNumber = TextEditingController();
+
   final cFlatHomeNumber = TextEditingController();
+
   final cCity = TextEditingController();
+
   final cState = TextEditingController();
+
   final cPinCode = TextEditingController();
 
-   _onWillPop(BuildContext context) {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => Address());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      onWillPop: () => _onWillPop(),
       child: SafeArea(
         child: Scaffold(
           key: scaffoldKey,
@@ -79,7 +90,7 @@ class AddAddress extends StatelessWidget {
                             return Text(
                                 (EcommerceApp.sharedPreferences
                                             .getStringList(
-                                                EcommerceApp.userCartList)
+                                                EcommerceApp.userCartList)!
                                             .length -
                                         1)
                                     .toString(),
@@ -135,7 +146,7 @@ class AddAddress extends StatelessWidget {
                           Text(
                             "All fields required*",
                             style: TextStyle(
-                                color: Colors.black45,
+                                color: Colors.red,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 10.0),
                           ),
@@ -154,26 +165,33 @@ class AddAddress extends StatelessWidget {
                         MyTextField(
                           hint: "Full name",
                           textEditingController: cName,
+                          textCapitalization: TextCapitalization.words,
                         ),
                         MyTextField(
-                          hint: "Phone number",
+                          hint: "Phone Number",
                           textEditingController: cPhoneNumber,
+                          textCapitalization: TextCapitalization.words,
+                          keyboardType: TextInputType.number,
                         ),
                         MyTextField(
-                          hint: "Business name",
+                          hint: "Business/shop name",
                           textEditingController: cFlatHomeNumber,
+                          textCapitalization: TextCapitalization.words,
                         ),
                         MyTextField(
                           hint: "Area",
                           textEditingController: cCity,
+                          textCapitalization: TextCapitalization.words,
                         ),
                         MyTextField(
                           hint: "Next to",
                           textEditingController: cState,
+                          textCapitalization: TextCapitalization.words,
                         ),
                         MyTextField(
                           hint: "County",
                           textEditingController: cPinCode,
+                          textCapitalization: TextCapitalization.words,
                         ),
                       ],
                     )),
@@ -181,7 +199,7 @@ class AddAddress extends StatelessWidget {
                   msg: "SAVE DETAILS",
                   // key: formKey,
                   onPressed: () {
-                    if (formKey.currentState.validate()) {
+                    if (formKey.currentState!.validate()) {
                       final model = AddressModel(
                         name: cName.text.trim(),
                         state: cState.text.trim(),
@@ -202,10 +220,11 @@ class AddAddress extends StatelessWidget {
                         final snack = SnackBar(
                           content: Text("New Address added successfully."),
                         );
-                        scaffoldKey.currentState.showSnackBar(snack);
+                        // ignore: deprecated_member_use
+                        scaffoldKey.currentState!.showSnackBar(snack);
                         FocusScope.of(context).requestFocus(FocusNode());
 
-                        formKey.currentState.reset();
+                        formKey.currentState!.reset();
                       });
 
                       Route route =
@@ -225,10 +244,17 @@ class AddAddress extends StatelessWidget {
 }
 
 class MyTextField extends StatelessWidget {
-  final String hint;
-  final TextEditingController textEditingController;
+  final String? hint;
+  final TextEditingController? textEditingController;
+  final TextCapitalization? textCapitalization;
+  final TextInputType? keyboardType;
 
-  const MyTextField({Key key, this.hint, this.textEditingController})
+  const MyTextField(
+      {Key? key,
+      this.hint,
+      this.textEditingController,
+      this.textCapitalization,
+      this.keyboardType})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -237,11 +263,13 @@ class MyTextField extends StatelessWidget {
           EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0, bottom: 20.0),
       child: TextFormField(
         controller: textEditingController,
+        textCapitalization: textCapitalization!,
+        keyboardType: keyboardType,
         decoration: InputDecoration.collapsed(
             border: UnderlineInputBorder(),
             hintText: hint,
             hintStyle: TextStyle(color: Colors.black38)),
-        validator: (val) => val.isEmpty ? "Field cannot be empty." : null,
+        validator: (val) => val!.isEmpty ? "Field cannot be empty." : null,
       ),
     );
   }

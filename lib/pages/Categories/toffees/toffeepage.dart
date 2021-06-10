@@ -6,19 +6,24 @@ import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ToffeePage extends StatelessWidget {
-  _onWillPop(BuildContext context) {
+class ToffeePage extends StatefulWidget {
+  @override
+  _ToffeePageState createState() => _ToffeePageState();
+}
+
+class _ToffeePageState extends State<ToffeePage> {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () {
-          _onWillPop(context);
-        },
+        onWillPop: () => _onWillPop(),
         child: DefaultTabController(
           length: 1,
           child: Scaffold(
@@ -83,7 +88,7 @@ class ToffeePage extends StatelessWidget {
                               return Text(
                                   (EcommerceApp.sharedPreferences
                                               .getStringList(
-                                                  EcommerceApp.userCartList)
+                                                  EcommerceApp.userCartList)!
                                               .length -
                                           1)
                                       .toString(),
@@ -118,9 +123,9 @@ class ToffeePage extends StatelessWidget {
                         child: Text(
                           "All Toffees",
                           style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontFamily: "Signatra"),
                         ),
                       ),
                     ],

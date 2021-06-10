@@ -50,7 +50,7 @@ class MyDrawer extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       EcommerceApp.sharedPreferences
-                          .getString(EcommerceApp.phoneNumber),
+                          .getString(EcommerceApp.phoneNumber)!,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 15.0,
@@ -58,20 +58,6 @@ class MyDrawer extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(left: 15.0, bottom: 10.0),
-                //   child: Align(
-                //     alignment: Alignment.centerLeft,
-                //     child: Text(
-                //       EcommerceApp.sharedPreferences
-                //           .getString(EcommerceApp.phoneNumber),
-                //       style: TextStyle(
-                //           color: Colors.white,
-                //           fontSize: 12.0,
-                //         ),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -181,28 +167,12 @@ class MyDrawer extends StatelessWidget {
                     Navigator.pushReplacement(context, route);
                   },
                 ),
-                 Divider(
+                Divider(
                   height: 0.1,
                   color: Colors.black45,
                   // thickness: 6.0,
                 ),
-                /*     ListTile(
-                  leading: Icon(
-                    Icons.settings,
-                    color: Colors.black45,
-                  ),
-                  title: Text(
-                    "Account Settings",
-                    style: TextStyle(color: Colors.black45),
-                  ),
-                  onTap: () {
-                  },
-                ),
-                Divider(
-                  height: 1.0,
-                  color: Colors.black45,
-               
-                ), */
+
                 ListTile(
                   leading: Icon(
                     Icons.logout,
@@ -213,7 +183,7 @@ class MyDrawer extends StatelessWidget {
                     style: TextStyle(color: Colors.black45),
                   ),
                   onTap: () {
-                    EcommerceApp.auth.signOut().then((value) {
+                    EcommerceApp.auth!.signOut().then((value) {
                       Route route =
                           MaterialPageRoute(builder: (c) => SplashScreen());
 

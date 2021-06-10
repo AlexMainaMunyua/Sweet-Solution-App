@@ -22,7 +22,7 @@ class AllFlashSale extends StatelessWidget {
                 .collection("items")
                 .where("shortInfo", isEqualTo: "Flash Sale")
                 .snapshots(),
-            builder: (context, snapshot) {
+            builder: (context,AsyncSnapshot snapshot) {
               return !snapshot.hasData
                   ? SliverToBoxAdapter(
                       child: Center(child: circularProgress()),
@@ -48,14 +48,13 @@ class AllFlashSale extends StatelessWidget {
         CarouselSlider(
           items: [
             //1st Image of Slider
-      
             Container(
               margin: EdgeInsets.only(top: 6.0, bottom: 6.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://images.unsplash.com/photo-1611250503393-9424f314d265?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1266&q=80"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2FflashJumbotron%20.png?alt=media&token=df52d810-ed30-4ac2-998b-b273e0db6c49"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -77,7 +76,7 @@ class AllFlashSale extends StatelessWidget {
   }
 
   Widget categorySourceInfo(ItemModel model, BuildContext context,
-      {Color background, removeCartFunction}) {
+      {Color? background, removeCartFunction}) {
     return InkWell(
       onTap: () {
         Route route =
@@ -98,7 +97,7 @@ class AllFlashSale extends StatelessWidget {
                       height: 30,
                     ),
                     Image.network(
-                      model.thumbnailUrl,
+                      model.thumbnailUrl!,
                       height: 100.0,
                       width: 120.0,
                     ),
@@ -109,7 +108,7 @@ class AllFlashSale extends StatelessWidget {
                         child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        model.title,
+                        model.title!,
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.grey, fontSize: 12.0),
                       ),
@@ -150,7 +149,7 @@ class AllFlashSale extends StatelessWidget {
                       color: Colors.black12,
                       child: Center(
                           child: Text(
-                        "5%",
+                         model.discount.toString()+"%",
                         style: TextStyle(fontSize: 10, color: Colors.black38),
                       )),
                     ),

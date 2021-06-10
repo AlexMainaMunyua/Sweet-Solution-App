@@ -6,7 +6,8 @@ class ItemQuantity with ChangeNotifier {
   int get numberOfItems => _numberOfItems;
 
   display(int no) async {
-    _numberOfItems = no;
+    // _numberOfItems = no;
+   
 
     notifyListeners();
   }
@@ -17,7 +18,7 @@ class ItemQuantity with ChangeNotifier {
     notifyListeners();
   }
 
-   void decrement() {
+  void decrement() {
     _numberOfItems--;
 
     notifyListeners();

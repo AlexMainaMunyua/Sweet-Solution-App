@@ -1,28 +1,30 @@
-import 'package:carousel_slider/carousel_options.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_application/pages/Categories/toys/widgets/alltoys.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
-import 'package:ecommerce_application/pages/Model/item.dart';
 import 'package:ecommerce_application/pages/Store/cart.dart';
-import 'package:ecommerce_application/pages/Store/productPage.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ToyPage extends StatelessWidget {
-  _onWillPop(BuildContext context) {
+class ToyPage extends StatefulWidget {
+  @override
+  _ToyPageState createState() => _ToyPageState();
+}
+
+class _ToyPageState extends State<ToyPage> {
+   Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () {
-          _onWillPop(context);
-        },
+     
+        onWillPop: () => _onWillPop(),
         child: DefaultTabController(
           length: 1,
           child: Scaffold(
@@ -87,7 +89,7 @@ class ToyPage extends StatelessWidget {
                               return Text(
                                   (EcommerceApp.sharedPreferences
                                               .getStringList(
-                                                  EcommerceApp.userCartList)
+                                                  EcommerceApp.userCartList)!
                                               .length -
                                           1)
                                       .toString(),
@@ -115,15 +117,15 @@ class ToyPage extends StatelessWidget {
                             BorderSide(width: 4, color: Colors.grey.shade700),
                         insets:
                             EdgeInsets.only(left: 0, right: 4.0, bottom: 0.0)),
-                    // labelPadding:  EdgeInsets.only(left: 0, right: 0),
 
                     tabs: [
                       Tab(
                         child: Text(
                           "All Toys",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 20,
                             color: Colors.white,
+                            fontFamily: "Signatra"
                           ),
                         ),
                       ),

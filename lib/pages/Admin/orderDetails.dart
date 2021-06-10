@@ -1,38 +1,43 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_application/pages/Admin/adminOrderDetailCard.dart';
 import 'package:ecommerce_application/pages/Admin/shiftOrders.dart';
 import 'package:ecommerce_application/pages/Admin/uploadItems.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Model/address.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
-import 'package:ecommerce_application/pages/Widgets/orderCard.dart';
 import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
-String getOrderId = "";
+String? getOrderId = "";
 
-class AdminOrderDetails extends StatelessWidget {
-  final String orderID;
-  final String orderBy;
-  final String addressID;
+class AdminOrderDetails extends StatefulWidget {
+  final String? orderID;
+  final String? orderBy;
+  final String? addressID;
 
-  const AdminOrderDetails({Key key, this.orderID, this.orderBy, this.addressID})
+  const AdminOrderDetails({Key? key, this.orderID, this.orderBy, this.addressID})
       : super(key: key);
 
-  _onWillPop(BuildContext context) {
+  @override
+  _AdminOrderDetailsState createState() => _AdminOrderDetailsState();
+}
+
+class _AdminOrderDetailsState extends State<AdminOrderDetails> {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => AdminShiftOrders());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    getOrderId = orderID;
+    getOrderId = widget.orderID;
     return WillPopScope(
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      onWillPop: () => _onWillPop(),
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -69,16 +74,16 @@ class AdminOrderDetails extends StatelessWidget {
                   .doc(getOrderId)
                   .get(),
               builder: (c, snapshot) {
-                Map dataMap;
+                Map? dataMap;
                 if (snapshot.hasData) {
-                  dataMap = snapshot.data.data();
+                  dataMap = snapshot.data!.data();
                 }
                 return snapshot.hasData
                     ? Container(
                         child: Column(
                           children: [
                             AdminStatusBanner(
-                              status: dataMap[EcommerceApp.isSuccess],
+                              status: dataMap![EcommerceApp.isSuccess],
                             ),
                             SizedBox(
                               height: 10.0,
@@ -99,9 +104,8 @@ class AdminOrderDetails extends StatelessWidget {
                             ),
                             Padding(
                               padding: EdgeInsets.all(4.0),
-                              child: Text("Order ID:" + getOrderId,
-                               style: TextStyle(fontSize: 8.0)
-                              ),
+                              child: Text("Order ID:" + getOrderId!,
+                                  style: TextStyle(fontSize: 8.0)),
                             ),
                             Padding(
                               padding: EdgeInsets.all(4.0),
@@ -120,16 +124,16 @@ class AdminOrderDetails extends StatelessWidget {
                             FutureBuilder<QuerySnapshot>(
                                 future: EcommerceApp.firestore
                                     .collection("items")
-                                    .where("shortInfo",
+                                    .where("productId",
                                         whereIn:
                                             dataMap[EcommerceApp.productID])
                                     .get(),
                                 builder: (c, dataSnapshot) {
                                   return dataSnapshot.hasData
-                                      ? OrderCard(
+                                      ? AdminOrderDetailCard(
                                           itemCount:
-                                              dataSnapshot.data.docs.length,
-                                          data: dataSnapshot.data.docs,
+                                              dataSnapshot.data!.docs.length,
+                                          data: dataSnapshot.data!.docs,
                                         )
                                       : Center(
                                           child: circularProgress(),
@@ -141,16 +145,16 @@ class AdminOrderDetails extends StatelessWidget {
                             FutureBuilder<DocumentSnapshot>(
                                 future: EcommerceApp.firestore
                                     .collection(EcommerceApp.collectionUser)
-                                    .doc(orderBy)
+                                    .doc(widget.orderBy)
                                     .collection(
                                         EcommerceApp.subCollectionAddress)
-                                    .doc(addressID)
+                                    .doc(widget.addressID)
                                     .get(),
                                 builder: (c, snap) {
                                   return snap.hasData
                                       ? AdminShippingDetails(
                                           model: AddressModel.fromJson(
-                                              snap.data.data()),
+                                              snap.data!.data()!),
                                         )
                                       : Center(
                                           child: circularProgress(),
@@ -172,43 +176,26 @@ class AdminOrderDetails extends StatelessWidget {
 }
 
 class AdminStatusBanner extends StatelessWidget {
-  final bool status;
+  final bool? status;
 
-  const AdminStatusBanner({Key key, this.status}) : super(key: key);
+  const AdminStatusBanner({Key? key, this.status}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String msg;
+    // ignore: unused_local_variable
     IconData iconData;
 
-    status ? iconData = Icons.done : iconData = Icons.cancel;
+    status! ? iconData = Icons.done : iconData = Icons.cancel;
 
-    status ? msg = "Succeful" : msg = "Unsuccessful";
+    status! ? msg = "Succeful" : msg = "Unsuccessful";
 
     return Container(
-      // decoration: BoxDecoration(
-      //     gradient: LinearGradient(
-      //         colors: [Colors.black26, Colors.white],
-      //         begin: const FractionalOffset(0.0, 0.0),
-      //         end: const FractionalOffset(1.0, 0.0),
-      //         stops: [0.0, 1.0],
-      //         tileMode: TileMode.clamp)),
       color: Colors.grey.shade300,
       height: 40.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // GestureDetector(
-          //   onTap: () {
-          //     SystemNavigator.pop();
-          //   },
-          //   child: Container(
-          //     child: Icon(
-          //       Icons.arrow_drop_down_circle,
-          //       color: Colors.white,
-          //     ),
-          //   ),
-          // ),
           SizedBox(
             width: 20.0,
           ),
@@ -219,17 +206,6 @@ class AdminStatusBanner extends StatelessWidget {
           SizedBox(
             width: 5.0,
           ),
-          // CircleAvatar(
-          //   radius: 8.0,
-          //   backgroundColor: Colors.grey,
-          //   child: Center(
-          //     child: Icon(
-          //       iconData,
-          //       color: Colors.white,
-          //       size: 14.0,
-          //     ),
-          //   ),
-          // )
         ],
       ),
     );
@@ -244,9 +220,9 @@ class PaymentDetailsCard extends StatelessWidget {
 }
 
 class AdminShippingDetails extends StatelessWidget {
-  final AddressModel model;
+  final AddressModel? model;
 
-  const AdminShippingDetails({Key key, this.model}) : super(key: key);
+  const AdminShippingDetails({Key? key, this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -279,46 +255,45 @@ class AdminShippingDetails extends StatelessWidget {
                 KeyText(
                   msg: "Name",
                 ),
-                Text(model.name, style: TextStyle(color: Colors.black45)),
+                Text(model!.name!, style: TextStyle(color: Colors.black45)),
               ]),
               TableRow(children: [
                 KeyText(
                   msg: "Phone Number",
                 ),
-                Text(model.phoneNumber,
+                Text(model!.phoneNumber!,
                     style: TextStyle(color: Colors.black45)),
               ]),
               TableRow(children: [
                 KeyText(
                   msg: "Business Name",
                 ),
-                Text(model.flatNumber, style: TextStyle(color: Colors.black45)),
+                Text(model!.flatNumber!, style: TextStyle(color: Colors.black45)),
               ]),
               TableRow(children: [
                 KeyText(
                   msg: "Area",
                 ),
-                Text(model.city, style: TextStyle(color: Colors.black45)),
+                Text(model!.city!, style: TextStyle(color: Colors.black45)),
               ]),
-                TableRow(children: [
+              TableRow(children: [
                 KeyText(
                   msg: "Next to",
                 ),
                 Text(
-                  model.state,
+                  model!.state!,
                   style: TextStyle(color: Colors.black45),
                 ),
               ]),
-                TableRow(children: [
+              TableRow(children: [
                 KeyText(
                   msg: "County",
                 ),
                 Text(
-                  model.pincode,
+                  model!.pincode!,
                   style: TextStyle(color: Colors.black45),
                 ),
               ]),
-             
             ],
           ),
         ),
@@ -331,36 +306,11 @@ class AdminShippingDetails extends StatelessWidget {
             },
           ),
         ),
-        // Padding(
-        //   padding: EdgeInsets.all(10.0),
-        //   child: InkWell(
-        //     onTap: () {
-        //       confirmedOrderShifted(context, getOrderId);
-        //     },
-        //     child: Container(
-        //       width: MediaQuery.of(context).size.width - 40.0,
-        //       height: 50.0,
-        //       decoration: BoxDecoration(
-        //           gradient: LinearGradient(
-        //               colors: [Colors.black26, Colors.white],
-        //               begin: const FractionalOffset(0.0, 0.0),
-        //               end: const FractionalOffset(1.0, 0.0),
-        //               stops: [0.0, 1.0],
-        //               tileMode: TileMode.clamp)),
-        //       child: Center(
-        //         child: Text(
-        //           "Confirmed Order shifted ",
-        //           style: TextStyle(color: Colors.white, fontSize: 15.0),
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // )
       ],
     );
   }
 
-  confirmedOrderShifted(BuildContext context, String myOrderID) {
+  confirmedOrderShifted(BuildContext context, String? myOrderID) {
     EcommerceApp.firestore
         .collection(EcommerceApp.collectionOrders)
         .doc(myOrderID)
@@ -377,16 +327,16 @@ class AdminShippingDetails extends StatelessWidget {
 }
 
 class KeyText extends StatelessWidget {
-  final String msg;
+  final String? msg;
 
-  const KeyText({Key key, this.msg}) : super(key: key);
+  const KeyText({Key? key, this.msg}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Text(
-        msg,
+        msg!,
         style: TextStyle(
             color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
       ),

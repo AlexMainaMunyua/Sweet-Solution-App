@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 @immutable
 // ignore: must_be_immutable
 class CustomTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final IconData data;
-  final String hintText;
-  bool isObsecure = true;
+  final TextEditingController? controller;
+  final IconData? data;
+  final String? hintText;
+  bool? isObsecure = true;
 
   CustomTextField(
-      {Key key, this.controller, this.data, this.hintText, this.isObsecure})
+      {Key? key, this.controller, this.data, this.hintText, this.isObsecure})
       : super(key: key);
 
   @override
@@ -23,7 +23,7 @@ class CustomTextField extends StatelessWidget {
       margin: EdgeInsets.all(8.0),
       child: TextFormField(
         controller: controller,
-        obscureText: isObsecure,
+        obscureText: isObsecure!,
         cursorColor: Theme.of(context).primaryColor,
         decoration: InputDecoration(
           border: InputBorder.none,

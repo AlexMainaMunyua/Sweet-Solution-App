@@ -1,11 +1,12 @@
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
 import 'package:ecommerce_application/pages/Store/cart.dart';
+import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MyAppBar extends StatelessWidget with PreferredSizeWidget {
-  final PreferredSizeWidget bottom;
+  final PreferredSizeWidget? bottom;
   MyAppBar({this.bottom});
 
   @override
@@ -23,16 +24,23 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
                 stops: [0.0, 1.0],
                 tileMode: TileMode.clamp)),
       ),
-  
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () {
+          Route route = MaterialPageRoute(builder: (c) => MyHomePage());
+
+          Navigator.pushReplacement(context, route);
+        },
+      ),
       title: Text(
-        "Cady",
+        "Sweet Solutions",
         style: TextStyle(
             fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
       ),
       bottom: bottom,
       actions: [
         Container(
-          padding: EdgeInsets.only(right:5.0, top: 5.0),
+          padding: EdgeInsets.only(right: 5.0, top: 5.0),
           child: Stack(children: [
             IconButton(
                 icon: Icon(
@@ -61,7 +69,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
                     builder: (context, counter, _) {
                       return Text(
                           (EcommerceApp.sharedPreferences
-                                      .getStringList(EcommerceApp.userCartList)
+                                      .getStringList(EcommerceApp.userCartList)!
                                       .length -
                                   1)
                               .toString(),
