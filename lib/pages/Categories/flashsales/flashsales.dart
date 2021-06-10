@@ -12,18 +12,19 @@ class FlashSale extends StatefulWidget {
 }
 
 class _FlashSaleState extends State<FlashSale> {
-  _onWillPop(BuildContext context) {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () {
-          _onWillPop(context);
-        },
+     
+        onWillPop: () => _onWillPop(),
         child: DefaultTabController(
           length: 1,
           child: Scaffold(
@@ -88,7 +89,7 @@ class _FlashSaleState extends State<FlashSale> {
                               return Text(
                                   (EcommerceApp.sharedPreferences
                                               .getStringList(
-                                                  EcommerceApp.userCartList)
+                                                  EcommerceApp.userCartList)!
                                               .length -
                                           1)
                                       .toString(),
@@ -109,22 +110,21 @@ class _FlashSaleState extends State<FlashSale> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: TabBar(
-                    // indicatorWeight: 5,
                     isScrollable: true,
                     indicator: UnderlineTabIndicator(
                         borderSide:
                             BorderSide(width: 4, color: Colors.grey.shade700),
                         insets:
                             EdgeInsets.only(left: 0, right: 4.0, bottom: 0.0)),
-                    // labelPadding:  EdgeInsets.only(left: 0, right: 0),
 
                     tabs: [
                       Tab(
                         child: Text(
                           "Deals of the week",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 20,
                             color: Colors.white,
+                            fontFamily: "Signatra"
                           ),
                         ),
                       ),

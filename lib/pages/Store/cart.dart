@@ -8,7 +8,6 @@ import 'package:ecommerce_application/pages/Counter/totalMoney.dart';
 import 'package:ecommerce_application/pages/Model/item.dart';
 import 'package:ecommerce_application/pages/Store/productPage.dart';
 import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
-import 'package:async/async.dart';
 import 'package:ecommerce_application/pages/Widgets/wideButton.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
@@ -23,20 +22,14 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  double totalAmount;
+  double? totalAmount;
   TextEditingController _numberCtrl = new TextEditingController();
 
-  int quantity;
+  int? quantity;
 
   Stream streamA = EcommerceApp.firestore
       .collection("items")
-      .where("shortInfo",
-          whereIn: EcommerceApp.sharedPreferences
-              .getStringList(EcommerceApp.userCartList))
-      .snapshots();
-  Stream streamB = EcommerceApp.firestore
-      .collection("flash")
-      .where("shortInfo",
+      .where("productId",
           whereIn: EcommerceApp.sharedPreferences
               .getStringList(EcommerceApp.userCartList))
       .snapshots();
@@ -67,45 +60,24 @@ class _CartPageState extends State<CartPage> {
     super.initState();
 
     quantity = 1;
-    _numberCtrl.text = "0720778156";
+    _numberCtrl.text = "0114413264";
     totalAmount = 0;
 
     Provider.of<TotalAmount>(context, listen: false).displayAmount(0);
   }
 
-  // Observable<List<QuerySnapshot>> combineStream = Observable.combineLatest2()
-
-  Stream<List<QuerySnapshot>> getData() {
-    Stream stream1 = EcommerceApp.firestore
-        .collection("items")
-        .where("shortInfo",
-            whereIn: EcommerceApp.sharedPreferences
-                .getStringList(EcommerceApp.userCartList))
-        .snapshots();
-    Stream stream2 = EcommerceApp.firestore
-        .collection("flash")
-        .where("shortInfo",
-            whereIn: EcommerceApp.sharedPreferences
-                .getStringList(EcommerceApp.userCartList))
-        .snapshots();
-
-    return StreamZip([stream1, stream2]);
-  }
-
-  _onWillPop(BuildContext context) {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    // Stream combineStream =
-    //     Rx.combineLatest2(streamA, streamB, (a, b) => [a, b]);
     return WillPopScope(
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      onWillPop: () => _onWillPop(),
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
@@ -160,13 +132,13 @@ class _CartPageState extends State<CartPage> {
                     Positioned(
                       top: 3.0,
                       bottom: 4.0,
-                      left: 6.0,
+                      left: 7.0,
                       child: Consumer<CartItemCounter>(
                         builder: (context, counter, _) {
                           return Text(
                               (EcommerceApp.sharedPreferences
                                           .getStringList(
-                                              EcommerceApp.userCartList)
+                                              EcommerceApp.userCartList)!
                                           .length -
                                       1)
                                   .toString(),
@@ -183,7 +155,6 @@ class _CartPageState extends State<CartPage> {
             )
           ],
         ),
-        // drawer: MyDrawer(),
         body: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
@@ -191,41 +162,9 @@ class _CartPageState extends State<CartPage> {
                 height: 10.0,
               ),
             ),
-            // StreamBuilder<QuerySnapshot>(
-            //     stream: streamA,
-            //     builder: (BuildContext context,
-            //         AsyncSnapshot<QuerySnapshot> itemSnapshot) {
-            //       return StreamBuilder(
-            //         stream: streamB,
-            //         builder: (context, flashSnapShot) {
-            //           if (itemSnapshot.hasError ||
-            //               flashSnapShot.hasError ||
-            //               !flashSnapShot.hasData)
-            //             return Text(
-            //                 "Error: ${itemSnapshot.error}, ${flashSnapShot.error}");
-            //           switch (itemSnapshot.connectionState) {
-            //             case ConnectionState.waiting:
-            //               return Text("Loading...");
-            //             default:
-            //               return ListView(children: itemSnapshot.data.docs
-            //                   .map((DocumentSnapshot doc) {
-            //                 var item = "";
-            //                 if (doc['uid'] != null &&
-            //                     itemSnapshot.data != null) {
-            //                   item = doc['uid'];
-            //                   item = itemSnapshot.data.docs
-            //                       .firstWhere((element) => element.id == item)
-            //                       .data();
-            //                 }
-            //               }).toList()
-            //               );
-            //           }
-            //         },
-            //       );
-            //     }),
             StreamBuilder(
               stream: streamA,
-              builder: (context, snapshot) {
+              builder: (context, AsyncSnapshot snapshot) {
                 return !snapshot.hasData
                     ? SliverToBoxAdapter(
                         child: Center(
@@ -242,12 +181,12 @@ class _CartPageState extends State<CartPage> {
 
                                 if (index == 0) {
                                   totalAmount = 0;
-                                  totalAmount = model.price + totalAmount;
+                                  totalAmount = model.price! + totalAmount!;
                                 } else {
-                                  totalAmount = model.price + totalAmount;
+                                  totalAmount = model.price! + totalAmount!;
                                 }
                                 if (snapshot.data.docs.length - 1 == index) {
-                                  WidgetsBinding.instance
+                                  WidgetsBinding.instance!
                                       .addPostFrameCallback((t) {
                                     Provider.of<TotalAmount>(context,
                                             listen: false)
@@ -258,7 +197,7 @@ class _CartPageState extends State<CartPage> {
                                 return cartSourceInfo(model, context,
                                     removeCartFunction: () =>
                                         removeItemFromUserCart(
-                                            model.shortInfo));
+                                            model.productId));
                               },
                               childCount: snapshot.hasData
                                   ? snapshot.data.docs.length
@@ -267,201 +206,6 @@ class _CartPageState extends State<CartPage> {
                           );
               },
             ),
-            // StreamBuilder(
-            //     stream: getData(),
-            //     builder:
-            //         (context, AsyncSnapshot<List<QuerySnapshot>> snapshot) {
-            //       List<QuerySnapshot> querySnapshotData =
-            //           snapshot.data.toList();
-
-            //       //copy document snapshots from second stream to first so querySnapshotData[0].documents will have all documents from both query snapshots
-            //       querySnapshotData[0].docs.addAll(querySnapshotData[1].docs);
-
-            //       if (querySnapshotData[0].docs.isEmpty) {
-            //         return SliverToBoxAdapter(
-            //           child: Center(
-            //             child: circularProgress(),
-            //           ),
-            //         );
-            //       } else {
-            //         // List<QuerySnapshot> _list = [];
-            //         // _list.addAll(getList(snapshot.data[0]));
-            //         // _list.addAll(getList(snapshot.data[1]));
-            //         if (querySnapshotData[0].docs.length == 0) {
-            //           return beginBuildingCart();
-            //         } else {
-            //           // return ListView(
-            //           //   children: List.generate(
-            //           //       querySnapshotData[0].docs.length, (index) {
-            //           //     DocumentSnapshot documentSnapshot =
-            //           //         querySnapshotData[0].docs[index];
-
-            //           //     return Text(documentSnapshot["title"]);
-            //           //   }),
-            //           //   // children: querySnapshotData[0]
-            //           //   //     .docs
-            //           //   //     .map((DocumentSnapshot documentSnapshot) {
-            //           //   //   var userDocument = documentSnapshot;
-            //           //   //   print(userDocument['title']);
-            //           //   //   // return Text(userDocument["items"]);
-            //           //   // }),
-            //           // );
-            //           return SliverList(
-            //             delegate: SliverChildBuilderDelegate(
-            //               (context, index) {
-            //                 ItemModel model = ItemModel.fromJson(
-            //                     querySnapshotData[0].docs[index].data());
-
-            //                 if (index == 0) {
-            //                   totalAmount = 0;
-            //                   totalAmount = model.price + totalAmount;
-            //                 } else {
-            //                   totalAmount = model.price + totalAmount;
-            //                 }
-            //                 if ( querySnapshotData[0].docs.length - 1 == index) {
-            //                   WidgetsBinding.instance.addPostFrameCallback((t) {
-            //                     Provider.of<TotalAmount>(context, listen: false)
-            //                         .displayAmount(totalAmount);
-            //                   });
-            //                 }
-            //                 print(snapshot.data[0].docs.length +
-            //                     snapshot.data[1].docs.length);
-
-            //                 return cartSourceInfo(model, context,
-            //                     removeCartFunction: () =>
-            //                         removeItemFromUserCart(model.shortInfo));
-            //               },
-            //               childCount: snapshot.hasData ?  querySnapshotData[0].docs.length : 0,
-            //             ),
-            //           );
-            //         }
-            //       }
-            //     }),
-
-            // StreamBuilder(
-            //     stream: getData(),
-            //     builder: (BuildContext context,
-            //         AsyncSnapshot<List<QuerySnapshot>> snapshot) {
-            //       List<QuerySnapshot> querySnapshotData =
-            //           snapshot.data.toList();
-
-            //       querySnapshotData[0].docs.addAll(querySnapshotData[1].docs);
-
-            //       if (querySnapshotData[0].docs.isEmpty)
-            //         return SliverToBoxAdapter(
-            //             child: Center(
-            //           child: circularProgress(),
-            //         ));
-
-            //       if (querySnapshotData[0].docs.length == 0) {
-            //         return beginBuildingCart();
-            //       } else {
-            //         return SliverList(delegate: SliverChildBuilderDelegate((context, index){
-
-            //             ItemModel model = ItemModel.fromJson(
-            //                           snapshot.data.docs[index].data());
-
-            //                       if (index == 0) {
-            //                         totalAmount = 0;
-            //                         totalAmount = model.price + totalAmount;
-            //                       } else {
-            //                         totalAmount = model.price + totalAmount;
-            //                       }
-            //                       if (snapshot.data.docs.length - 1 == index) {
-            //                         WidgetsBinding.instance
-            //                             .addPostFrameCallback((t) {
-            //                           Provider.of<TotalAmount>(context,
-            //                                   listen: false)
-            //                               .displayAmount(totalAmount);
-            //                         });
-            //                       }
-
-            //         })
-            //         );
-
-            //       }
-            //       // return ListView(
-            //       //   children: querySnapshotData[0]
-            //       //       .docs
-            //       //       .map((DocumentSnapshot documentSnapshot) {
-            //       //     return Text(documentSnapshot.id);
-            //       //   }).toList(),
-            //       // );
-            //     }),
-
-            // StreamBuilder(
-            //     stream: Rx.combineLatest2(
-            //         streamA, streamB, (a, b) => a != null || b != null),
-            //     builder: (context, snapshot) {}),
-            // StreamBuilder<QuerySnapshot>(
-            //     // stream: EcommerceApp.firestore
-            //     //     .collection("items")
-            //     //     .where("shortInfo",
-            //     //         whereIn: EcommerceApp.sharedPreferences
-            //     //             .getStringList(EcommerceApp.userCartList))
-            //     //     .snapshots(),
-            //     stream: streamA,
-            //     //  stream: StreamGroup.merge(streamA,streamB),
-
-            //     // final item = a.docs.first.data();
-            //     // final flash = b.docs.first.data();
-
-            //     // return (item["shortInfo"] as List<String>)
-            //     //     .where((element) => element == flash["shortInfo"])
-            //     //     .toList();
-            //     // stream: getData(),
-            //     // stream: Rx.combineLatest2(streamA, streamB, (a, b) {
-            //     //   streamB.where((event) => event.startWith(streamA));
-            //     // }),
-            //     // stream: Rx.combineLatest([streamA], (values) => true),
-            //     builder: (context, snapshot) {
-            //       StreamBuilder(
-            //         stream: streamB,
-            //         builder: (context, snapshot) {
-            //             return !snapshot.hasData
-            //           ? SliverToBoxAdapter(
-            //               child: Center(
-            //                 child: circularProgress(),
-            //               ),
-            //             )
-            //           : snapshot.data.docs.length == 0
-            //               ? beginBuildingCart()
-            //               : SliverList(
-            //                   delegate: SliverChildBuilderDelegate(
-            //                     (context, index) {
-            //                       ItemModel model = ItemModel.fromJson(
-            //                           snapshot.data.docs[index].data());
-
-            //                       if (index == 0) {
-            //                         totalAmount = 0;
-            //                         totalAmount = model.price + totalAmount;
-            //                       } else {
-            //                         totalAmount = model.price + totalAmount;
-            //                       }
-            //                       if (snapshot.data.docs.length - 1 == index) {
-            //                         WidgetsBinding.instance
-            //                             .addPostFrameCallback((t) {
-            //                           Provider.of<TotalAmount>(context,
-            //                                   listen: false)
-            //                               .displayAmount(totalAmount);
-            //                         });
-            //                       }
-
-            //                       return cartSourceInfo(model, context,
-            //                           removeCartFunction: () =>
-            //                               removeItemFromUserCart(
-            //                                   model.shortInfo));
-            //                     },
-            //                     childCount: snapshot.hasData
-            //                         ? snapshot.data.docs.length
-            //                         : 0,
-            //                   ),
-            //                 );
-
-            //         },
-            //       );
-
-            //     }),
             SliverToBoxAdapter(
               child: Container(
                 height: 20,
@@ -492,7 +236,7 @@ class _CartPageState extends State<CartPage> {
                                               fontWeight: FontWeight.w500),
                                         ),
                                         Text(
-                                          "Ksh.${amountProvider.totalAmount.toString()}",
+                                          "Ksh. ${amountProvider.totalAmount.toString()}",
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 16.0,
@@ -516,7 +260,7 @@ class _CartPageState extends State<CartPage> {
                                               fontWeight: FontWeight.w500),
                                         ),
                                         Text(
-                                          "Ksh.${amountProvider.totalAmount.toString()}",
+                                          "Ksh. ${amountProvider.totalAmount.toString()}",
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 16.0,
@@ -529,40 +273,42 @@ class _CartPageState extends State<CartPage> {
                         },
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(top: 20.0),
-                      child: WideButton(
-                        onPressed: () {
-                          if (EcommerceApp.sharedPreferences
-                                  .getStringList(EcommerceApp.userCartList)
-                                  .length ==
-                              1) {
-                            Fluttertoast.showToast(msg: "Your cart is empty");
-                          } else {
-                            Route route = MaterialPageRoute(
-                                builder: (c) =>
-                                    Address(totalAmount: totalAmount));
-
-                            Navigator.pushReplacement(context, route);
-                          }
-                        },
-                        msg: "CHECK OUT",
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 20.0),
-                      child: WideButton(
-                        onPressed: () async {
-                          await FlutterPhoneDirectCaller.callNumber(
-                              _numberCtrl.text);
-                        },
-                        msg: "CALL TO ORDER",
-                      ),
-                    ),
                   ],
                 ),
               ),
             ),
+            SliverToBoxAdapter(
+              child: Container(
+                padding: EdgeInsets.only(top: 20.0),
+                child: WideButton(
+                  onPressed: () {
+                    if (EcommerceApp.sharedPreferences
+                            .getStringList(EcommerceApp.userCartList)!
+                            .length ==
+                        1) {
+                      Fluttertoast.showToast(msg: "Your cart is empty");
+                    } else {
+                      Route route = MaterialPageRoute(
+                          builder: (c) => Address(totalAmount: totalAmount));
+
+                      Navigator.pushReplacement(context, route);
+                    }
+                  },
+                  msg: "CHECK OUT",
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Container(
+                padding: EdgeInsets.only(top: 20.0),
+                child: WideButton(
+                  onPressed: () async {
+                    await FlutterPhoneDirectCaller.callNumber(_numberCtrl.text);
+                  },
+                  msg: "CALL TO ORDER",
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -572,7 +318,7 @@ class _CartPageState extends State<CartPage> {
   Widget cartSourceInfo(
     ItemModel model,
     BuildContext context, {
-    Color backgroud,
+    Color? backgroud,
     removeCartFunction,
   }) {
     return InkWell(
@@ -584,7 +330,7 @@ class _CartPageState extends State<CartPage> {
       },
       splashColor: Colors.black26,
       child: Container(
-        height: 120.0,
+        height: 140.0,
         child: Card(
           child: Container(
             child: Stack(
@@ -594,8 +340,8 @@ class _CartPageState extends State<CartPage> {
                     Container(
                       child: Center(
                         child: Image.network(
-                          model.thumbnailUrl,
-                          height: 80.0,
+                          model.thumbnailUrl!,
+                          height: 120.0,
                           width: 120.0,
                         ),
                       ),
@@ -605,19 +351,31 @@ class _CartPageState extends State<CartPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          // SizedBox(height: 15.0,),
+                          SizedBox(
+                            height: 10.0,
+                          ),
                           Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                model.shortInfo,
+                                model.title!,
                                 style: TextStyle(
-                                    color: Colors.grey, fontSize: 12.0),
+                                    color: Colors.grey.shade700,
+                                    fontSize: 12.0),
                               )),
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Container(
                                 child: Text(
-                              model.title,
+                              model.shortInfo!,
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 12.0),
+                            )),
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                                child: Text(
+                              model.longDescription!,
                               style:
                                   TextStyle(color: Colors.grey, fontSize: 12.0),
                             )),
@@ -701,11 +459,6 @@ class _CartPageState extends State<CartPage> {
                       icon: Icon(Icons.remove_shopping_cart),
                       onPressed: () async {
                         removeCartFunction();
-
-                        Route route =
-                            MaterialPageRoute(builder: (c) => MyHomePage());
-
-                        Navigator.pushReplacement(context, route);
                       },
                     ),
                   ),
@@ -716,7 +469,6 @@ class _CartPageState extends State<CartPage> {
         ),
       ),
     );
-    ;
   }
 
   beginBuildingCart() {
@@ -746,11 +498,11 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  removeItemFromUserCart(String shortInfoID) {
+  removeItemFromUserCart(String? productId) {
     List tempCartList =
-        EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
+        EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList)!;
 
-    tempCartList.remove(shortInfoID);
+    tempCartList.remove(productId);
 
     EcommerceApp.firestore
         .collection(EcommerceApp.collectionUser)
@@ -761,11 +513,15 @@ class _CartPageState extends State<CartPage> {
       Fluttertoast.showToast(msg: "Item Removed Successfully");
 
       EcommerceApp.sharedPreferences
-          .setStringList(EcommerceApp.userCartList, tempCartList);
+          .setStringList(EcommerceApp.userCartList, tempCartList as List<String>);
 
       Provider.of<CartItemCounter>(context, listen: false).displayResult();
 
       totalAmount = 0;
+
+      Route route = MaterialPageRoute(builder: (c) => MyHomePage());
+
+      Navigator.pushReplacement(context, route);
     });
   }
 }

@@ -4,26 +4,25 @@ import 'package:ecommerce_application/pages/Widgets/loadingWidget.dart';
 import 'package:ecommerce_application/pages/Widgets/orderCard.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class MyOrders extends StatefulWidget {
   @override
   _MyOrdersState createState() => _MyOrdersState();
 }
 
-_onWillPop(BuildContext context) {
-  Route route = MaterialPageRoute(builder: (c) => MyHomePage());
-
-  Navigator.pushReplacement(context, route);
-}
-
 class _MyOrdersState extends State<MyOrders> {
+  Future<bool> _onWillPop() async {
+    Route route = MaterialPageRoute(builder: (c) => MyHomePage());
+
+    Navigator.pushReplacement(context, route);
+
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      onWillPop: () => _onWillPop(),
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -61,21 +60,21 @@ class _MyOrdersState extends State<MyOrders> {
             builder: (c, snapshot) {
               return snapshot.hasData
                   ? ListView.builder(
-                      itemCount: snapshot.data.docs.length,
+                      itemCount: snapshot.data!.docs.length,
                       itemBuilder: (c, index) {
                         return FutureBuilder<QuerySnapshot>(
                             future: FirebaseFirestore.instance
                                 .collection("items")
-                                .where("shortInfo",
-                                    whereIn: snapshot.data.docs[index]
-                                        .data()[EcommerceApp.productID])
+                                .where("productId",
+                                    whereIn: snapshot.data!.docs[index]
+                                        .data()![EcommerceApp.productID])
                                 .get(),
                             builder: (c, snap) {
                               return snap.hasData
                                   ? OrderCard(
-                                      itemCount: snap.data.docs.length,
-                                      data: snap.data.docs,
-                                      orderID: snapshot.data.docs[index].id,
+                                      itemCount: snap.data!.docs.length,
+                                      data: snap.data!.docs,
+                                      orderID: snapshot.data!.docs[index].id,
                                     )
                                   : Center(
                                       child: circularProgress(),
@@ -91,6 +90,4 @@ class _MyOrdersState extends State<MyOrders> {
       ),
     );
   }
-
-
 }

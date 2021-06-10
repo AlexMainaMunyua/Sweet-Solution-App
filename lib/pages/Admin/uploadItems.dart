@@ -18,130 +18,60 @@ class _UploadPageState extends State<UploadPage>
     with AutomaticKeepAliveClientMixin<UploadPage> {
   bool get wantKeepAlive => true;
 
-  File file;
+  File? file;
 
   TextEditingController _descriptionTextEditingController =
       TextEditingController();
   TextEditingController _priceTextEditingController = TextEditingController();
   TextEditingController _titleTextEditingController = TextEditingController();
   TextEditingController _shortTextEditingController = TextEditingController();
+  TextEditingController _productIdTextEditingController =
+      TextEditingController();
+  TextEditingController _discont = TextEditingController();
 
   String productId = DateTime.now().millisecondsSinceEpoch.toString();
   bool uploading = false;
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     return file == null
         ? displayAdminHomeScreen()
         : displayAdminUploadFormScreen();
   }
 
-  Future<bool> _onBackPressed() {
-    return showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text("Are you sure?"),
-              content: Text("Do you want to exit the application."),
-              actions: <Widget>[
-                GestureDetector(
-                  onTap: () => Navigator.of(context).pop(false),
-                  child: Text(
-                    "No",
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                ),
-                SizedBox(width: 30.0, height: 30),
-                GestureDetector(
-                  onTap: () => Navigator.of(context).pop(true),
-                  child: Text(
-                    "Yes",
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                ),
-                SizedBox(width: 10.0),
-              ],
-            ));
-  }
+
 
   displayAdminHomeScreen() {
-    return WillPopScope(
-      onWillPop: _onBackPressed,
-      child: Scaffold(
-        // appBar: AppBar(
-        //   flexibleSpace: Container(
-        //     decoration: BoxDecoration(
-        //         gradient: LinearGradient(
-        //             colors: [Colors.black26, Colors.white],
-        //             begin: const FractionalOffset(0.0, 0.0),
-        //             end: const FractionalOffset(1.0, 0.0),
-        //             stops: [0.0, 1.0],
-        //             tileMode: TileMode.clamp)),
-        //   ),
-        //   leading: IconButton(
-        //     icon: Icon(
-        //       Icons.border_color,
-        //       color: Colors.white,
-        //     ),
-        //     onPressed: () {
-        //       Route route =
-        //           MaterialPageRoute(builder: (c) => AdminShiftOrders());
-
-        //       Navigator.pushReplacement(context, route);
-        //     },
-        //   ),
-        //   actions: [
-        //     // TextButton(
-        //     //     onPressed: () {
-        //     //       Route route =
-        //     //           MaterialPageRoute(builder: (c) => SplashScreen());
-
-        //     //       Navigator.pushReplacement(context, route);
-        //     //     },
-        //     //     child: Text(
-        //     //       "Logout",
-        //     //       style: TextStyle(
-        //     //           fontSize: 16.0,
-        //     //           fontWeight: FontWeight.bold,
-        //     //           color: Colors.black26),
-        //     //     ))
-        //   ],
-        // ),
-        body: getAdminHomeScreenBody(),
-      ),
+    return Scaffold(
+      body: getAdminHomeScreenBody(),
     );
   }
 
   getAdminHomeScreenBody() {
     return Container(
-      // decoration: BoxDecoration(
-      //     gradient: LinearGradient(
-      //         colors: [Colors.black26, Colors.white],
-      //         begin: const FractionalOffset(0.0, 0.0),
-      //         end: const FractionalOffset(1.0, 0.0),
-      //         stops: [0.0, 1.0],
-      //         tileMode: TileMode.clamp)),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-               SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(10.0),
-                    height: 70,
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text("Admin dashboad",
-                          style: TextStyle(
-                              fontSize: 45.0,
-                              color: Colors.grey.shade500,
-                              fontFamily: "Signatra")),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: EdgeInsets.all(10.0),
+              height: 70,
+              child: Align(
+                alignment: Alignment.center,
+                child: Text("Admin dashboad",
+                    style: TextStyle(
+                        fontSize: 45.0,
+                        color: Colors.grey.shade500,
+                        fontFamily: "Signatra")),
+              ),
+            ),
+            SizedBox(
+              height: 8.0,
+            ),
             Icon(Icons.shop_two, color: Colors.grey.shade400, size: 200.0),
             Padding(
                 padding: EdgeInsets.only(
@@ -152,18 +82,6 @@ class _UploadPageState extends State<UploadPage>
                       takeImage(context);
                     },
                     msg: "Add New Items")),
-                      Padding(
-                padding: EdgeInsets.only(
-                  top: 20.0,
-                ),
-                child: WideButton(
-                    onPressed: () {
-              //         Route route =
-              //     MaterialPageRoute(builder: (c) => AdminShiftOrders());
-
-              // Navigator.pushReplacement(context, route);
-                    },
-                    msg: "View Registered Users")),
             Padding(
                 padding: EdgeInsets.only(
                   top: 20.0,
@@ -171,9 +89,9 @@ class _UploadPageState extends State<UploadPage>
                 child: WideButton(
                     onPressed: () {
                       Route route =
-                  MaterialPageRoute(builder: (c) => AdminShiftOrders());
+                          MaterialPageRoute(builder: (c) => AdminShiftOrders());
 
-              Navigator.pushReplacement(context, route);
+                      Navigator.pushReplacement(context, route);
                     },
                     msg: "View Available Orders")),
             Padding(
@@ -182,10 +100,10 @@ class _UploadPageState extends State<UploadPage>
                 ),
                 child: WideButton(
                     onPressed: () {
-                       Route route =
-                      MaterialPageRoute(builder: (c) => SplashScreen());
+                      Route route =
+                          MaterialPageRoute(builder: (c) => SplashScreen());
 
-                  Navigator.pushReplacement(context, route);
+                      Navigator.pushReplacement(context, route);
                     },
                     msg: "LOGOUT"))
           ],
@@ -220,9 +138,7 @@ class _UploadPageState extends State<UploadPage>
                     ),
                     Text(
                       "Capture with Camera",
-                      style: TextStyle(
-                          // color: Colors.green,
-                          ),
+                      style: TextStyle(),
                     ),
                   ],
                 ),
@@ -239,9 +155,7 @@ class _UploadPageState extends State<UploadPage>
                     ),
                     Text(
                       "Select from Gallery",
-                      style: TextStyle(
-                          // color: Colors.green,
-                          ),
+                      style: TextStyle(),
                     ),
                   ],
                 ),
@@ -326,17 +240,6 @@ class _UploadPageState extends State<UploadPage>
               fontSize: 30.0,
               fontWeight: FontWeight.bold),
         ),
-        // actions: [
-        //   TextButton(
-        //       onPressed: () {
-        //         uploading ? null : uploadImageAndSaveItemInfo();
-        //       },
-        //       child: Text("Add",
-        //           style: TextStyle(
-        //               color: Colors.black26,
-        //               fontSize: 16.0,
-        //               fontWeight: FontWeight.bold)))
-        // ],
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -349,7 +252,7 @@ class _UploadPageState extends State<UploadPage>
       ),
       body: ListView(
         children: [
-          uploading ? linearProgress() : Text(""),
+          uploading ? circularProgress() : Text(""),
           Container(
             height: 230.0,
             width: MediaQuery.of(context).size.width * 0.8,
@@ -359,7 +262,7 @@ class _UploadPageState extends State<UploadPage>
                 child: Container(
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: FileImage(file), fit: BoxFit.cover)),
+                          image: FileImage(file!), fit: BoxFit.cover)),
                 ),
               ),
             ),
@@ -369,6 +272,29 @@ class _UploadPageState extends State<UploadPage>
             title: Container(
                 width: 250.0,
                 child: TextField(
+                  textCapitalization: TextCapitalization.characters,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(color: Colors.black26),
+                      hintText: "Product Id"),
+                  controller: _productIdTextEditingController,
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                )),
+            leading: Icon(
+              Icons.card_membership,
+              color: Colors.black45,
+            ),
+          ),
+          Divider(
+            color: Colors.black26,
+          ),
+          ListTile(
+            title: Container(
+                width: 250.0,
+                child: TextField(
+                  textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintStyle: TextStyle(color: Colors.black26),
@@ -390,6 +316,7 @@ class _UploadPageState extends State<UploadPage>
             title: Container(
                 width: 250.0,
                 child: TextField(
+                  textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintStyle: TextStyle(color: Colors.black26),
@@ -411,6 +338,7 @@ class _UploadPageState extends State<UploadPage>
             title: Container(
                 width: 250.0,
                 child: TextField(
+                  textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintStyle: TextStyle(color: Colors.black26),
@@ -450,31 +378,40 @@ class _UploadPageState extends State<UploadPage>
           Divider(
             color: Colors.black26,
           ),
+          ListTile(
+            title: Container(
+                width: 250.0,
+                child: TextField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(color: Colors.black26),
+                      hintText: "Discount"),
+                  controller: _discont,
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                )),
+            leading: Icon(
+              Icons.disc_full_outlined,
+              color: Colors.black45,
+            ),
+          ),
+          Divider(
+            color: Colors.black26,
+          ),
           SizedBox(
             height: 15,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.grey.shade300,
-                    padding: EdgeInsets.only(
-                        top: 15, right: 25, bottom: 15, left: 25)),
+              WideButton(
                 onPressed: () {
-                  uploading ? null : uploadFlashImageAndSaveItemInfo();
-                },
-                child: Text("Flash Item"),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.grey.shade300,
-                    padding: EdgeInsets.only(
-                        top: 15, right: 25, bottom: 15, left: 25)),
-                onPressed: () {
+                  // ignore: unnecessary_statements
                   uploading ? null : uploadImageAndSaveItemInfo();
                 },
-                child: Text("New Item"),
+                msg: "Add Item",
               ),
             ],
           )
@@ -486,10 +423,12 @@ class _UploadPageState extends State<UploadPage>
   clearFormInfo() {
     setState(() {
       file = null;
+      _productIdTextEditingController.clear();
       _descriptionTextEditingController.clear();
       _priceTextEditingController.clear();
       _shortTextEditingController.clear();
       _titleTextEditingController.clear();
+      _discont.clear();
     });
   }
 
@@ -522,6 +461,8 @@ class _UploadPageState extends State<UploadPage>
       "shortInfo": _shortTextEditingController.text.trim(),
       "longDescription": _descriptionTextEditingController.text.trim(),
       "title": _titleTextEditingController.text.trim(),
+      "productId": _productIdTextEditingController.text.trim(),
+      "discount": int.parse(_discont.text),
       "publishedDate": DateTime.now(),
       "price": int.parse(_priceTextEditingController.text),
       "thumbnailUrl": downloadUrl,
@@ -533,6 +474,8 @@ class _UploadPageState extends State<UploadPage>
       productId = DateTime.now().microsecondsSinceEpoch.toString();
       _descriptionTextEditingController.clear();
       _titleTextEditingController.clear();
+      _discont.clear();
+      _productIdTextEditingController.clear();
       _shortTextEditingController.clear();
       _priceTextEditingController.clear();
     });
@@ -567,6 +510,8 @@ class _UploadPageState extends State<UploadPage>
       "shortInfo": _shortTextEditingController.text.trim(),
       "longDescription": _descriptionTextEditingController.text.trim(),
       "title": _titleTextEditingController.text.trim(),
+      "discount": int.parse(_discont.text),
+      "productId": _productIdTextEditingController.text.trim(),
       "publishedDate": DateTime.now(),
       "price": int.parse(_priceTextEditingController.text),
       "thumbnailUrl": downloadUrl,
@@ -579,6 +524,8 @@ class _UploadPageState extends State<UploadPage>
       _descriptionTextEditingController.clear();
       _titleTextEditingController.clear();
       _shortTextEditingController.clear();
+      _discont.clear();
+      _productIdTextEditingController.clear();
       _priceTextEditingController.clear();
     });
   }

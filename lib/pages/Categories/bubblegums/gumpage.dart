@@ -8,19 +8,24 @@ import 'package:provider/provider.dart';
 
 import 'widgets/bubblegum.dart';
 
-class GumPage extends StatelessWidget {
-  _onWillPop(BuildContext context) {
+class GumPage extends StatefulWidget {
+  @override
+  _GumPageState createState() => _GumPageState();
+}
+
+class _GumPageState extends State<GumPage> {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () {
-          _onWillPop(context);
-        },
+        onWillPop: () => _onWillPop(),
         child: DefaultTabController(
           length: 2,
           child: Scaffold(
@@ -85,7 +90,7 @@ class GumPage extends StatelessWidget {
                               return Text(
                                   (EcommerceApp.sharedPreferences
                                               .getStringList(
-                                                  EcommerceApp.userCartList)
+                                                  EcommerceApp.userCartList)!
                                               .length -
                                           1)
                                       .toString(),
@@ -120,18 +125,18 @@ class GumPage extends StatelessWidget {
                         child: Text(
                           "Bubble gums",
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 20,
                               color: Colors.white,
-                             ),
+                              fontFamily: "Signatra"),
                         ),
                       ),
                       Tab(
                         child: Text(
                           "Chiclets",
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 20,
                               color: Colors.white,
-                             ),
+                              fontFamily: "Signatra"),
                         ),
                       ),
                     ],

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class WideButton extends StatelessWidget {
-  final String msg;
-  final Function onPressed;
+  final String? msg;
+  final Function? onPressed;
 
-  const WideButton({Key key, this.msg, this.onPressed}) : super(key: key);
+  const WideButton({Key? key, this.msg, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: InkWell(
-        onTap: onPressed,
+        onTap: onPressed as void Function()?,
         child: Container(
           decoration: BoxDecoration(
             color: Colors.black26,
@@ -19,7 +19,7 @@ class WideButton extends StatelessWidget {
           height: 50.0,
           child: Center(
             child: Text(
-              msg,
+              msg!,
               style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 2,wordSpacing: 3),
             ),
           ),

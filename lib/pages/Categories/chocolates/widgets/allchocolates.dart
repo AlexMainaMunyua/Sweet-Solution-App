@@ -20,9 +20,9 @@ class AllChocolates extends StatelessWidget {
         StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("items")
-                .where("shortInfo", isEqualTo: "Chocolates")
+                .where("shortInfo", isEqualTo: "Chocolate")
                 .snapshots(),
-            builder: (context, snapshot) {
+            builder: (context,AsyncSnapshot snapshot) {
               return !snapshot.hasData
                   ? SliverToBoxAdapter(
                       child: Center(child: circularProgress()),
@@ -55,7 +55,7 @@ class AllChocolates extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2FchocolateJumbo.jpeg?alt=media&token=28faa9f0-1f61-49fc-af39-e705b4db9870"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2FchocolateJumbo.png?alt=media&token=4c27eda4-a459-4feb-9cd8-6b72af379a45"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -77,7 +77,7 @@ class AllChocolates extends StatelessWidget {
   }
 
   Widget categorySourceInfo(ItemModel model, BuildContext context,
-      {Color background, removeCartFunction}) {
+      {Color? background, removeCartFunction}) {
     return InkWell(
       onTap: () {
         Route route =
@@ -98,7 +98,7 @@ class AllChocolates extends StatelessWidget {
                       height: 30,
                     ),
                     Image.network(
-                      model.thumbnailUrl,
+                      model.thumbnailUrl!,
                       height: 100.0,
                       width: 120.0,
                     ),
@@ -109,7 +109,7 @@ class AllChocolates extends StatelessWidget {
                         child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        model.title,
+                        model.title!,
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.grey, fontSize: 12.0),
                       ),
@@ -150,7 +150,7 @@ class AllChocolates extends StatelessWidget {
                       color: Colors.black12,
                       child: Center(
                           child: Text(
-                        "5%",
+                         model.discount.toString()+"%",
                         style: TextStyle(fontSize: 10, color: Colors.black38),
                       )),
                     ),

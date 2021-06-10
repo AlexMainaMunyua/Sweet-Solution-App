@@ -22,7 +22,7 @@ class BigDaddy extends StatelessWidget {
                 .collection("items")
                 .where("shortInfo", isEqualTo: "Big Daddy")
                 .snapshots(),
-            builder: (context, snapshot) {
+            builder: (context,AsyncSnapshot snapshot) {
               return !snapshot.hasData
                   ? SliverToBoxAdapter(
                       child: Center(child: circularProgress()),
@@ -54,7 +54,7 @@ class BigDaddy extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2FbigbaddyJumbo.jpeg?alt=media&token=0647ef2e-70e0-4e97-9d3b-783a0b7f06c2"),
+                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2Fbig%20Daddy%20Jumbotron%20.png?alt=media&token=62031bd6-bf7e-4654-b510-717782809eb3"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -76,7 +76,7 @@ class BigDaddy extends StatelessWidget {
   }
 
   Widget categorySourceInfo(ItemModel model, BuildContext context,
-      {Color background, removeCartFunction}) {
+      {Color? background, removeCartFunction}) {
     return InkWell(
       onTap: () {
         Route route =
@@ -97,7 +97,7 @@ class BigDaddy extends StatelessWidget {
                       height: 30,
                     ),
                     Image.network(
-                      model.thumbnailUrl,
+                      model.thumbnailUrl!,
                       height: 100.0,
                       width: 120.0,
                     ),
@@ -108,7 +108,7 @@ class BigDaddy extends StatelessWidget {
                         child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        model.title,
+                        model.title!,
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.grey, fontSize: 12.0),
                       ),
@@ -149,7 +149,7 @@ class BigDaddy extends StatelessWidget {
                       color: Colors.black12,
                       child: Center(
                           child: Text(
-                        "5%",
+                         model.discount.toString()+"%",
                         style: TextStyle(fontSize: 10, color: Colors.black38),
                       )),
                     ),

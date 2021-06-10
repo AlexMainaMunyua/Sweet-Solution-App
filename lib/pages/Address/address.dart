@@ -14,16 +14,16 @@ import 'package:provider/provider.dart';
 import 'addAddress.dart';
 
 class Address extends StatefulWidget {
-  final double totalAmount;
+  final double? totalAmount;
 
-  const Address({Key key, this.totalAmount}) : super(key: key);
+  const Address({Key? key, this.totalAmount}) : super(key: key);
 
   @override
   _AddressState createState() => _AddressState();
 }
 
 class _AddressState extends State<Address> {
-  double totalAmount;
+  double? totalAmount;
 
   @override
   void initState() {
@@ -34,18 +34,18 @@ class _AddressState extends State<Address> {
     Provider.of<TotalAmount>(context, listen: false).displayAmount(0);
   }
 
-  _onWillPop(BuildContext context) {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => CartPage());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      onWillPop: () => _onWillPop(),
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -104,12 +104,16 @@ class _AddressState extends State<Address> {
 
                               Navigator.pushReplacement(context, route);
                             },
-                            child: Text(
-                              "Add new Address",
-                              style: TextStyle(
-                                  color: Colors.black45,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Add new Address",
+                                  style: TextStyle(
+                                      color: Colors.blue,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13.0),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -120,7 +124,7 @@ class _AddressState extends State<Address> {
               ),
               SliverToBoxAdapter(
                 child: Consumer<AddressChanger>(builder: (context, address, c) {
-                  return Flexible(
+                  return Container(
                     child: StreamBuilder<QuerySnapshot>(
                       stream: EcommerceApp.firestore
                           .collection(EcommerceApp.collectionUser)
@@ -133,19 +137,19 @@ class _AddressState extends State<Address> {
                             ? Center(
                                 child: circularProgress(),
                               )
-                            : snapshot.data.docs.length == 0
+                            : snapshot.data!.docs.length == 0
                                 ? noAddressCard()
                                 : ListView.builder(
-                                    itemCount: snapshot.data.docs.length,
+                                    itemCount: snapshot.data!.docs.length,
                                     shrinkWrap: true,
                                     itemBuilder: (context, index) {
                                       return AddressCard(
                                         currentIndex: address.count,
                                         value: index,
-                                        addressId: snapshot.data.docs[index].id,
+                                        addressId: snapshot.data!.docs[index].id,
                                         totalAmount: widget.totalAmount,
                                         model: AddressModel.fromJson(
-                                            snapshot.data.docs[index].data()),
+                                            snapshot.data!.docs[index].data()!),
                                       );
                                     },
                                   );
@@ -181,7 +185,7 @@ class _AddressState extends State<Address> {
                               child: Text(
                                 "Ksh.${amountProvider.totalAmount.toString()}",
                                 style: TextStyle(
-                                    color: Colors.black45,
+                                    color: Colors.red,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12.0),
                               ),
@@ -196,7 +200,7 @@ class _AddressState extends State<Address> {
               StreamBuilder<QuerySnapshot>(
                   stream: EcommerceApp.firestore
                       .collection("items")
-                      .where("shortInfo",
+                      .where("productId",
                           whereIn: EcommerceApp.sharedPreferences
                               .getStringList(EcommerceApp.userCartList))
                       .snapshots(),
@@ -207,23 +211,23 @@ class _AddressState extends State<Address> {
                               child: circularProgress(),
                             ),
                           )
-                        : snapshot.data.docs.length == 0
+                        : snapshot.data!.docs.length == 0
                             ? Container()
                             : SliverList(
                                 delegate: SliverChildBuilderDelegate(
                                   (context, index) {
                                     ItemModel model = ItemModel.fromJson(
-                                        snapshot.data.docs[index].data());
+                                        snapshot.data!.docs[index].data()!);
 
                                     if (index == 0) {
                                       totalAmount = 0;
-                                      totalAmount = model.price + totalAmount;
+                                      totalAmount = model.price! + totalAmount!;
                                     } else {
-                                      totalAmount = model.price + totalAmount;
+                                      totalAmount = model.price! + totalAmount!;
                                     }
-                                    if (snapshot.data.docs.length - 1 ==
+                                    if (snapshot.data!.docs.length - 1 ==
                                         index) {
-                                      WidgetsBinding.instance
+                                      WidgetsBinding.instance!
                                           .addPostFrameCallback((t) {
                                         Provider.of<TotalAmount>(context,
                                                 listen: false)
@@ -234,7 +238,7 @@ class _AddressState extends State<Address> {
                                     return cartSourceInfo(model, context);
                                   },
                                   childCount: snapshot.hasData
-                                      ? snapshot.data.docs.length
+                                      ? snapshot.data!.docs.length
                                       : 0,
                                 ),
                               );
@@ -247,7 +251,7 @@ class _AddressState extends State<Address> {
   }
 
   Widget cartSourceInfo(ItemModel model, BuildContext context,
-      {Color backgroud,
+      {Color? backgroud,
       removeCartFunction,
       increseItemQuantityFunction,
       decreaseItemQuantityFunction}) {
@@ -263,51 +267,26 @@ class _AddressState extends State<Address> {
                   Container(
                     child: Center(
                       child: Image.network(
-                        model.thumbnailUrl,
+                        model.thumbnailUrl!,
                         height: 50.0,
                         width: 80.0,
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: Align(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    model.shortInfo,
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 12.0),
-                                  )),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Container(
-                                    child: Text(
-                                  model.title,
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 12.0),
-                                )),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Container(
-                        child: Row(
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.70,
+                    alignment: Alignment.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Text(
+                              model.title!,
+                              style: TextStyle(
+                                  color: Colors.grey.shade900, fontSize: 12.0),
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -329,9 +308,19 @@ class _AddressState extends State<Address> {
                             ),
                           ],
                         ),
-                      ),
+                        SizedBox(height: 2.0),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                              child: Text(
+                            model.longDescription!,
+                            style:
+                                TextStyle(color: Colors.grey, fontSize: 12.0),
+                          )),
+                        ),
+                      ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
@@ -350,19 +339,34 @@ class _AddressState extends State<Address> {
     return Container(
       margin: EdgeInsets.only(left: 5.0, right: 5.0),
       child: Card(
-        color: Colors.black26.withOpacity(0.5),
+        color: Colors.grey.shade300,
         child: Container(
-          height: 100.0,
+          height: 130.0,
           alignment: Alignment.center,
           child: Column(
             children: [
+              SizedBox(
+                height: 5,
+              ),
               Icon(
                 Icons.add_location,
                 color: Colors.white,
               ),
-              Text("No shipment address has been saved"),
-              Text(
-                  "Please add your shipment address so that we can deliver products")
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                  child: Text("No shipment address has been saved.",
+                      textAlign: TextAlign.center)),
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Text(
+                  "Please add your shipment address so that we can deliver products.",
+                  textAlign: TextAlign.center,
+                ),
+              )
             ],
           ),
         ),
@@ -372,14 +376,14 @@ class _AddressState extends State<Address> {
 }
 
 class AddressCard extends StatefulWidget {
-  final AddressModel model;
-  final int currentIndex;
-  final int value;
-  final String addressId;
-  final double totalAmount;
+  final AddressModel? model;
+  final int? currentIndex;
+  final int? value;
+  final String? addressId;
+  final double? totalAmount;
 
   const AddressCard(
-      {Key key,
+      {Key? key,
       this.model,
       this.currentIndex,
       this.value,
@@ -412,7 +416,7 @@ class _AddressCardState extends State<AddressCard> {
                     groupValue: widget.currentIndex,
                     value: widget.value,
                     activeColor: Colors.white,
-                    onChanged: (val) {
+                    onChanged: (dynamic val) {
                       Provider.of<AddressChanger>(context, listen: false)
                           .displayResults(val);
                     },
@@ -430,7 +434,7 @@ class _AddressCardState extends State<AddressCard> {
                                 msg: "Name",
                               ),
                               Text(
-                                widget.model.name,
+                                widget.model!.name!,
                                 style: TextStyle(color: Colors.black45),
                               ),
                             ]),
@@ -439,7 +443,7 @@ class _AddressCardState extends State<AddressCard> {
                                 msg: "Phone Number",
                               ),
                               Text(
-                                widget.model.phoneNumber,
+                                widget.model!.phoneNumber!,
                                 style: TextStyle(color: Colors.black45),
                               ),
                             ]),
@@ -448,7 +452,7 @@ class _AddressCardState extends State<AddressCard> {
                                 msg: "Business Name",
                               ),
                               Text(
-                                widget.model.flatNumber,
+                                widget.model!.flatNumber!,
                                 style: TextStyle(color: Colors.black45),
                               ),
                             ]),
@@ -457,7 +461,7 @@ class _AddressCardState extends State<AddressCard> {
                                 msg: "Area",
                               ),
                               Text(
-                                widget.model.city,
+                                widget.model!.city!,
                                 style: TextStyle(color: Colors.black45),
                               ),
                             ]),
@@ -466,7 +470,7 @@ class _AddressCardState extends State<AddressCard> {
                                 msg: "Next to",
                               ),
                               Text(
-                                widget.model.state,
+                                widget.model!.state!,
                                 style: TextStyle(color: Colors.black45),
                               ),
                             ]),
@@ -475,7 +479,7 @@ class _AddressCardState extends State<AddressCard> {
                                 msg: "County",
                               ),
                               Text(
-                                widget.model.pincode,
+                                widget.model!.pincode!,
                                 style: TextStyle(color: Colors.black45),
                               ),
                             ])
@@ -511,16 +515,16 @@ class _AddressCardState extends State<AddressCard> {
 }
 
 class KeyText extends StatelessWidget {
-  final String msg;
+  final String? msg;
 
-  const KeyText({Key key, this.msg}) : super(key: key);
+  const KeyText({Key? key, this.msg}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: Text(
-        msg,
+        msg!,
         style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
       ),
     );

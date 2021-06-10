@@ -6,19 +6,24 @@ import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class FruitDropPage extends StatelessWidget {
-  _onWillPop(BuildContext context) {
+class FruitDropPage extends StatefulWidget {
+  @override
+  _FruitDropPageState createState() => _FruitDropPageState();
+}
+
+class _FruitDropPageState extends State<FruitDropPage> {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
-  }
 
+    return true;
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      
+      onWillPop: () => _onWillPop(),
       child: DefaultTabController(
         length: 1,
         child: Scaffold(
@@ -55,7 +60,6 @@ class FruitDropPage extends StatelessWidget {
                   IconButton(
                       icon: Icon(
                         Icons.shopping_cart,
-                        // size: 30.0,
                         color: Colors.black26,
                       ),
                       onPressed: () {
@@ -81,7 +85,7 @@ class FruitDropPage extends StatelessWidget {
                             return Text(
                                 (EcommerceApp.sharedPreferences
                                             .getStringList(
-                                                EcommerceApp.userCartList)
+                                                EcommerceApp.userCartList)!
                                             .length -
                                         1)
                                     .toString(),
@@ -102,22 +106,20 @@ class FruitDropPage extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: TabBar(
-                  // indicatorWeight: 5,
                   isScrollable: true,
                   indicator: UnderlineTabIndicator(
                       borderSide:
                           BorderSide(width: 4, color: Colors.grey.shade700),
                       insets:
                           EdgeInsets.only(left: 0, right: 4.0, bottom: 0.0)),
-                  // labelPadding:  EdgeInsets.only(left: 0, right: 0),
-
                   tabs: [
                     Tab(
                       child: Text(
                         "All Fruit Drops",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 20,
                           color: Colors.white,
+                          fontFamily: "Signatra"
                         ),
                       ),
                     ),

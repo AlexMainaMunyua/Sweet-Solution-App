@@ -1,10 +1,10 @@
 class AddressModel {
-  String name;
-  String phoneNumber;
-  String flatNumber;
-  String city;
-  String state;
-  String pincode;
+  String? name;
+  String? phoneNumber;
+  String? flatNumber;
+  String? city;
+  String? state;
+  String? pincode;
 
   AddressModel(
       {this.name,

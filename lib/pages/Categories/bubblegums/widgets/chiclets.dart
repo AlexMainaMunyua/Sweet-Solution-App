@@ -20,11 +20,9 @@ class Chiclet extends StatelessWidget {
         StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("items")
-                .where("shortInfo", isEqualTo: "Chiclets")
-                // .limit(4)
-                // .orderBy("publishedDate", descending: true)
+                .where("shortInfo", isEqualTo: "Chiclet")
                 .snapshots(),
-            builder: (context, snapshot) {
+            builder: (context, AsyncSnapshot snapshot) {
               return !snapshot.hasData
                   ? SliverToBoxAdapter(
                       child: Center(child: circularProgress()),
@@ -78,7 +76,7 @@ class Chiclet extends StatelessWidget {
   }
 
   Widget categorySourceInfo(ItemModel model, BuildContext context,
-      {Color background, removeCartFunction}) {
+      {Color? background, removeCartFunction}) {
     return InkWell(
       onTap: () {
         Route route =
@@ -99,7 +97,7 @@ class Chiclet extends StatelessWidget {
                       height: 30,
                     ),
                     Image.network(
-                      model.thumbnailUrl,
+                      model.thumbnailUrl!,
                       height: 100.0,
                       width: 120.0,
                     ),
@@ -110,7 +108,7 @@ class Chiclet extends StatelessWidget {
                         child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        model.title,
+                        model.title!,
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.grey, fontSize: 12.0),
                       ),
@@ -151,7 +149,7 @@ class Chiclet extends StatelessWidget {
                       color: Colors.black12,
                       child: Center(
                           child: Text(
-                        "5%",
+                        model.discount.toString() + "%",
                         style: TextStyle(fontSize: 10, color: Colors.black38),
                       )),
                     ),

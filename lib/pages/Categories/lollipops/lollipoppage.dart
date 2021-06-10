@@ -8,19 +8,24 @@ import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LollipopPage extends StatelessWidget {
-  _onWillPop(BuildContext context) {
+class LollipopPage extends StatefulWidget {
+  @override
+  _LollipopPageState createState() => _LollipopPageState();
+}
+
+class _LollipopPageState extends State<LollipopPage> {
+   Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
-  }
 
+    return true;
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        _onWillPop(context);
-      },
+    
+      onWillPop: () => _onWillPop(),
       child: DefaultTabController(
         length: 3,
         child: Scaffold(
@@ -83,7 +88,7 @@ class LollipopPage extends StatelessWidget {
                             return Text(
                                 (EcommerceApp.sharedPreferences
                                             .getStringList(
-                                                EcommerceApp.userCartList)
+                                                EcommerceApp.userCartList)!
                                             .length -
                                         1)
                                     .toString(),
@@ -118,8 +123,9 @@ class LollipopPage extends StatelessWidget {
                       child: Text(
                         "Big Daddy",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 20,
                           color: Colors.white,
+                          fontFamily: "Signatra"
                         ),
                       ),
                     ),
@@ -127,8 +133,9 @@ class LollipopPage extends StatelessWidget {
                       child: Text(
                         "Lollipop",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 20,
                           color: Colors.white,
+                          fontFamily: "Signatra"
                         ),
                       ),
                     ),
@@ -136,8 +143,9 @@ class LollipopPage extends StatelessWidget {
                       child: Text(
                         "Vimto",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 20,
                           color: Colors.white,
+                          fontFamily: "Signatra"
                         ),
                       ),
                     ),

@@ -33,7 +33,7 @@ class _RegisterState extends State<Register> {
 
   String userImageUrl = "";
 
-  File _imageFile;
+  File? _imageFile;
 
   bool _obscureText = true;
 
@@ -51,10 +51,12 @@ class _RegisterState extends State<Register> {
     });
   }
 
-  _onWillPop(BuildContext context) {
+  Future<bool> _onWillPop()async {
     Route route = MaterialPageRoute(builder: (c) => Login());
 
     Navigator.pushReplacement(context, route);
+
+    return true;
   }
 
   @override
@@ -63,9 +65,10 @@ class _RegisterState extends State<Register> {
         _screenHeight = MediaQuery.of(context).size.height;
 
     return WillPopScope(
-      onWillPop: () {
-        _onWillPop(context);
-      },
+      // ignore: missing_return
+      onWillPop: () =>
+        _onWillPop(),
+      
       child: Scaffold(
         body: SingleChildScrollView(
           child: SafeArea(
@@ -73,7 +76,7 @@ class _RegisterState extends State<Register> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                   SizedBox(
+                  SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -98,7 +101,7 @@ class _RegisterState extends State<Register> {
                       radius: _screenHeight * 0.06,
                       backgroundColor: Colors.grey.shade300,
                       backgroundImage:
-                          _imageFile == null ? null : FileImage(_imageFile),
+                          _imageFile == null ? null : FileImage(_imageFile!),
                       child: _imageFile == null
                           ? Icon(Icons.add_photo_alternate,
                               size: _screenWidth * 0.10, color: Colors.grey)
@@ -196,12 +199,7 @@ class _RegisterState extends State<Register> {
                             ],
                           ),
                         ),
-                        // CustomTextField(
-                        //   controller: _passwordTextEditingController,
-                        //   data: Icons.lock,
-                        //   hintText: "Password",
-                        //   isObsecure: true,
-                        // ),
+
                         Container(
                           decoration: BoxDecoration(
                               color: Colors.white,
@@ -239,12 +237,6 @@ class _RegisterState extends State<Register> {
                             ],
                           ),
                         )
-                        // CustomTextField(
-                        //   controller: _cPasswordTextEditingController,
-                        //   data: Icons.lock,
-                        //   hintText: "Confirm password",
-                        //   isObsecure: true,
-                        // )
                       ],
                     ),
                   ),
@@ -349,7 +341,7 @@ class _RegisterState extends State<Register> {
 
     Reference ref = storage.ref().child(imageFileName);
 
-    UploadTask uploadTask = ref.putFile(_imageFile);
+    UploadTask uploadTask = ref.putFile(_imageFile!);
 
     uploadTask.whenComplete(() async {
       userImageUrl = await ref.getDownloadURL();
@@ -372,7 +364,7 @@ class _RegisterState extends State<Register> {
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   void _registerUser() async {
-    User firebaseUser;
+    User? firebaseUser;
 
     await _auth
         .createUserWithEmailAndPassword(
@@ -391,7 +383,7 @@ class _RegisterState extends State<Register> {
           });
     });
     if (firebaseUser != null) {
-      saveUserInfoToFireStore(firebaseUser).then((value) {
+      saveUserInfoToFireStore(firebaseUser!).then((value) {
         Navigator.pop(context);
         Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
@@ -412,7 +404,7 @@ class _RegisterState extends State<Register> {
     await EcommerceApp.sharedPreferences
         .setString(EcommerceApp.userUID, fUser.uid);
     await EcommerceApp.sharedPreferences
-        .setString(EcommerceApp.userEmail, fUser.email);
+        .setString(EcommerceApp.userEmail, fUser.email!);
     await EcommerceApp.sharedPreferences.setString(
         EcommerceApp.userName, _nameTextEditingController.text.trim());
     await EcommerceApp.sharedPreferences
