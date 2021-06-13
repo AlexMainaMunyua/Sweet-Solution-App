@@ -49,6 +49,50 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486925158947:android:066f10079bf9a48c9bff96",
+        "android_client_info": {
+          "package_name": "com.sweetsolution.ecommerce_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "486925158947-gsrq88r3d8p1uf17gnk042nnqmvtor6u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sweetsolution.ecommerce_application",
+            "certificate_hash": "8261d9f57f104ae122693d9685bd5a2be22afca0"
+          }
+        },
+        {
+          "client_id": "486925158947-vgf0017dlrv01tgj85j97mblcu1clfp6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALcG-2Xgzbye7GGd8iVZXjCqDTrzw9cEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "486925158947-vgf0017dlrv01tgj85j97mblcu1clfp6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "486925158947-ddms8u0clq17u6dhakgvvbd2sagkf3sg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.loanapp"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
