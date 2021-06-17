@@ -108,7 +108,7 @@ class _ProductPageState extends State<ProductPage> {
               )
             ],
           ),
-          // drawer: MyDrawer(),
+         
           body: ListView(
             children: [
               Container(
@@ -143,13 +143,14 @@ class _ProductPageState extends State<ProductPage> {
                           children: [
                             Text(
                               widget.itemModel!.title!,
-                              style: boldTextStyle,
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                             ),
                             SizedBox(
                               height: 10.0,
                             ),
                             Text(
                               widget.itemModel!.longDescription!,
+                              style: TextStyle(color: Colors.grey[600]),
                             ),
                             SizedBox(
                               height: 10.0,
@@ -185,5 +186,5 @@ class _ProductPageState extends State<ProductPage> {
   }
 }
 
-const boldTextStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
+var boldTextStyle = TextStyle(color: Colors.grey.shade700,fontWeight: FontWeight.bold, fontSize: 20);
 const largeTextStyle = TextStyle(fontWeight: FontWeight.normal, fontSize: 20);
