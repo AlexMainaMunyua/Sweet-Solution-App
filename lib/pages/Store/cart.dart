@@ -476,7 +476,10 @@ class _CartPageState extends State<CartPage> {
       child: Padding(
           padding: EdgeInsets.all(10.0),
           child: Container(
-            color: Colors.grey.shade400,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade400,
+              borderRadius: BorderRadius.circular(5),
+            ),
             height: 100.0,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -499,8 +502,8 @@ class _CartPageState extends State<CartPage> {
   }
 
   removeItemFromUserCart(String? productId) {
-    List tempCartList =
-        EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList)!;
+    List tempCartList = EcommerceApp.sharedPreferences
+        .getStringList(EcommerceApp.userCartList)!;
 
     tempCartList.remove(productId);
 
@@ -512,8 +515,8 @@ class _CartPageState extends State<CartPage> {
     }).then((value) {
       Fluttertoast.showToast(msg: "Item Removed Successfully");
 
-      EcommerceApp.sharedPreferences
-          .setStringList(EcommerceApp.userCartList, tempCartList as List<String>);
+      EcommerceApp.sharedPreferences.setStringList(
+          EcommerceApp.userCartList, tempCartList as List<String>);
 
       Provider.of<CartItemCounter>(context, listen: false).displayResult();
 
