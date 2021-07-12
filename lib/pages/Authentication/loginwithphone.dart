@@ -249,17 +249,17 @@ class _LoginScreenState extends State<LoginScreen> {
             "We have texted OTP(One Time Pin) to your registed cell phone number." 
           "  Please check and enter OTP below to verify your Sweet Solutions account.",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 12),
           )),
         ),
         SizedBox(
-          height: 40,
+          height: 30,
         ),
         Padding(
-          padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+          padding: const EdgeInsets.only(right: 30.0, left: 30.0),
           child: Form(
               key: formKey,
-              child: PinCodeTextField(
+              child: PinCodeTextField(  
                 appContext: context,
                 length: 6,
                 autoDisposeControllers: false,
