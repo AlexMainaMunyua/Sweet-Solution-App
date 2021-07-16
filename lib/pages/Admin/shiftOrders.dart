@@ -22,9 +22,7 @@ class _MyOrdersState extends State<AdminShiftOrders> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-  
       onWillPop: () => _onWillPop(),
-
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -64,7 +62,7 @@ class _MyOrdersState extends State<AdminShiftOrders> {
                                 .collection("items")
                                 .where("productId",
                                     whereIn: snapshot.data!.docs[index]
-                                        .data()![EcommerceApp.productID])
+                                        .data()![SweetSolution.productID])
                                 .get(),
                             builder: (c, snap) {
                               return snap.hasData

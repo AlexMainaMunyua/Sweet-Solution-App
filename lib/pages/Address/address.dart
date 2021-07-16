@@ -126,11 +126,11 @@ class _AddressState extends State<Address> {
                 child: Consumer<AddressChanger>(builder: (context, address, c) {
                   return Container(
                     child: StreamBuilder<QuerySnapshot>(
-                      stream: EcommerceApp.firestore
-                          .collection(EcommerceApp.collectionUser)
-                          .doc(EcommerceApp.sharedPreferences
-                              .getString(EcommerceApp.userUID))
-                          .collection(EcommerceApp.subCollectionAddress)
+                      stream: SweetSolution.firestore
+                          .collection(SweetSolution.collectionUser)
+                          .doc(SweetSolution.sharedPreferences
+                              .getString(SweetSolution.userUID))
+                          .collection(SweetSolution.subCollectionAddress)
                           .snapshots(),
                       builder: (context, snapshot) {
                         return !snapshot.hasData
@@ -146,7 +146,8 @@ class _AddressState extends State<Address> {
                                       return AddressCard(
                                         currentIndex: address.count,
                                         value: index,
-                                        addressId: snapshot.data!.docs[index].id,
+                                        addressId:
+                                            snapshot.data!.docs[index].id,
                                         totalAmount: widget.totalAmount,
                                         model: AddressModel.fromJson(
                                             snapshot.data!.docs[index].data()!),
@@ -198,11 +199,11 @@ class _AddressState extends State<Address> {
                 ),
               ),
               StreamBuilder<QuerySnapshot>(
-                  stream: EcommerceApp.firestore
+                  stream: SweetSolution.firestore
                       .collection("items")
                       .where("productId",
-                          whereIn: EcommerceApp.sharedPreferences
-                              .getStringList(EcommerceApp.userCartList))
+                          whereIn: SweetSolution.sharedPreferences
+                              .getStringList(SweetSolution.userCartList))
                       .snapshots(),
                   builder: (context, snapshot) {
                     return !snapshot.hasData

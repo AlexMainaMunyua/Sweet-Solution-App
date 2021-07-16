@@ -23,7 +23,6 @@ class _FlashSaleState extends State<FlashSale> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-     
         onWillPop: () => _onWillPop(),
         child: DefaultTabController(
           length: 1,
@@ -87,9 +86,9 @@ class _FlashSaleState extends State<FlashSale> {
                           child: Consumer<CartItemCounter>(
                             builder: (context, counter, _) {
                               return Text(
-                                  (EcommerceApp.sharedPreferences
+                                  (SweetSolution.sharedPreferences
                                               .getStringList(
-                                                  EcommerceApp.userCartList)!
+                                                  SweetSolution.userCartList)!
                                               .length -
                                           1)
                                       .toString(),
@@ -116,16 +115,14 @@ class _FlashSaleState extends State<FlashSale> {
                             BorderSide(width: 4, color: Colors.grey.shade700),
                         insets:
                             EdgeInsets.only(left: 0, right: 4.0, bottom: 0.0)),
-
                     tabs: [
                       Tab(
                         child: Text(
                           "Deals of the week",
                           style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontFamily: "Signatra"
-                          ),
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontFamily: "Signatra"),
                         ),
                       ),
                     ],
