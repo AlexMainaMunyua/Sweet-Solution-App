@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class EcommerceApp {
+class SweetSolution {
   static const String appName = 'Sweet Solutions';
 
   static late SharedPreferences sharedPreferences;

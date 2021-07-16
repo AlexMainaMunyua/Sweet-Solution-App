@@ -22,11 +22,11 @@ Future<void> main() async {
 
   await Firebase.initializeApp();
 
-  EcommerceApp.auth = FirebaseAuth.instance;
+  SweetSolution.auth = FirebaseAuth.instance;
 
-  EcommerceApp.sharedPreferences = await SharedPreferences.getInstance();
+  SweetSolution.sharedPreferences = await SharedPreferences.getInstance();
 
-  EcommerceApp.firestore = FirebaseFirestore.instance;
+  SweetSolution.firestore = FirebaseFirestore.instance;
 
   runApp(MyApp());
 }
@@ -69,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   displaySplash() {
     Timer(Duration(seconds: 5), () async {
-      if (EcommerceApp.auth?.currentUser != null) {
+      if (SweetSolution.auth?.currentUser != null) {
         Route route = MaterialPageRoute(builder: (_) => MyHomePage());
 
         Navigator.pushReplacement(context, route);
@@ -91,7 +91,10 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               Align(
                   alignment: Alignment.center,
-                  child: const SpinKitRipple(color: Colors.red,size: 100,)),
+                  child: const SpinKitRipple(
+                    color: Colors.red,
+                    size: 100,
+                  )),
               SizedBox(
                 height: 30,
               ),

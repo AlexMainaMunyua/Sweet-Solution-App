@@ -298,19 +298,20 @@ class _LoginState extends State<Login> {
         .doc(user.uid)
         .get()
         .then((dataSnapshot) async {
-      await EcommerceApp.sharedPreferences.setString(
-          EcommerceApp.userUID, dataSnapshot.data()![EcommerceApp.userUID]);
-      await EcommerceApp.sharedPreferences.setString(
-          EcommerceApp.userEmail, dataSnapshot.data()![EcommerceApp.userEmail]);
-      await EcommerceApp.sharedPreferences.setString(
-          EcommerceApp.userName, dataSnapshot.data()![EcommerceApp.userName]);
-      await EcommerceApp.sharedPreferences.setString(EcommerceApp.userAvatarUrl,
-          dataSnapshot.data()![EcommerceApp.userAvatarUrl]);
+      await SweetSolution.sharedPreferences.setString(
+          SweetSolution.userUID, dataSnapshot.data()![SweetSolution.userUID]);
+      await SweetSolution.sharedPreferences.setString(SweetSolution.userEmail,
+          dataSnapshot.data()![SweetSolution.userEmail]);
+      await SweetSolution.sharedPreferences.setString(
+          SweetSolution.userName, dataSnapshot.data()![SweetSolution.userName]);
+      await SweetSolution.sharedPreferences.setString(
+          SweetSolution.userAvatarUrl,
+          dataSnapshot.data()![SweetSolution.userAvatarUrl]);
 
       List<String> cartList =
-          dataSnapshot.data()![EcommerceApp.userCartList].cast<String>();
-      await EcommerceApp.sharedPreferences
-          .setStringList(EcommerceApp.userCartList, cartList);
+          dataSnapshot.data()![SweetSolution.userCartList].cast<String>();
+      await SweetSolution.sharedPreferences
+          .setStringList(SweetSolution.userCartList, cartList);
     });
   }
 }

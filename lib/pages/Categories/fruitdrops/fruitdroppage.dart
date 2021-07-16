@@ -19,10 +19,10 @@ class _FruitDropPageState extends State<FruitDropPage> {
 
     return true;
   }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      
       onWillPop: () => _onWillPop(),
       child: DefaultTabController(
         length: 1,
@@ -83,9 +83,9 @@ class _FruitDropPageState extends State<FruitDropPage> {
                         child: Consumer<CartItemCounter>(
                           builder: (context, counter, _) {
                             return Text(
-                                (EcommerceApp.sharedPreferences
+                                (SweetSolution.sharedPreferences
                                             .getStringList(
-                                                EcommerceApp.userCartList)!
+                                                SweetSolution.userCartList)!
                                             .length -
                                         1)
                                     .toString(),
@@ -117,10 +117,9 @@ class _FruitDropPageState extends State<FruitDropPage> {
                       child: Text(
                         "All Fruit Drops",
                         style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontFamily: "Signatra"
-                        ),
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontFamily: "Signatra"),
                       ),
                     ),
                   ],

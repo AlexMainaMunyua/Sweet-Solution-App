@@ -14,17 +14,17 @@ class LollipopPage extends StatefulWidget {
 }
 
 class _LollipopPageState extends State<LollipopPage> {
-   Future<bool> _onWillPop() async {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
 
     return true;
   }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-    
       onWillPop: () => _onWillPop(),
       child: DefaultTabController(
         length: 3,
@@ -86,9 +86,9 @@ class _LollipopPageState extends State<LollipopPage> {
                         child: Consumer<CartItemCounter>(
                           builder: (context, counter, _) {
                             return Text(
-                                (EcommerceApp.sharedPreferences
+                                (SweetSolution.sharedPreferences
                                             .getStringList(
-                                                EcommerceApp.userCartList)!
+                                                SweetSolution.userCartList)!
                                             .length -
                                         1)
                                     .toString(),
@@ -123,30 +123,27 @@ class _LollipopPageState extends State<LollipopPage> {
                       child: Text(
                         "Big Daddy",
                         style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontFamily: "Signatra"
-                        ),
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontFamily: "Signatra"),
                       ),
                     ),
                     Tab(
                       child: Text(
                         "Lollipop",
                         style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontFamily: "Signatra"
-                        ),
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontFamily: "Signatra"),
                       ),
                     ),
                     Tab(
                       child: Text(
                         "Vimto",
                         style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontFamily: "Signatra"
-                        ),
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontFamily: "Signatra"),
                       ),
                     ),
                   ],

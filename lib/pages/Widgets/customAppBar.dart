@@ -68,8 +68,9 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
                   child: Consumer<CartItemCounter>(
                     builder: (context, counter, _) {
                       return Text(
-                          (EcommerceApp.sharedPreferences
-                                      .getStringList(EcommerceApp.userCartList)!
+                          (SweetSolution.sharedPreferences
+                                      .getStringList(
+                                          SweetSolution.userCartList)!
                                       .length -
                                   1)
                               .toString(),
