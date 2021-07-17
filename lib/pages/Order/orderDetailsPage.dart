@@ -66,11 +66,11 @@ class _OrderDetailsState extends State<OrderDetails> {
           ),
           body: SingleChildScrollView(
             child: FutureBuilder<DocumentSnapshot>(
-              future: EcommerceApp.firestore
-                  .collection(EcommerceApp.collectionUser)
-                  .doc(EcommerceApp.sharedPreferences
-                      .getString(EcommerceApp.userUID))
-                  .collection(EcommerceApp.collectionOrders)
+              future: SweetSolution.firestore
+                  .collection(SweetSolution.collectionUser)
+                  .doc(SweetSolution.sharedPreferences
+                      .getString(SweetSolution.userUID))
+                  .collection(SweetSolution.collectionOrders)
                   .doc(widget.orderID)
                   .get(),
               builder: (c, snapshot) {
@@ -83,7 +83,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         child: Column(
                           children: [
                             StatusBanner(
-                              status: dataMap![EcommerceApp.isSuccess],
+                              status: dataMap![SweetSolution.isSuccess],
                             ),
                             SizedBox(
                               height: 10.0,
@@ -94,7 +94,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   "Ksh." +
-                                      dataMap[EcommerceApp.totalAmount]
+                                      dataMap[SweetSolution.totalAmount]
                                           .toString(),
                                   style: TextStyle(
                                       fontSize: 20.0,
@@ -124,11 +124,11 @@ class _OrderDetailsState extends State<OrderDetails> {
                             ),
                             Divider(height: 2.0),
                             FutureBuilder<QuerySnapshot>(
-                                future: EcommerceApp.firestore
+                                future: SweetSolution.firestore
                                     .collection("items")
                                     .where("productId",
                                         whereIn:
-                                            dataMap[EcommerceApp.productID])
+                                            dataMap[SweetSolution.productID])
                                     .get(),
                                 builder: (c, dataSnapshot) {
                                   return dataSnapshot.hasData
@@ -145,13 +145,13 @@ class _OrderDetailsState extends State<OrderDetails> {
                               height: 2,
                             ),
                             FutureBuilder<DocumentSnapshot>(
-                                future: EcommerceApp.firestore
-                                    .collection(EcommerceApp.collectionUser)
-                                    .doc(EcommerceApp.sharedPreferences
-                                        .getString(EcommerceApp.userUID))
+                                future: SweetSolution.firestore
+                                    .collection(SweetSolution.collectionUser)
+                                    .doc(SweetSolution.sharedPreferences
+                                        .getString(SweetSolution.userUID))
                                     .collection(
-                                        EcommerceApp.subCollectionAddress)
-                                    .doc(dataMap[EcommerceApp.addressID])
+                                        SweetSolution.subCollectionAddress)
+                                    .doc(dataMap[SweetSolution.addressID])
                                     .get(),
                                 builder: (c, snap) {
                                   return snap.hasData
@@ -281,7 +281,8 @@ class ShippingDetails extends StatelessWidget {
                 KeyText(
                   msg: "Business Name",
                 ),
-                Text(model!.flatNumber!, style: TextStyle(color: Colors.black45)),
+                Text(model!.flatNumber!,
+                    style: TextStyle(color: Colors.black45)),
               ]),
               TableRow(children: [
                 KeyText(
@@ -323,10 +324,10 @@ class ShippingDetails extends StatelessWidget {
   }
 
   confirmedUserOrderReceived(BuildContext context, String? myOrderID) {
-    EcommerceApp.firestore
-        .collection(EcommerceApp.collectionUser)
-        .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
-        .collection(EcommerceApp.collectionOrders)
+    SweetSolution.firestore
+        .collection(SweetSolution.collectionUser)
+        .doc(SweetSolution.sharedPreferences.getString(SweetSolution.userUID))
+        .collection(SweetSolution.collectionOrders)
         .doc(myOrderID)
         .delete();
 

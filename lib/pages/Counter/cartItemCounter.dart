@@ -2,8 +2,8 @@ import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:flutter/foundation.dart';
 
 class CartItemCounter extends ChangeNotifier {
-  int _counter = EcommerceApp.sharedPreferences
-          .getStringList(EcommerceApp.userCartList)!
+  int _counter = SweetSolution.sharedPreferences
+          .getStringList(SweetSolution.userCartList)!
           .length -
       1;
 
@@ -12,8 +12,8 @@ class CartItemCounter extends ChangeNotifier {
 
   Future<void> displayResult() async {
     // ignore: unused_local_variable
-    int _counter = EcommerceApp.sharedPreferences
-            .getStringList(EcommerceApp.userCartList)!
+    int _counter = SweetSolution.sharedPreferences
+            .getStringList(SweetSolution.userCartList)!
             .length -
         1;
 

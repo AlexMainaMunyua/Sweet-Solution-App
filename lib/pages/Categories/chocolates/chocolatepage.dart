@@ -84,9 +84,9 @@ class _ChocolatePageState extends State<ChocolatePage> {
                         child: Consumer<CartItemCounter>(
                           builder: (context, counter, _) {
                             return Text(
-                                (EcommerceApp.sharedPreferences
+                                (SweetSolution.sharedPreferences
                                             .getStringList(
-                                                EcommerceApp.userCartList)!
+                                                SweetSolution.userCartList)!
                                             .length -
                                         1)
                                     .toString(),

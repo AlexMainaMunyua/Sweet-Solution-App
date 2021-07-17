@@ -24,8 +24,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
-
   MobileVerificationState currentState =
       MobileVerificationState.SHOW_MOBILE_FORM_STATE;
 
@@ -91,8 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
         saveUserInfoToFirestore(firebaseUser!).then((value) {
           readData(firebaseUser!).then((value) {
             Navigator.pop(context);
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => SplashScreen()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SplashScreen()));
           });
         });
       }
@@ -113,15 +111,15 @@ class _LoginScreenState extends State<LoginScreen> {
         .doc(user.uid)
         .get()
         .then((dataSnapshot) async {
-      await EcommerceApp.sharedPreferences.setString(
-          EcommerceApp.userUID, dataSnapshot.data()![EcommerceApp.userUID]);
-      await EcommerceApp.sharedPreferences.setString(EcommerceApp.phoneNumber,
-          dataSnapshot.data()![EcommerceApp.phoneNumber]);
+      await SweetSolution.sharedPreferences.setString(
+          SweetSolution.userUID, dataSnapshot.data()![SweetSolution.userUID]);
+      await SweetSolution.sharedPreferences.setString(SweetSolution.phoneNumber,
+          dataSnapshot.data()![SweetSolution.phoneNumber]);
 
       List<String> cartList =
-          dataSnapshot.data()![EcommerceApp.userCartList].cast<String>();
-      await EcommerceApp.sharedPreferences
-          .setStringList(EcommerceApp.userCartList, cartList);
+          dataSnapshot.data()![SweetSolution.userCartList].cast<String>();
+      await SweetSolution.sharedPreferences
+          .setStringList(SweetSolution.userCartList, cartList);
     });
   }
 
@@ -129,14 +127,14 @@ class _LoginScreenState extends State<LoginScreen> {
     FirebaseFirestore.instance.collection("userPhone").doc(user.uid).set({
       "uid": user.uid,
       "Phone": user.phoneNumber,
-      EcommerceApp.userCartList: ["garbageValue"]
+      SweetSolution.userCartList: ["garbageValue"]
     });
-    await EcommerceApp.sharedPreferences
-        .setString(EcommerceApp.userUID, user.uid);
-    await EcommerceApp.sharedPreferences
-        .setString(EcommerceApp.userUID, user.phoneNumber!);
-    await EcommerceApp.sharedPreferences
-        .setStringList(EcommerceApp.userCartList, ["garbageValue"]);
+    await SweetSolution.sharedPreferences
+        .setString(SweetSolution.userUID, user.uid);
+    await SweetSolution.sharedPreferences
+        .setString(SweetSolution.userUID, user.phoneNumber!);
+    await SweetSolution.sharedPreferences
+        .setStringList(SweetSolution.userCartList, ["garbageValue"]);
   }
 
   getMobileFormWidget(context) {
@@ -162,18 +160,16 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: EdgeInsets.all(8.0),
           margin: EdgeInsets.all(8.0),
           child: TextField(
-       
             controller: phoneController,
             decoration: InputDecoration(
-              border: InputBorder.none,
-              prefixIcon: Icon(
-                Icons.phone,
-                color: Theme.of(context).primaryColor,
-              ),
-              focusColor: Theme.of(context).primaryColor,
-              hintText: "+2547XXXXXXXX",
-              hintStyle: TextStyle(color: Colors.grey.shade300)
-            ),
+                border: InputBorder.none,
+                prefixIcon: Icon(
+                  Icons.phone,
+                  color: Theme.of(context).primaryColor,
+                ),
+                focusColor: Theme.of(context).primaryColor,
+                hintText: "+2547XXXXXXXX",
+                hintStyle: TextStyle(color: Colors.grey.shade300)),
           ),
         ),
         Padding(
@@ -246,8 +242,8 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.all(10.0),
           child: Center(
               child: Text(
-            "We have texted OTP(One Time Pin) to your registed cell phone number." 
-          "  Please check and enter OTP below to verify your Sweet Solutions account.",
+            "We have texted OTP(One Time Pin) to your registed cell phone number."
+            "  Please check and enter OTP below to verify your Sweet Solutions account.",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 12),
           )),
@@ -259,7 +255,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.only(right: 30.0, left: 30.0),
           child: Form(
               key: formKey,
-              child: PinCodeTextField(  
+              child: PinCodeTextField(
                 appContext: context,
                 length: 6,
                 autoDisposeControllers: false,

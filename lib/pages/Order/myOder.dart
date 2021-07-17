@@ -51,11 +51,11 @@ class _MyOrdersState extends State<MyOrders> {
             ),
           ),
           body: StreamBuilder<QuerySnapshot>(
-            stream: EcommerceApp.firestore
-                .collection(EcommerceApp.collectionUser)
-                .doc(EcommerceApp.sharedPreferences
-                    .getString(EcommerceApp.userUID))
-                .collection(EcommerceApp.collectionOrders)
+            stream: SweetSolution.firestore
+                .collection(SweetSolution.collectionUser)
+                .doc(SweetSolution.sharedPreferences
+                    .getString(SweetSolution.userUID))
+                .collection(SweetSolution.collectionOrders)
                 .snapshots(),
             builder: (c, snapshot) {
               return snapshot.hasData
@@ -67,7 +67,7 @@ class _MyOrdersState extends State<MyOrders> {
                                 .collection("items")
                                 .where("productId",
                                     whereIn: snapshot.data!.docs[index]
-                                        .data()![EcommerceApp.productID])
+                                        .data()![SweetSolution.productID])
                                 .get(),
                             builder: (c, snap) {
                               return snap.hasData

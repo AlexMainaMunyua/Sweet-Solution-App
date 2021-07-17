@@ -17,7 +17,8 @@ class AdminOrderDetails extends StatefulWidget {
   final String? orderBy;
   final String? addressID;
 
-  const AdminOrderDetails({Key? key, this.orderID, this.orderBy, this.addressID})
+  const AdminOrderDetails(
+      {Key? key, this.orderID, this.orderBy, this.addressID})
       : super(key: key);
 
   @override
@@ -69,8 +70,8 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
           ),
           body: SingleChildScrollView(
             child: FutureBuilder<DocumentSnapshot>(
-              future: EcommerceApp.firestore
-                  .collection(EcommerceApp.collectionOrders)
+              future: SweetSolution.firestore
+                  .collection(SweetSolution.collectionOrders)
                   .doc(getOrderId)
                   .get(),
               builder: (c, snapshot) {
@@ -83,7 +84,7 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                         child: Column(
                           children: [
                             AdminStatusBanner(
-                              status: dataMap![EcommerceApp.isSuccess],
+                              status: dataMap![SweetSolution.isSuccess],
                             ),
                             SizedBox(
                               height: 10.0,
@@ -94,7 +95,7 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   "Ksh." +
-                                      dataMap[EcommerceApp.totalAmount]
+                                      dataMap[SweetSolution.totalAmount]
                                           .toString(),
                                   style: TextStyle(
                                       fontSize: 20.0,
@@ -122,11 +123,11 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                             ),
                             Divider(height: 2.0),
                             FutureBuilder<QuerySnapshot>(
-                                future: EcommerceApp.firestore
+                                future: SweetSolution.firestore
                                     .collection("items")
                                     .where("productId",
                                         whereIn:
-                                            dataMap[EcommerceApp.productID])
+                                            dataMap[SweetSolution.productID])
                                     .get(),
                                 builder: (c, dataSnapshot) {
                                   return dataSnapshot.hasData
@@ -143,11 +144,11 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                               height: 2,
                             ),
                             FutureBuilder<DocumentSnapshot>(
-                                future: EcommerceApp.firestore
-                                    .collection(EcommerceApp.collectionUser)
+                                future: SweetSolution.firestore
+                                    .collection(SweetSolution.collectionUser)
                                     .doc(widget.orderBy)
                                     .collection(
-                                        EcommerceApp.subCollectionAddress)
+                                        SweetSolution.subCollectionAddress)
                                     .doc(widget.addressID)
                                     .get(),
                                 builder: (c, snap) {
@@ -268,7 +269,8 @@ class AdminShippingDetails extends StatelessWidget {
                 KeyText(
                   msg: "Business Name",
                 ),
-                Text(model!.flatNumber!, style: TextStyle(color: Colors.black45)),
+                Text(model!.flatNumber!,
+                    style: TextStyle(color: Colors.black45)),
               ]),
               TableRow(children: [
                 KeyText(
@@ -311,8 +313,8 @@ class AdminShippingDetails extends StatelessWidget {
   }
 
   confirmedOrderShifted(BuildContext context, String? myOrderID) {
-    EcommerceApp.firestore
-        .collection(EcommerceApp.collectionOrders)
+    SweetSolution.firestore
+        .collection(SweetSolution.collectionOrders)
         .doc(myOrderID)
         .delete();
 
