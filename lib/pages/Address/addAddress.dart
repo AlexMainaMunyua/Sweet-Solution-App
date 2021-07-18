@@ -88,9 +88,9 @@ class _AddAddressState extends State<AddAddress> {
                         child: Consumer<CartItemCounter>(
                           builder: (context, counter, _) {
                             return Text(
-                                (EcommerceApp.sharedPreferences
+                                (SweetSolution.sharedPreferences
                                             .getStringList(
-                                                EcommerceApp.userCartList)!
+                                                SweetSolution.userCartList)!
                                             .length -
                                         1)
                                     .toString(),
@@ -209,11 +209,11 @@ class _AddAddressState extends State<AddAddress> {
                         city: cCity.text.trim(),
                       ).toJson();
 
-                      EcommerceApp.firestore
-                          .collection(EcommerceApp.collectionUser)
-                          .doc(EcommerceApp.sharedPreferences
-                              .getString(EcommerceApp.userUID))
-                          .collection(EcommerceApp.subCollectionAddress)
+                      SweetSolution.firestore
+                          .collection(SweetSolution.collectionUser)
+                          .doc(SweetSolution.sharedPreferences
+                              .getString(SweetSolution.userUID))
+                          .collection(SweetSolution.subCollectionAddress)
                           .doc(DateTime.now().millisecondsSinceEpoch.toString())
                           .set(model)
                           .then((value) {

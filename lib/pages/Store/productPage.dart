@@ -89,9 +89,9 @@ class _ProductPageState extends State<ProductPage> {
                         child: Consumer<CartItemCounter>(
                           builder: (context, counter, _) {
                             return Text(
-                                (EcommerceApp.sharedPreferences
+                                (SweetSolution.sharedPreferences
                                             .getStringList(
-                                                EcommerceApp.userCartList)!
+                                                SweetSolution.userCartList)!
                                             .length -
                                         1)
                                     .toString(),
@@ -108,7 +108,6 @@ class _ProductPageState extends State<ProductPage> {
               )
             ],
           ),
-         
           body: ListView(
             children: [
               Container(
@@ -123,7 +122,8 @@ class _ProductPageState extends State<ProductPage> {
                         Container(
                           height: 300.0,
                           child: Center(
-                            child: Image.network(widget.itemModel!.thumbnailUrl!),
+                            child:
+                                Image.network(widget.itemModel!.thumbnailUrl!),
                           ),
                         ),
                         Container(
@@ -143,7 +143,8 @@ class _ProductPageState extends State<ProductPage> {
                           children: [
                             Text(
                               widget.itemModel!.title!,
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
                             ),
                             SizedBox(
                               height: 10.0,
@@ -186,5 +187,6 @@ class _ProductPageState extends State<ProductPage> {
   }
 }
 
-var boldTextStyle = TextStyle(color: Colors.grey.shade700,fontWeight: FontWeight.bold, fontSize: 20);
+var boldTextStyle = TextStyle(
+    color: Colors.grey.shade700, fontWeight: FontWeight.bold, fontSize: 20);
 const largeTextStyle = TextStyle(fontWeight: FontWeight.normal, fontSize: 20);

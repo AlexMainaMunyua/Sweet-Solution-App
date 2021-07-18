@@ -139,7 +139,9 @@ class _PaymentPageState extends State<PaymentPage> {
                             children: [
                               Radio(
                                 activeColor: Colors.grey.shade300,
-                                onChanged: (dynamic val) {}, groupValue: null, value: null,
+                                onChanged: (dynamic val) {},
+                                groupValue: null,
+                                value: null,
                               ),
                               Text(
                                 "Lipa na mpesa",
@@ -205,8 +207,6 @@ class _PaymentPageState extends State<PaymentPage> {
                     msg: "COMPLETE ORDER",
                     onPressed: () {
                       addOrderDetails();
-
-                   
                     },
                   )
                 ],
@@ -220,43 +220,45 @@ class _PaymentPageState extends State<PaymentPage> {
 
   addOrderDetails() {
     writeOrderDetailsForUsers({
-      EcommerceApp.addressID: widget.addressId,
-      EcommerceApp.totalAmount: widget.totalAmount,
-      "orderBy": EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID),
-      EcommerceApp.productID: EcommerceApp.sharedPreferences
-          .getStringList(EcommerceApp.userCartList),
-      EcommerceApp.paymentDetails: "Cash on Delivery",
-      EcommerceApp.orderTime: DateTime.now().microsecondsSinceEpoch.toString(),
-      EcommerceApp.isSuccess: true
+      SweetSolution.addressID: widget.addressId,
+      SweetSolution.totalAmount: widget.totalAmount,
+      "orderBy":
+          SweetSolution.sharedPreferences.getString(SweetSolution.userUID),
+      SweetSolution.productID: SweetSolution.sharedPreferences
+          .getStringList(SweetSolution.userCartList),
+      SweetSolution.paymentDetails: "Cash on Delivery",
+      SweetSolution.orderTime: DateTime.now().microsecondsSinceEpoch.toString(),
+      SweetSolution.isSuccess: true
     });
 
     writeOrderDetailsForAdmin({
-      EcommerceApp.addressID: widget.addressId,
-      EcommerceApp.totalAmount: widget.totalAmount,
-      "orderBy": EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID),
-      EcommerceApp.productID: EcommerceApp.sharedPreferences
-          .getStringList(EcommerceApp.userCartList),
-      EcommerceApp.paymentDetails: "Cash on Delivery",
-      EcommerceApp.orderTime: DateTime.now().microsecondsSinceEpoch.toString(),
-      EcommerceApp.isSuccess: true
+      SweetSolution.addressID: widget.addressId,
+      SweetSolution.totalAmount: widget.totalAmount,
+      "orderBy":
+          SweetSolution.sharedPreferences.getString(SweetSolution.userUID),
+      SweetSolution.productID: SweetSolution.sharedPreferences
+          .getStringList(SweetSolution.userCartList),
+      SweetSolution.paymentDetails: "Cash on Delivery",
+      SweetSolution.orderTime: DateTime.now().microsecondsSinceEpoch.toString(),
+      SweetSolution.isSuccess: true
     }).whenComplete(() => {emptyCartNow()});
   }
 
   emptyCartNow() {
-    EcommerceApp.sharedPreferences
-        .setStringList(EcommerceApp.userCartList, ["garbageValue"]);
+    SweetSolution.sharedPreferences
+        .setStringList(SweetSolution.userCartList, ["garbageValue"]);
 
-    List? tempList =
-        EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
+    List? tempList = SweetSolution.sharedPreferences
+        .getStringList(SweetSolution.userCartList);
 
     FirebaseFirestore.instance
         .collection("userPhone")
-        .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
+        .doc(SweetSolution.sharedPreferences.getString(SweetSolution.userUID))
         .update({
-      EcommerceApp.userCartList: tempList,
+      SweetSolution.userCartList: tempList,
     }).then((value) {
-      EcommerceApp.sharedPreferences
-          .setStringList(EcommerceApp.userCartList, tempList as List<String>);
+      SweetSolution.sharedPreferences
+          .setStringList(SweetSolution.userCartList, tempList as List<String>);
 
       Provider.of<CartItemCounter>(context, listen: false).displayResult();
     });
@@ -270,19 +272,19 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 
   Future writeOrderDetailsForUsers(Map<String, dynamic> data) async {
-    await EcommerceApp.firestore
-        .collection(EcommerceApp.collectionUser)
-        .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
-        .collection(EcommerceApp.collectionOrders)
-        .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID)! +
+    await SweetSolution.firestore
+        .collection(SweetSolution.collectionUser)
+        .doc(SweetSolution.sharedPreferences.getString(SweetSolution.userUID))
+        .collection(SweetSolution.collectionOrders)
+        .doc(SweetSolution.sharedPreferences.getString(SweetSolution.userUID)! +
             data['orderTime'])
         .set(data);
   }
 
   Future writeOrderDetailsForAdmin(Map<String, dynamic> data) async {
-    await EcommerceApp.firestore
-        .collection(EcommerceApp.collectionOrders)
-        .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID)! +
+    await SweetSolution.firestore
+        .collection(SweetSolution.collectionOrders)
+        .doc(SweetSolution.sharedPreferences.getString(SweetSolution.userUID)! +
             data['orderTime'])
         .set(data);
   }

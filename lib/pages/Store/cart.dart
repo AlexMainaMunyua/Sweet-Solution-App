@@ -27,11 +27,11 @@ class _CartPageState extends State<CartPage> {
 
   int? quantity;
 
-  Stream streamA = EcommerceApp.firestore
+  Stream streamA = SweetSolution.firestore
       .collection("items")
       .where("productId",
-          whereIn: EcommerceApp.sharedPreferences
-              .getStringList(EcommerceApp.userCartList))
+          whereIn: SweetSolution.sharedPreferences
+              .getStringList(SweetSolution.userCartList))
       .snapshots();
 
   List<QuerySnapshot> getList(QuerySnapshot list1) {
@@ -136,9 +136,9 @@ class _CartPageState extends State<CartPage> {
                       child: Consumer<CartItemCounter>(
                         builder: (context, counter, _) {
                           return Text(
-                              (EcommerceApp.sharedPreferences
+                              (SweetSolution.sharedPreferences
                                           .getStringList(
-                                              EcommerceApp.userCartList)!
+                                              SweetSolution.userCartList)!
                                           .length -
                                       1)
                                   .toString(),
@@ -282,8 +282,8 @@ class _CartPageState extends State<CartPage> {
                 padding: EdgeInsets.only(top: 20.0),
                 child: WideButton(
                   onPressed: () {
-                    if (EcommerceApp.sharedPreferences
-                            .getStringList(EcommerceApp.userCartList)!
+                    if (SweetSolution.sharedPreferences
+                            .getStringList(SweetSolution.userCartList)!
                             .length ==
                         1) {
                       Fluttertoast.showToast(msg: "Your cart is empty");
@@ -502,21 +502,21 @@ class _CartPageState extends State<CartPage> {
   }
 
   removeItemFromUserCart(String? productId) {
-    List tempCartList = EcommerceApp.sharedPreferences
-        .getStringList(EcommerceApp.userCartList)!;
+    List tempCartList = SweetSolution.sharedPreferences
+        .getStringList(SweetSolution.userCartList)!;
 
     tempCartList.remove(productId);
 
-    EcommerceApp.firestore
-        .collection(EcommerceApp.collectionUser)
-        .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
+    SweetSolution.firestore
+        .collection(SweetSolution.collectionUser)
+        .doc(SweetSolution.sharedPreferences.getString(SweetSolution.userUID))
         .update({
-      EcommerceApp.userCartList: tempCartList,
+      SweetSolution.userCartList: tempCartList,
     }).then((value) {
       Fluttertoast.showToast(msg: "Item Removed Successfully");
 
-      EcommerceApp.sharedPreferences.setStringList(
-          EcommerceApp.userCartList, tempCartList as List<String>);
+      SweetSolution.sharedPreferences.setStringList(
+          SweetSolution.userCartList, tempCartList as List<String>);
 
       Provider.of<CartItemCounter>(context, listen: false).displayResult();
 

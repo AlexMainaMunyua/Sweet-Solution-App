@@ -12,7 +12,7 @@ class ToyPage extends StatefulWidget {
 }
 
 class _ToyPageState extends State<ToyPage> {
-   Future<bool> _onWillPop() async {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => MyHomePage());
 
     Navigator.pushReplacement(context, route);
@@ -23,7 +23,6 @@ class _ToyPageState extends State<ToyPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-     
         onWillPop: () => _onWillPop(),
         child: DefaultTabController(
           length: 1,
@@ -87,9 +86,9 @@ class _ToyPageState extends State<ToyPage> {
                           child: Consumer<CartItemCounter>(
                             builder: (context, counter, _) {
                               return Text(
-                                  (EcommerceApp.sharedPreferences
+                                  (SweetSolution.sharedPreferences
                                               .getStringList(
-                                                  EcommerceApp.userCartList)!
+                                                  SweetSolution.userCartList)!
                                               .length -
                                           1)
                                       .toString(),
@@ -123,10 +122,9 @@ class _ToyPageState extends State<ToyPage> {
                         child: Text(
                           "All Toys",
                           style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontFamily: "Signatra"
-                          ),
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontFamily: "Signatra"),
                         ),
                       ),
                     ],

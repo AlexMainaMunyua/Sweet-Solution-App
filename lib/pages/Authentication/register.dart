@@ -51,7 +51,7 @@ class _RegisterState extends State<Register> {
     });
   }
 
-  Future<bool> _onWillPop()async {
+  Future<bool> _onWillPop() async {
     Route route = MaterialPageRoute(builder: (c) => Login());
 
     Navigator.pushReplacement(context, route);
@@ -66,9 +66,8 @@ class _RegisterState extends State<Register> {
 
     return WillPopScope(
       // ignore: missing_return
-      onWillPop: () =>
-        _onWillPop(),
-      
+      onWillPop: () => _onWillPop(),
+
       child: Scaffold(
         body: SingleChildScrollView(
           child: SafeArea(
@@ -398,18 +397,18 @@ class _RegisterState extends State<Register> {
       "email": fUser.email,
       "name": _nameTextEditingController.text.trim(),
       "url": userImageUrl,
-      EcommerceApp.userCartList: ["garbageValue"],
+      SweetSolution.userCartList: ["garbageValue"],
     });
 
-    await EcommerceApp.sharedPreferences
-        .setString(EcommerceApp.userUID, fUser.uid);
-    await EcommerceApp.sharedPreferences
-        .setString(EcommerceApp.userEmail, fUser.email!);
-    await EcommerceApp.sharedPreferences.setString(
-        EcommerceApp.userName, _nameTextEditingController.text.trim());
-    await EcommerceApp.sharedPreferences
-        .setString(EcommerceApp.userAvatarUrl, userImageUrl);
-    await EcommerceApp.sharedPreferences
-        .setStringList(EcommerceApp.userCartList, ["garbageValue"]);
+    await SweetSolution.sharedPreferences
+        .setString(SweetSolution.userUID, fUser.uid);
+    await SweetSolution.sharedPreferences
+        .setString(SweetSolution.userEmail, fUser.email!);
+    await SweetSolution.sharedPreferences.setString(
+        SweetSolution.userName, _nameTextEditingController.text.trim());
+    await SweetSolution.sharedPreferences
+        .setString(SweetSolution.userAvatarUrl, userImageUrl);
+    await SweetSolution.sharedPreferences
+        .setStringList(SweetSolution.userCartList, ["garbageValue"]);
   }
 }

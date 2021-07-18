@@ -88,9 +88,9 @@ class _GumPageState extends State<GumPage> {
                           child: Consumer<CartItemCounter>(
                             builder: (context, counter, _) {
                               return Text(
-                                  (EcommerceApp.sharedPreferences
+                                  (SweetSolution.sharedPreferences
                                               .getStringList(
-                                                  EcommerceApp.userCartList)!
+                                                  SweetSolution.userCartList)!
                                               .length -
                                           1)
                                       .toString(),

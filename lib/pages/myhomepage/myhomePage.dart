@@ -26,149 +26,146 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-          child: Scaffold(
-        appBar: AppBar(
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.black26, Colors.white],
-                    begin: const FractionalOffset(0.0, 0.0),
-                    end: const FractionalOffset(1.0, 0.0),
-                    stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp)),
-          ),
-          title: Text(
-            "Sweet Solutions",
-            style: TextStyle(
-                fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
-          ),
-          centerTitle: true,
-          actions: [
-            Container(
-              padding: EdgeInsets.only(right: 5.0, top: 5.0),
-              child: Stack(children: [
-                IconButton(
-                    icon: Icon(
-                      Icons.shopping_cart,
-                      // size: 30.0,
-                      color: Colors.black26,
-                    ),
-                    onPressed: () {
-                      Route route =
-                          MaterialPageRoute(builder: (c) => CartPage());
+        child: Scaffold(
+      appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [Colors.black26, Colors.white],
+                  begin: const FractionalOffset(0.0, 0.0),
+                  end: const FractionalOffset(1.0, 0.0),
+                  stops: [0.0, 1.0],
+                  tileMode: TileMode.clamp)),
+        ),
+        title: Text(
+          "Sweet Solutions",
+          style: TextStyle(
+              fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
+        ),
+        centerTitle: true,
+        actions: [
+          Container(
+            padding: EdgeInsets.only(right: 5.0, top: 5.0),
+            child: Stack(children: [
+              IconButton(
+                  icon: Icon(
+                    Icons.shopping_cart,
+                    // size: 30.0,
+                    color: Colors.black26,
+                  ),
+                  onPressed: () {
+                    Route route = MaterialPageRoute(builder: (c) => CartPage());
 
-                      Navigator.pushReplacement(context, route);
-                    }),
-                Positioned(
-                    child: Stack(
-                  children: [
-                    Icon(
-                      Icons.brightness_1,
-                      size: 20.0,
-                      color: Colors.black45,
+                    Navigator.pushReplacement(context, route);
+                  }),
+              Positioned(
+                  child: Stack(
+                children: [
+                  Icon(
+                    Icons.brightness_1,
+                    size: 20.0,
+                    color: Colors.black45,
+                  ),
+                  Positioned(
+                    top: 3.0,
+                    bottom: 4.0,
+                    left: 6.0,
+                    child: Consumer<CartItemCounter>(
+                      builder: (context, counter, _) {
+                        return Text(
+                            (SweetSolution.sharedPreferences
+                                        .getStringList(
+                                            SweetSolution.userCartList)!
+                                        .length -
+                                    1)
+                                .toString(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w500));
+                      },
                     ),
-                    Positioned(
-                      top: 3.0,
-                      bottom: 4.0,
-                      left: 6.0,
-                      child: Consumer<CartItemCounter>(
-                        builder: (context, counter, _) {
-                          return Text(
-                              (EcommerceApp.sharedPreferences
-                                          .getStringList(
-                                              EcommerceApp.userCartList)!
-                                          .length -
-                                      1)
-                                  .toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.w500));
-                        },
+                  )
+                ],
+              )),
+            ]),
+          )
+        ],
+      ),
+      drawer: MyDrawer(),
+      body: CustomScrollView(
+        slivers: [
+          SliverPersistentHeader(pinned: true, delegate: SearchBoxDelegate()),
+          SliverToBoxAdapter(
+            child: _createCarousel(),
+          ),
+          SliverToBoxAdapter(
+            child: _createCategories(context),
+          ),
+          SliverToBoxAdapter(
+            child: _createFlashSalesHeader(context),
+          ),
+          StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("items")
+                .where("shortInfo", isEqualTo: "Flash Sales")
+                .limit(4)
+                .snapshots(),
+            builder: (context, dataSnapshot) {
+              return !dataSnapshot.hasData
+                  ? SliverToBoxAdapter(
+                      child: Center(
+                        child: circularProgress(),
                       ),
                     )
-                  ],
-                )),
-              ]),
-            )
-          ],
-        ),
-        drawer: MyDrawer(),
-        body: CustomScrollView(
-          slivers: [
-            SliverPersistentHeader(pinned: true, delegate: SearchBoxDelegate()),
-            SliverToBoxAdapter(
-              child: _createCarousel(),
-            ),
-            SliverToBoxAdapter(
-              child: _createCategories(context),
-            ),
-            SliverToBoxAdapter(
-              child: _createFlashSalesHeader(context),
-            ),
-            StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection("items")
-                  .where("shortInfo", isEqualTo: "Flash Sales")
-                  .limit(4)
-                  .snapshots(),
-              builder: (context, dataSnapshot) {
-                return !dataSnapshot.hasData
-                    ? SliverToBoxAdapter(
-                        child: Center(
-                          child: circularProgress(),
-                        ),
-                      )
-                    : SliverStaggeredGrid.countBuilder(
-                        crossAxisCount: 2,
-                        staggeredTileBuilder: (c) => StaggeredTile.fit(1),
-                        itemBuilder: (context, index) {
-                          ItemModel model = ItemModel.fromJson(
-                              dataSnapshot.data!.docs[index].data()!);
-                          return sourceInfo(model, context);
-                        },
-                        itemCount: dataSnapshot.data!.docs.length,
-                      );
-              },
-            ),
-            SliverToBoxAdapter(
-              child: _createBanner(),
-            ),
-            SliverToBoxAdapter(
-              child: _createStreamBuilderHeader(),
-            ),
-            StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection("items")
-                  .orderBy("publishedDate", descending: false)
-                  .snapshots(),
-              builder: (context, dataSnapshot) {
-                return !dataSnapshot.hasData
-                    ? SliverToBoxAdapter(
-                        child: Center(
-                          child: circularProgress(),
-                        ),
-                      )
-                    : SliverStaggeredGrid.countBuilder(
-                        crossAxisCount: 2,
-                        staggeredTileBuilder: (c) => StaggeredTile.fit(1),
-                        itemBuilder: (context, index) {
-                          ItemModel model = ItemModel.fromJson(
-                              dataSnapshot.data!.docs[index].data()!);
-                          return sourceInfo(model, context);
-                        },
-                        itemCount: dataSnapshot.data!.docs.length,
-                      );
-              },
-            ),
-          ],
-        ),
-      )
-    );
+                  : SliverStaggeredGrid.countBuilder(
+                      crossAxisCount: 2,
+                      staggeredTileBuilder: (c) => StaggeredTile.fit(1),
+                      itemBuilder: (context, index) {
+                        ItemModel model = ItemModel.fromJson(
+                            dataSnapshot.data!.docs[index].data()!);
+                        return sourceInfo(model, context);
+                      },
+                      itemCount: dataSnapshot.data!.docs.length,
+                    );
+            },
+          ),
+          SliverToBoxAdapter(
+            child: _createBanner(),
+          ),
+          SliverToBoxAdapter(
+            child: _createStreamBuilderHeader(),
+          ),
+          StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("items")
+                .orderBy("publishedDate", descending: false)
+                .snapshots(),
+            builder: (context, dataSnapshot) {
+              return !dataSnapshot.hasData
+                  ? SliverToBoxAdapter(
+                      child: Center(
+                        child: circularProgress(),
+                      ),
+                    )
+                  : SliverStaggeredGrid.countBuilder(
+                      crossAxisCount: 2,
+                      staggeredTileBuilder: (c) => StaggeredTile.fit(1),
+                      itemBuilder: (context, index) {
+                        ItemModel model = ItemModel.fromJson(
+                            dataSnapshot.data!.docs[index].data()!);
+                        return sourceInfo(model, context);
+                      },
+                      itemCount: dataSnapshot.data!.docs.length,
+                    );
+            },
+          ),
+        ],
+      ),
+    ));
   }
 }
 
@@ -554,7 +551,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                     color: Colors.black12,
                     child: Center(
                         child: Text(
-                      model.discount.toString()+"%",
+                      model.discount.toString() + "%",
                       style: TextStyle(fontSize: 10, color: Colors.black38),
                     )),
                   ),
@@ -592,32 +589,32 @@ Widget card({Color primaryColor = Colors.redAccent, required String imgPath}) {
 }
 
 void checkItemInCart(String? productID, BuildContext context) {
-  EcommerceApp.sharedPreferences
-          .getStringList(EcommerceApp.userCartList)!
+  SweetSolution.sharedPreferences
+          .getStringList(SweetSolution.userCartList)!
           .contains(productID)
       ? Fluttertoast.showToast(msg: "Item already in Cart")
       : addItemToCart(productID, context);
 }
 
 addItemToCart(String? productID, BuildContext context) {
-  List tempCartList =
-      EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList)!;
+  List tempCartList = SweetSolution.sharedPreferences
+      .getStringList(SweetSolution.userCartList)!;
 
   tempCartList.add(productID);
 
-  print(
-      EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList));
+  print(SweetSolution.sharedPreferences
+      .getStringList(SweetSolution.userCartList));
 
-  EcommerceApp.firestore
-      .collection(EcommerceApp.collectionUser)
-      .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
+  SweetSolution.firestore
+      .collection(SweetSolution.collectionUser)
+      .doc(SweetSolution.sharedPreferences.getString(SweetSolution.userUID))
       .update({
-    EcommerceApp.userCartList: tempCartList,
+    SweetSolution.userCartList: tempCartList,
   }).then((value) {
     Fluttertoast.showToast(msg: "Item Added to Cart Successfully");
 
-    EcommerceApp.sharedPreferences
-        .setStringList(EcommerceApp.userCartList, tempCartList as List<String>);
+    SweetSolution.sharedPreferences.setStringList(
+        SweetSolution.userCartList, tempCartList as List<String>);
 
     Provider.of<CartItemCounter>(context, listen: false).displayResult();
   });
