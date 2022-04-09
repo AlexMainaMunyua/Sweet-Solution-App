@@ -4,7 +4,7 @@ Ecommerce mobile application.
 
 ## Getting Started.
 
-This is a B2B mobile application that will connect business to a variety of products that they can sell. The initial implementation of the project will be an Minimum Viable Product (MVP) to test its vaibility. There exist a potention gap in the industry and a ready market for the application. With emphasis to marketing analysis, the application has a wide room of growth and therefore, the application is requierd to be robust and scalable.
+This is a B2B mobile application that will connect business to a variety of products that they can sell. The initial implementation of the project will be an Minimum Viable Product (MVP) to test its vaibility. There exist a potental gap in the industry and a ready market for the application. With emphasis to marketing analysis, the application has a wide room of growth and therefore, the application is requierd to be robust and scalable.
 
 The roadmap to the project is to implement and MVP version of the application with the functionlities listed below, execute the application and deploy for use. Thereafter, we will be requied to collect feedback from the users and improved with respect to agile methodology.
 
