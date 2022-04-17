@@ -51,7 +51,8 @@ android {
         applicationId "com.sweetsolution.ecommerce_application"
         minSdkVersion 16
         multiDexEnabled true
-        targetSdkVersion 29
+        targetSdkVersion 30
+        compileSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
      
