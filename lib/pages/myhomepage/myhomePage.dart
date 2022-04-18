@@ -126,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       staggeredTileBuilder: (c) => StaggeredTile.fit(1),
                       itemBuilder: (context, index) {
                         ItemModel model = ItemModel.fromJson(
-                            dataSnapshot.data!.docs[index].data()!);
+                            dataSnapshot.data!.docs[index].data());
                         return sourceInfo(model, context);
                       },
                       itemCount: dataSnapshot.data!.docs.length,
@@ -156,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       staggeredTileBuilder: (c) => StaggeredTile.fit(1),
                       itemBuilder: (context, index) {
                         ItemModel model = ItemModel.fromJson(
-                            dataSnapshot.data!.docs[index].data()!);
+                            dataSnapshot.data!.docs[index].data());
                         return sourceInfo(model, context);
                       },
                       itemCount: dataSnapshot.data!.docs.length,
