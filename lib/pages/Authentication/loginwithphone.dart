@@ -191,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
             });
 
             await _auth.verifyPhoneNumber(
-              phoneNumber: phoneController.text,
+              phoneNumber: setPhoneNumber(phoneController.text),
               verificationCompleted: (phoneAuthCredential) async {
                 setState(() {
                   showLoading = false;
@@ -297,7 +297,7 @@ class _LoginScreenState extends State<LoginScreen> {
             PhoneAuthCredential phoneAuthCredential =
                 PhoneAuthProvider.credential(
                     verificationId: verificationId,
-                    smsCode: otpController.text) as PhoneAuthCredential;
+                    smsCode: otpController.text);
 
             signInWithPhoneAuthCredential(phoneAuthCredential);
           },
@@ -372,5 +372,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   ? getMobileFormWidget(context)
                   : getOtpFormWidget(context),
         ));
+  }
+
+  // A function that will allow user to enter local phone number that starts with zero.
+  setPhoneNumber(String number) {
+    if (number.startsWith("0") && number.length == 10) {
+      var phoneNumber = number.substring(1);
+      phoneNumber = "+254" + phoneNumber;
+      return phoneNumber;
+    } else {
+      return number;
+    }
   }
 }
