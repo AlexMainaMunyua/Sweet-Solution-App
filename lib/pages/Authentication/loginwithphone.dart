@@ -354,14 +354,14 @@ class _LoginScreenState extends State<LoginScreen> {
             )
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(
-            Icons.dashboard,
-            color: Colors.white,
-          ),
-          onPressed: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AdminSignInPage())),
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   child: Icon(
+        //     Icons.dashboard,
+        //     color: Colors.white,
+        //   ),
+        //   onPressed: () => Navigator.push(context,
+        //       MaterialPageRoute(builder: (context) => AdminSignInPage())),
+        // ),
         body: Container(
           padding: const EdgeInsets.all(16),
           child: showLoading
