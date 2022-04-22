@@ -243,7 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Center(
               child: Text(
             "We have texted OTP(One Time Pin) to your registed cell phone number."
-            "  Please check and enter OTP below to verify your Sweet Solutions account.",
+            "  Please check and enter OTP below to verify your Sweets Solutions account.",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 12),
           )),
@@ -333,7 +333,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     tileMode: TileMode.clamp)),
           ),
           title: Text(
-            "Sweet Solutions",
+            "Sweets Solutions",
             style: TextStyle(
                 fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
           ),
