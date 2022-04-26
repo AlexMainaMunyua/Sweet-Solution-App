@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SweetSolution {
-  static const String appName = 'Sweet Solutions';
+  static const String appName = 'Sweets Solutions';
 
   static late SharedPreferences sharedPreferences;
   static User? user;
