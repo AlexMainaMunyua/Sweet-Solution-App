@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   tileMode: TileMode.clamp)),
         ),
         title: Text(
-          "Sweet Solutions",
+          "Sweets Solutions",
           style: TextStyle(
               fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
         ),
@@ -126,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       staggeredTileBuilder: (c) => StaggeredTile.fit(1),
                       itemBuilder: (context, index) {
                         ItemModel model = ItemModel.fromJson(
-                            dataSnapshot.data!.docs[index].data()!);
+                            dataSnapshot.data!.docs[index].data());
                         return sourceInfo(model, context);
                       },
                       itemCount: dataSnapshot.data!.docs.length,
@@ -156,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       staggeredTileBuilder: (c) => StaggeredTile.fit(1),
                       itemBuilder: (context, index) {
                         ItemModel model = ItemModel.fromJson(
-                            dataSnapshot.data!.docs[index].data()!);
+                            dataSnapshot.data!.docs[index].data());
                         return sourceInfo(model, context);
                       },
                       itemCount: dataSnapshot.data!.docs.length,

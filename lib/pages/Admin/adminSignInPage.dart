@@ -61,7 +61,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
             Navigator.pushReplacement(context, route);
           },
         ),
-        title: Text("Sweet solutions admin",
+        title: Text("Sweets solutions admin",
             style: TextStyle(
                 fontSize: 30.0, color: Colors.white, fontFamily: "Signatra")),
       ),
@@ -197,17 +197,17 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
   loginAdmin() {
     FirebaseFirestore.instance.collection("admins").get().then((snapshot) {
       snapshot.docs.forEach((element) {
-        if (element.data()!["id"] !=
+        if (element.data()["id"] !=
             _adminIDTextEditingController.text.trim()) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text("Your ID is not correct")));
-        } else if (element.data()!["password"] !=
+        } else if (element.data()["password"] !=
             _passwordTextEditingController.text.trim()) {
           ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("Your password is not correct")));
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text("Welcome Dear Admin, " + element.data()!["name"])));
+              content: Text("Welcome Dear Admin, " + element.data()["name"])));
 
           setState(() {
             _adminIDTextEditingController.text = "";

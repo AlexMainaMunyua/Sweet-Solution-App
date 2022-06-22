@@ -62,7 +62,7 @@ class _MyOrdersState extends State<AdminShiftOrders> {
                                 .collection("items")
                                 .where("productId",
                                     whereIn: snapshot.data!.docs[index]
-                                        .data()![SweetSolution.productID])
+                                        .data()[SweetSolution.productID])
                                 .get(),
                             builder: (c, snap) {
                               return snap.hasData
@@ -71,9 +71,9 @@ class _MyOrdersState extends State<AdminShiftOrders> {
                                       data: snap.data!.docs,
                                       orderID: snapshot.data!.docs[index].id,
                                       orderBy: snapshot.data!.docs[index]
-                                          .data()!["orderBy"],
+                                          .data()["orderBy"],
                                       addressID: snapshot.data!.docs[index]
-                                          .data()!["addressID"])
+                                          .data()["addressID"])
                                   : Center(
                                       child: circularProgress(),
                                     );

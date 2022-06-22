@@ -9,7 +9,6 @@ import 'package:ecommerce_application/pages/Counter/cartItemCounter.dart';
 import 'package:ecommerce_application/pages/Counter/itemQuantity.dart';
 import 'package:ecommerce_application/pages/Counter/totalMoney.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,7 +43,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Sweet solutions',
+        title: 'Sweet solution',
         theme: ThemeData(
           primarySwatch: Colors.grey,
         ),

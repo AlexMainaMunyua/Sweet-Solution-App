@@ -150,7 +150,7 @@ class _AddressState extends State<Address> {
                                             snapshot.data!.docs[index].id,
                                         totalAmount: widget.totalAmount,
                                         model: AddressModel.fromJson(
-                                            snapshot.data!.docs[index].data()!),
+                                            snapshot.data!.docs[index].data()),
                                       );
                                     },
                                   );
@@ -218,7 +218,7 @@ class _AddressState extends State<Address> {
                                 delegate: SliverChildBuilderDelegate(
                                   (context, index) {
                                     ItemModel model = ItemModel.fromJson(
-                                        snapshot.data!.docs[index].data()!);
+                                        snapshot.data!.docs[index].data());
 
                                     if (index == 0) {
                                       totalAmount = 0;

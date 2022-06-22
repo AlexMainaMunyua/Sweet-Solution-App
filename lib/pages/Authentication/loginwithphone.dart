@@ -191,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
             });
 
             await _auth.verifyPhoneNumber(
-              phoneNumber: phoneController.text,
+              phoneNumber: setPhoneNumber(phoneController.text),
               verificationCompleted: (phoneAuthCredential) async {
                 setState(() {
                   showLoading = false;
@@ -243,7 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Center(
               child: Text(
             "We have texted OTP(One Time Pin) to your registed cell phone number."
-            "  Please check and enter OTP below to verify your Sweet Solutions account.",
+            "  Please check and enter OTP below to verify your Sweets Solutions account.",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 12),
           )),
@@ -297,7 +297,7 @@ class _LoginScreenState extends State<LoginScreen> {
             PhoneAuthCredential phoneAuthCredential =
                 PhoneAuthProvider.credential(
                     verificationId: verificationId,
-                    smsCode: otpController.text) as PhoneAuthCredential;
+                    smsCode: otpController.text);
 
             signInWithPhoneAuthCredential(phoneAuthCredential);
           },
@@ -333,7 +333,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     tileMode: TileMode.clamp)),
           ),
           title: Text(
-            "Sweet Solutions",
+            "Sweets Solutions",
             style: TextStyle(
                 fontSize: 35.0, color: Colors.white, fontFamily: "Signatra"),
           ),
@@ -354,14 +354,14 @@ class _LoginScreenState extends State<LoginScreen> {
             )
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(
-            Icons.dashboard,
-            color: Colors.white,
-          ),
-          onPressed: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AdminSignInPage())),
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   child: Icon(
+        //     Icons.dashboard,
+        //     color: Colors.white,
+        //   ),
+        //   onPressed: () => Navigator.push(context,
+        //       MaterialPageRoute(builder: (context) => AdminSignInPage())),
+        // ),
         body: Container(
           padding: const EdgeInsets.all(16),
           child: showLoading
@@ -372,5 +372,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   ? getMobileFormWidget(context)
                   : getOtpFormWidget(context),
         ));
+  }
+
+  // A function that will allow user to enter local phone number that starts with zero.
+  setPhoneNumber(String number) {
+    if (number.startsWith("0") && number.length == 10) {
+      var phoneNumber = number.substring(1);
+      phoneNumber = "+254" + phoneNumber;
+      return phoneNumber;
+    } else {
+      return number;
+    }
   }
 }

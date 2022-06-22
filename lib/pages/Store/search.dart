@@ -40,7 +40,7 @@ class _SearchProductState extends State<SearchProduct> {
                   ? ListView.builder(
                       itemBuilder: (context, index) {
                         ItemModel model =
-                            ItemModel.fromJson(snap.data!.docs[index].data()!);
+                            ItemModel.fromJson(snap.data!.docs[index].data());
 
                         return searchSourceInfo(model, context);
                       },
