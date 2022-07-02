@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_application/pages/Categories/chocolates/chocolatepage.dart';
@@ -173,11 +174,12 @@ Widget _createBanner() {
   return Container(
     height: 180,
     padding: EdgeInsets.all(15.0),
-    child: Image(
-      fit: BoxFit.cover,
-      image: NetworkImage(
-          "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Fbanner.jpeg?alt=media&token=d4a80868-686c-405b-b293-014f2d340f29"),
-    ),
+    child: CachedNetworkImage(
+        placeholder: (context, url) =>
+            Container(child: const CircularProgressIndicator()),
+        fit: BoxFit.cover,
+        imageUrl:
+            "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Fbanner.jpeg?alt=media&token=d4a80868-686c-405b-b293-014f2d340f29"),
   );
 }
 
@@ -264,10 +266,20 @@ Widget _createCategories(BuildContext context) {
             },
             child: Column(
               children: [
-                CircleAvatar(
-                  radius: 20.0,
-                  backgroundImage: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Fgum.jpeg?alt=media&token=69325cc3-ad9a-4280-be32-51a219022963"),
+                CachedNetworkImage(
+                  imageUrl:
+                      'https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Fgum.jpeg?alt=media&token=69325cc3-ad9a-4280-be32-51a219022963',
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: 40.0,
+                    height: 40.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: imageProvider, fit: BoxFit.cover),
+                    ),
+                  ),
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
                 SizedBox(
                   height: 10.0,
@@ -291,10 +303,21 @@ Widget _createCategories(BuildContext context) {
             },
             child: Column(
               children: [
-                CircleAvatar(
-                    radius: 20.0,
-                    backgroundImage: NetworkImage(
-                        "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Ftoffee.jpeg?alt=media&token=2ef31932-a2fd-4d56-b7e4-538474b93827")),
+                CachedNetworkImage(
+                  imageUrl:
+                      'https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Ftoffee.jpeg?alt=media&token=2ef31932-a2fd-4d56-b7e4-538474b93827',
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: 40.0,
+                    height: 40.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: imageProvider, fit: BoxFit.cover),
+                    ),
+                  ),
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
                 SizedBox(
                   height: 10.0,
                 ),
@@ -317,10 +340,20 @@ Widget _createCategories(BuildContext context) {
             },
             child: Column(
               children: [
-                CircleAvatar(
-                  radius: 20.0,
-                  backgroundImage: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Fchocolates.jpeg?alt=media&token=c99dd0e9-4ed8-4bfd-9c60-a2d4df3cfad0"),
+                CachedNetworkImage(
+                  imageUrl:
+                      'https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Fchocolates.jpeg?alt=media&token=c99dd0e9-4ed8-4bfd-9c60-a2d4df3cfad0',
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: 40.0,
+                    height: 40.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: imageProvider, fit: BoxFit.cover),
+                    ),
+                  ),
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
                 SizedBox(
                   height: 10.0,
@@ -344,10 +377,20 @@ Widget _createCategories(BuildContext context) {
             },
             child: Column(
               children: [
-                CircleAvatar(
-                  radius: 20.0,
-                  backgroundImage: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Flollipops.jpeg?alt=media&token=bff83178-9479-4bde-a7c0-1681671702cd"),
+                CachedNetworkImage(
+                  imageUrl:
+                      'https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Flollipops.jpeg?alt=media&token=bff83178-9479-4bde-a7c0-1681671702cd',
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: 40.0,
+                    height: 40.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: imageProvider, fit: BoxFit.cover),
+                    ),
+                  ),
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
                 SizedBox(
                   height: 10.0,
@@ -371,10 +414,20 @@ Widget _createCategories(BuildContext context) {
             },
             child: Column(
               children: [
-                CircleAvatar(
-                  radius: 20.0,
-                  backgroundImage: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Ffruitdrops.jpeg?alt=media&token=7f3bbfb6-12d0-4e90-afcd-f1874b05a187"),
+                CachedNetworkImage(
+                  imageUrl:
+                      'https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Ffruitdrops.jpeg?alt=media&token=7f3bbfb6-12d0-4e90-afcd-f1874b05a187',
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: 40.0,
+                    height: 40.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: imageProvider, fit: BoxFit.cover),
+                    ),
+                  ),
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
                 SizedBox(
                   height: 10.0,
@@ -397,10 +450,20 @@ Widget _createCategories(BuildContext context) {
             },
             child: Column(
               children: [
-                CircleAvatar(
-                  radius: 20.0,
-                  backgroundImage: NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Ftoys.jpeg?alt=media&token=5799e1c5-cd24-4ef0-a35b-8b329a13912d"),
+                CachedNetworkImage(
+                  imageUrl:
+                      'https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2Ftoys.jpeg?alt=media&token=5799e1c5-cd24-4ef0-a35b-8b329a13912d',
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: 40.0,
+                    height: 40.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: imageProvider, fit: BoxFit.cover),
+                    ),
+                  ),
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
                 SizedBox(
                   height: 10.0,
@@ -428,11 +491,11 @@ Widget _createCarousel() {
             margin: EdgeInsets.only(top: 6.0, bottom: 6.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
-              image: DecorationImage(
-                image: NetworkImage(
-                    "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2Fjumbo1.png?alt=media&token=628b3a16-eada-48d1-a7f5-0ed3b95accf4"),
-                fit: BoxFit.cover,
-              ),
+            ),
+            child: CachedNetworkImage(
+              imageUrl:
+                  "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2Fjumbo1.png?alt=media&token=628b3a16-eada-48d1-a7f5-0ed3b95accf4",
+              fit: BoxFit.cover,
             ),
           ),
 
@@ -441,11 +504,12 @@ Widget _createCarousel() {
             margin: EdgeInsets.only(top: 6.0, bottom: 6.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
-              image: DecorationImage(
-                image: NetworkImage(
-                    "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2Fjumbo3.png?alt=media&token=35a8f8c5-8f7f-442a-ab85-c7b27644d6d7"),
-                fit: BoxFit.cover,
-              ),
+            ),
+            child: CachedNetworkImage(
+              imageUrl: "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2Fjumbo3.png?alt=media&token=35a8f8c5-8f7f-442a-ab85-c7b27644d6d7",
+              fit: BoxFit.cover,
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
             ),
           ),
 
@@ -454,12 +518,14 @@ Widget _createCarousel() {
             margin: EdgeInsets.only(top: 6.0, bottom: 6.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
-              image: DecorationImage(
-                image: NetworkImage(
-                    "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2Fbanner4.png?alt=media&token=66df1029-84e7-4480-89fb-9347b356a490"),
-                fit: BoxFit.cover,
-              ),
             ),
+            child: CachedNetworkImage(
+              imageUrl: "https://firebasestorage.googleapis.com/v0/b/loan-app-6d0b2.appspot.com/o/ecommerceImages%2FJumboTron%2Fbanner4.png?alt=media&token=66df1029-84e7-4480-89fb-9347b356a490",
+              fit: BoxFit.cover,
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            ),
+           
           ),
         ],
         options: CarouselOptions(
@@ -498,11 +564,12 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                   SizedBox(
                     height: 30,
                   ),
-                  Image.network(
-                    model.thumbnailUrl!,
+                  CachedNetworkImage(
                     height: 100.0,
                     width: 120.0,
-                  ),
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    imageUrl: model.thumbnailUrl!),
                   SizedBox(
                     height: 10.0,
                   ),

@@ -9,6 +9,7 @@ import 'package:ecommerce_application/pages/Admin/adminSignInPage.dart';
 import 'package:ecommerce_application/pages/Config/config.dart';
 import 'package:ecommerce_application/pages/myhomepage/myhomePage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -153,6 +154,15 @@ class _LoginScreenState extends State<LoginScreen> {
           height: 20,
         ),
         Container(
+          padding: EdgeInsets.only(left: 10),
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: Text("Digit (0-9,+) 10 - 13",
+              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 11), 
+            ),
+          ),
+        ),       
+        Container(
           decoration: BoxDecoration(
               color: Colors.white,
               border: Border.all(color: Colors.grey.shade400),
@@ -160,6 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: EdgeInsets.all(8.0),
           margin: EdgeInsets.all(8.0),
           child: TextField(
+            keyboardType: TextInputType.number,
             controller: phoneController,
             decoration: InputDecoration(
                 border: InputBorder.none,
@@ -168,21 +179,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Theme.of(context).primaryColor,
                 ),
                 focusColor: Theme.of(context).primaryColor,
-                hintText: "+2547XXXXXXXX",
+                hintText: "XXXXXXXXXX",
                 hintStyle: TextStyle(color: Colors.grey.shade300)),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "12 Digits, Starts with (+254)",
-                style: TextStyle(fontSize: 12, color: Colors.grey),
-              )),
-        ),
         SizedBox(
-          height: 30,
+          height: 40,
         ),
         MaterialButton(
           onPressed: () async {
@@ -380,8 +382,10 @@ class _LoginScreenState extends State<LoginScreen> {
       var phoneNumber = number.substring(1);
       phoneNumber = "+254" + phoneNumber;
       return phoneNumber;
-    } else {
+    } else if (number.startsWith("+254") && number.length == 12) {
       return number;
+    } else {
+      Fluttertoast.showToast(msg: "Number must be 10 digits or start with +254");
     }
   }
 }
